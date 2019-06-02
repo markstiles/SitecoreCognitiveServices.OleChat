@@ -1,0 +1,259 @@
+<project>
+  <Metadata>
+    <metadata>
+      <PackageName>SitecoreCognitiveServices.OleChat</PackageName>
+      <Author>Mark Stiles</Author>
+      <Version>8-1.0</Version>
+      <Revision />
+      <License />
+      <Comment />
+      <Attributes />
+      <Readme />
+      <Publisher />
+      <PostStep />
+      <PackageID />
+    </metadata>
+  </Metadata>
+  <SaveProject>True</SaveProject>
+  <Sources>
+    <xitems>
+      <Converter>
+        <ItemToEntryConverter>
+          <Transforms />
+        </ItemToEntryConverter>
+      </Converter>
+      <Entries>
+        <x-item>/master/sitecore/templates/Sitecore Cognitive Services - Ole Chat/{A19B09F0-0750-4CBB-A11D-230F65558CAE}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Sitecore Cognitive Services - Ole Chat/Ole Chat Settings/__Standard Values/{79275CED-A317-4727-826F-3D29A7AD1DB8}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Sitecore Cognitive Services - Ole Chat/Ole Chat Settings/{DB4CA9FB-21AA-42E8-9CF7-76B5E664E7C1}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Sitecore Cognitive Services - Ole Chat/Ole Chat Settings/Ole Chat/{23671BE4-84CF-4D31-B430-88F3C42CEC1C}/invariant/0</x-item>
+        <x-item>/master/sitecore/templates/Sitecore Cognitive Services - Ole Chat/Ole Chat Settings/Ole Chat/Application Id/{05289B4A-1026-470D-A8EE-D65A6D69E0B3}/invariant/0</x-item>
+      </Entries>
+      <SkipVersions>False</SkipVersions>
+      <Include />
+      <Exclude />
+      <Name>templates</Name>
+    </xitems>
+    <xitems>
+      <Converter>
+        <ItemToEntryConverter>
+          <Transforms>
+            <InstallerConfigurationTransform>
+              <Options>
+                <BehaviourOptions>
+                  <ItemMode>Undefined</ItemMode>
+                  <ItemMergeMode>Undefined</ItemMergeMode>
+                </BehaviourOptions>
+              </Options>
+            </InstallerConfigurationTransform>
+          </Transforms>
+        </ItemToEntryConverter>
+      </Converter>
+      <Entries>
+        <x-item>/core/sitecore/content/Applications/Content Editor/Ribbons/Chunks/Chat/{37C28CBF-BF04-4023-A01B-8039AA06F351}/invariant/0</x-item>
+        <x-item>/core/sitecore/content/Applications/Content Editor/Ribbons/Chunks/Chat/Ole/{6F8A77FC-C08D-4CDF-A581-91EA6AFB28E3}/invariant/0</x-item>
+        <x-item>/core/sitecore/content/Applications/Content Editor/Ribbons/Strips/Cognitive/Chat/{D82475E2-8C7A-4949-8166-35069B6A6B9C}/invariant/0</x-item>
+      </Entries>
+      <SkipVersions>False</SkipVersions>
+      <Include />
+      <Exclude />
+      <Name>ribbon</Name>
+    </xitems>
+    <xitems>
+      <Converter>
+        <ItemToEntryConverter>
+          <Transforms />
+        </ItemToEntryConverter>
+      </Converter>
+      <Entries>
+        <x-item>/core/sitecore/content/Applications/Content Editor/Editors/Ole Chat/{3A953ECB-56B6-40FB-9836-F458B43498A6}/invariant/0</x-item>
+        <x-item>/core/sitecore/content/Applications/Content Editor/Editors/Ole Chat/Setup/{A104A805-2062-46C5-8FD7-DCD1B2DEEAE4}/invariant/0</x-item>
+      </Entries>
+      <SkipVersions>False</SkipVersions>
+      <Include />
+      <Exclude />
+      <Name>editor tab</Name>
+    </xitems>
+    <xfiles>
+      <Entries>
+        <x-item>/App_Config/Include/SitecoreCognitiveServices/SitecoreCognitiveServices.Feature.OleChat.config</x-item>
+      </Entries>
+      <Converter>
+        <FileToEntryConverter>
+          <Root>/</Root>
+          <Transforms />
+        </FileToEntryConverter>
+      </Converter>
+      <Include />
+      <Exclude />
+      <Name>config</Name>
+    </xfiles>
+    <xfiles>
+      <Entries>
+        <x-item>/bin/SitecoreCognitiveServices.Feature.OleChat.dll</x-item>
+      </Entries>
+      <Converter>
+        <FileToEntryConverter>
+          <Root>/</Root>
+          <Transforms />
+        </FileToEntryConverter>
+      </Converter>
+      <Include />
+      <Exclude />
+      <Name>bin</Name>
+    </xfiles>
+    <xfiles>
+      <Entries>
+        <x-item>/Areas/SitecoreCognitiveServices/Assets/css/SitecoreCognitiveServices.Feature.OleChat.css</x-item>
+        <x-item>/Areas/SitecoreCognitiveServices/Assets/js/SitecoreCognitiveServices.Feature.OleChat.js</x-item>
+        <x-item>/Areas/SitecoreCognitiveServices/Views/OleChat/OleChat.cshtml</x-item>
+        <x-item>/Areas/SitecoreCognitiveServices/Views/OleChat/Setup.cshtml</x-item>
+        <x-item>/Areas/SitecoreCognitiveServices/Views/OleChat/web.config</x-item>
+        <x-item>/Areas/SitecoreCognitiveServices/Assets/json/SitecoreCognitiveServices.Feature.OleChat.json</x-item>
+      </Entries>
+      <Converter>
+        <FileToEntryConverter>
+          <Root>/</Root>
+          <Transforms>
+            <InstallerConfigurationTransform>
+              <Options>
+                <BehaviourOptions>
+                  <ItemMode>Undefined</ItemMode>
+                  <ItemMergeMode>Undefined</ItemMergeMode>
+                </BehaviourOptions>
+              </Options>
+            </InstallerConfigurationTransform>
+          </Transforms>
+        </FileToEntryConverter>
+      </Converter>
+      <Include />
+      <Exclude />
+      <Name>area</Name>
+    </xfiles>
+    <xitems>
+      <Converter>
+        <ItemToEntryConverter>
+          <Transforms>
+            <InstallerConfigurationTransform>
+              <Options>
+                <BehaviourOptions>
+                  <ItemMode>Undefined</ItemMode>
+                  <ItemMergeMode>Undefined</ItemMergeMode>
+                </BehaviourOptions>
+              </Options>
+            </InstallerConfigurationTransform>
+          </Transforms>
+        </ItemToEntryConverter>
+      </Converter>
+      <Entries>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/{BF7A09C8-0FF9-42E6-A3CF-01A6FDDC2F49}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/{1F8C210E-96CD-429E-B4D4-93071BBEE32C}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/{C36A01E5-C61F-4BA6-811B-9B6EC730E9EA}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Cancel/{76C364CC-26C2-4740-8FFA-0D0241AA12B0}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Clear/{1F30002B-3597-4A8A-8D73-D4279589CF88}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Confirm Message/{C92A124D-15D9-4DC5-8826-8D4615571130}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Continue/{85041FEB-6CB4-4746-823A-D9226DDCD83F}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Hello/{0745996E-AC43-4F45-97C7-321D8EC0EDB2}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/{2CF0FA74-D304-4E7A-817E-08DD1128EED8}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/About/{36ED6FD8-0675-4CBD-9240-3259955B1C59}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/About/Name/{37671FFC-6BFB-4272-934D-E5221840DED5}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/About/Response/{9A4E938C-C89B-469B-A47B-8C04056695DD}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Default/{435FD9F3-F808-4EDE-935A-0EA74429253E}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Default/Response/{146B1528-5A41-4881-B62D-76E34B6FB81D}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Frustrated User/{61647145-4F57-431F-8BA0-137ECF33C940}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Frustrated User/1/{42581A9B-923A-46CC-AB63-D88E5A15CF87}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Frustrated User/2/{C8C82D1C-EF79-4E60-A609-4803C3CE995A}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Frustrated User/3/{4CBC593F-DC15-4508-98E1-6B518B42A2B3}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Frustrated User/4/{54FC8DDD-EFD0-4190-A1D8-46E5807EA1E4}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Frustrated User/5/{24EA585F-9C7A-4E1C-ACBD-572CA0E5A65F}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Frustrated User/6/{B420B2C6-CD10-442F-8178-180F2B987356}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Greet/{FF3DC436-A64A-49A4-8D32-94B2050E66E3}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Greet/1/{4E97EBC6-4977-404C-BFB9-B277BC773111}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Greet/2/{C9518214-692A-45E8-B3C5-B9ED3F343DCE}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Greet/3/{71EEDA80-3B1B-45A8-A404-CE610564EDDB}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Greet/4/{7BAC7DAD-C21F-40BE-A349-74EEEC0149B4}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Greet/5/{2D42C07E-26C2-49B3-BD3C-491AD61B453F}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Greet/6/{B73D0436-7EC6-4E24-BE78-4B943698D2F3}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Greet/Name/{FAD4DFA2-7C23-4A78-ACDA-DD893CC8AEB8}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Kick User/{D6617A1A-AE43-4F35-9EC4-17B50197DC4E}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Kick User/Must Be Admin Message/{72005BFE-2D7E-4E90-A7ED-40AB4A5E4A15}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Kick User/Name/{F8AB2ABC-E940-40CA-8A1A-75D821AD1D23}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Kick User/Response/{9632C50E-0706-48E7-A304-8A351894FC90}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Kick User/User Parameter Request/{D91A83C5-BE5E-4565-97D2-5AC9A7BEB3F4}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Locked Item Count/{A341A198-6A01-40A7-BE15-A7EBBFD55788}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Locked Item Count/Name/{95DED561-3E41-43D5-9883-A26A4843BEDA}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Locked Item Count/Response/{0827A254-EB87-48D6-86E0-C3D50840DF77}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Logged In Users/{AEABE003-D625-458D-88AC-21044912596A}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Logged In Users/Name/{A9CF12B5-60DE-43B4-9933-413D0869A19D}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Logged In Users/Plural Conjunction/{CFB5716A-CEFD-4DDA-8881-6A03746B3D14}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Logged In Users/Plural Letter/{5B6F5E4B-4E2F-404D-84B2-F90356EB5E83}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Logged In Users/Response/{CEFC706F-55B9-4569-8C3F-8470E630DDD7}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Logged In Users/Singular Conjunction/{22AAC93E-3BAA-4BD9-A64E-F61DD522EF86}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Logout/{ABBC937E-46CE-48A2-B939-F45FF46CEC82}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Logout/Name/{87DD45C6-BD54-4307-9CB5-5EA126593E86}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Logout/Response/{A6E03A61-53AC-4397-9BE9-3F859035125C}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Publish/{BF1A0DBA-6A25-4880-AF1F-C0AA8C3EF8A1}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Publish/Database Parameter Request/{73F6D7D2-8652-4248-A2AE-4AA9A736C75C}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Publish/Item Parameter Request/{C84CB275-EBB9-4C00-8F6B-4626E9D894FD}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Publish/Language Parameter Request/{1F08F3E8-C838-40CC-A007-2F173874DB87}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Publish/Name/{54DEC8C6-686C-49B7-82F6-17F2B9856C4A}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Publish/No/{CB797508-A7D7-47A9-AEC1-772BDC743CE8}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Publish/Recursion Parameter Request/{1F0C56FA-6DAB-4C55-BADC-C2DA0DA3A0C0}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Publish/Response Recursion/{A0D25B94-EB91-4C31-A1ED-BC8E5FE57EA4}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Publish/Response/{2B5E594F-C49E-4010-A227-310BA147BEAC}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Publish/Yes/{C30164B6-17F9-49B1-8B04-09B36E60ADCB}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Quit/{70D55FD2-3604-474B-964E-EBBD23E01805}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Quit/Response/{CA09C1D2-E95F-4F63-B114-8FAD1660DF65}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Rebuild Index/{F63EAAD7-7F1C-44E2-BC10-657A92826965}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Rebuild Index/All Option/{26E55BD3-7ED9-4A52-AE1B-625E52EF1639}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Rebuild Index/All Rebuilt Message/{CCE837C7-C55D-41E1-A536-BB49F4F90E8A}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Rebuild Index/Index Parameter Request/{8281D73A-5F25-477F-9EC9-97CA1A8DBD88}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Rebuild Index/Name/{3288629C-971D-44B0-8A79-D99B377B33ED}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Rebuild Index/Rebuild Index Message/{26F9A08D-4884-4F35-BD5B-7306419236B0}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Thanks/{CB5428F6-E78B-4FCC-8624-268957976F67}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Thanks/1/{2BD17A62-E48C-46A6-B7A6-FA3465326CA5}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Thanks/2/{60BEEBC9-CA62-4766-A36E-5AE0350F49B2}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Thanks/3/{D250BAA1-0FE9-4C6A-B886-712531B8CD38}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Thanks/4/{10AEAA38-66C7-4DEE-81DB-15D7D800BFF0}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Thanks/5/{FA6847FE-EA0D-40C8-9785-E481D6587A54}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Thanks/6/{26366676-01A6-472A-A9FF-841E86F77800}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Thanks/7/{66A4A3C5-2A13-47DF-AEA5-C6BA2CFA7E98}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Unlock Items/{09716780-397D-4A64-A0A9-1F9DD43BDD10}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Unlock Items/Name/{CC8A66E1-17F5-4F6C-A57E-5F03987BC4E1}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Unlock Items/Response/{82465173-F9D2-4067-AC35-BAA685D62AF3}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Version/{1AF19D02-ECE9-4389-89DD-1A2CB3CCA980}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Version/Name/{FBF30136-5F8B-49FE-AEEA-5CD3110F55F7}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Version/Response/{55CED69C-998B-4EF7-B945-5BD75FA640D2}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Send/{DB209E86-9C43-41C4-975E-DD90B15D5C06}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Trouble/{4B1D87B3-F78D-4B11-ACB0-BB9CF2DCF540}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Setup/{22379850-BABC-44B7-9FD7-F7F01A54CACA}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Setup/Azure Link/{832D4B8B-1055-4377-A74E-A4BDFD0BA26F}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Setup/Button Text/{9B838459-31AA-4FBE-977C-F68BA0FDC753}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Setup/Description/{2E8911B9-0EED-43C7-9149-7D8D6769BB04}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Setup/Failure Message/{4C85ED40-4CB8-4D77-BE3F-314FB7DA8D1B}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Setup/Form Heading/{221D0094-5A47-4DA3-9220-DD1BE70E8238}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Setup/Luis Api Endpoint Label/{527E1619-2FF9-444D-A714-E1B599013221}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Setup/Luis Api Label/{3FB15521-9C64-4D9E-A895-E50D0CBB7022}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Setup/No Option/{688471D7-5AF1-4E5F-97C6-F68714F15A6E}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Setup/Overwrite Label/{20204C2A-AB09-4902-8B1A-BD5909B292AA}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Setup/Success Message/{F4DCA441-FCBB-412B-832C-9B2C9BC17E17}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Setup/Text Analytics API Endpoint Label/{C631A1A7-4358-406B-A065-B5D2CC161EBE}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Setup/Text Analytics Api Label/{12C2E850-D9B6-4099-A2F8-96F8008A747F}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Setup/View Title/{3B43478E-1513-4397-BA50-6DA5470A9A95}/invariant/0</x-item>
+        <x-item>/master/sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Setup/Yes Option/{E3CF330F-3C88-465E-BA81-5382AAE3D7CE}/invariant/0</x-item>
+      </Entries>
+      <SkipVersions>False</SkipVersions>
+      <Include />
+      <Exclude />
+      <Name>system settings</Name>
+    </xitems>
+  </Sources>
+  <Converter>
+    <TrivialConverter>
+      <Transforms />
+    </TrivialConverter>
+  </Converter>
+  <Include />
+  <Exclude />
+  <Name />
+</project>

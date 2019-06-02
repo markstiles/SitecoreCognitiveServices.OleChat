@@ -1,0 +1,77 @@
+﻿@using SitecoreCognitiveServices.Feature.OleChat.Statics
+@model SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Models.ItemContextParameters
+
+@{
+    ViewBag.Title = "Cognitive Services: Ole Chat";
+    Layout = "~/Areas/SitecoreCognitiveServices/Views/Common/CognitiveLayout.cshtml";
+}
+
+<link href="/Areas/SitecoreCognitiveServices/Assets/css/SitecoreCognitiveServices.Feature.OleChat.css?x=@(new System.Random().Next())" rel="stylesheet" type="text/css" />
+<script src="/Areas/SitecoreCognitiveServices/Assets/js/microsoft.cognitiveservices.speech.sdk.bundle.js"></script>
+<script src="/Areas/SitecoreCognitiveServices/Assets/js/SitecoreCognitiveServices.Feature.OleChat.js"></script>
+
+<div class="frame">
+    <div class="hidden">
+        <div class="init-text">@Translator.Text("Chat.Hello")</div>
+        <div class="trouble-message">@Translator.Text("Chat.Trouble")</div>
+        <div class="clear-message">@Translator.Text("Chat.Clear")</div>
+        <div class="continue-message">@Translator.Text("Chat.Accept")</div>
+        <div class="cancel-message">@Translator.Text("Chat.Cancel")</div>
+    </div>
+    <form class="form chat-form" method="post" action="/SitecoreCognitiveServices/OleChat/Post"
+          tokenaction="/SitecoreCognitiveServices/OleChat/GetSpeechToken">
+        @Html.AntiForgeryToken()
+        <div class="chat-conversation"></div>
+        <div class="chat-input-wrap">
+            <div class="audio-toggle">
+                <img src="/Areas/SitecoreCognitiveServices/Assets/img/audio.jpg" />
+            </div>
+            <input class="chat-input" id="chat-input" type="text" />
+            <div class="chat-audio microphone-button" title="Start Microphone">
+                <img class="mic" src="/Areas/SitecoreCognitiveServices/Assets/img/mic.png" title="microphone button" />
+                <img class="speech-animated" src="/Areas/SitecoreCognitiveServices/Assets/img/speech-animated.gif" title="capturing speech" />
+            </div>
+            <audio id="audio-player">
+                <source src="" type="audio/mp3" />
+            </audio>
+        </div>
+
+        <input type="hidden" name="chat-db" class="chat-db" value="@Model.Database" />
+        <input type="hidden" name="chat-lang" class="chat-lang" value="@Model.Language" />
+        <input type="hidden" name="chat-id" class="chat-id" value="@Model.Id" />
+        <button class="chat-submit scButton">@Translator.Text("Chat.Send")</button>
+    </form>
+    <form class="form item-search-form" method="post" action="/SitecoreCognitiveServices/OleChat/ItemSearch">
+        @Html.AntiForgeryToken()
+        <div class="item-search-header">
+            @Translator.Text("Chat.ItemSearch")
+            <img class="close" src="/Areas/SitecoreCognitiveServices/Assets/img/x-close.png" title="close" />
+        </div>
+        <div class="item-search-wrap">
+            <input class="item-search-input" id="item-search-input" type="text" />
+            <div class="chat-audio microphone-button" title="Start Microphone">
+                <img class="mic" src="/Areas/SitecoreCognitiveServices/Assets/img/mic.png" title="microphone button" />
+                <img class="speech-animated" src="/Areas/SitecoreCognitiveServices/Assets/img/speech-animated.gif" title="capturing speech" />
+            </div>
+        </div>
+        <div class="item-search-results"></div>
+        <input type="hidden" name="chat-db" class="item-search-db" value="@Model.Database" />
+        <input type="hidden" name="chat-lang" class="item-search-lang" value="@Model.Language" />
+    </form>
+    <form class="form list-search-form">
+        @Html.AntiForgeryToken()
+        <div class="list-search-header">
+            @Translator.Text("Chat.ListSearch")
+            <img class="close" src="/Areas/SitecoreCognitiveServices/Assets/img/x-close.png" title="close" />
+        </div>
+        <div class="list-search-wrap">
+            <input class="list-search-input" id="list-search-input" type="text" />
+            <div class="chat-audio microphone-button" title="Start Microphone">
+                <img class="mic" src="/Areas/SitecoreCognitiveServices/Assets/img/mic.png" title="microphone button" />
+                <img class="speech-animated" src="/Areas/SitecoreCognitiveServices/Assets/img/speech-animated.gif" title="capturing speech" />
+            </div>
+        </div>
+        <div class="list-search-results"></div>
+        <input type="hidden" class="list-search-options" value="@Model.Database" />
+    </form>
+</div>

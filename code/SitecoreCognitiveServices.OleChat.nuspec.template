@@ -1,0 +1,55 @@
+﻿<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+    <metadata>
+        <id>SitecoreCognitiveServices.Feature.OleChat</id>
+        <version>${CognitiveService.Nuspec.Version}</version>
+        <description>Ole: Sitecore Cognitive Services Feature</description>
+        <authors>${CognitiveService.Nuspec.Author}</authors>
+        <owners>${CognitiveService.Nuspec.Author}</owners>
+        <licenseUrl>${CognitiveService.Nuspec.LicenseUrl}</licenseUrl>
+        <projectUrl>${CognitiveService.Nuspec.ProjectUrl}</projectUrl>
+        <requireLicenseAcceptance>${CognitiveService.Nuspec.RequireLicenseAcceptance}</requireLicenseAcceptance>
+        <copyright>${CognitiveService.Nuspec.Copyright}</copyright>
+        <dependencies>
+            <dependency id="SitecoreCognitiveServices.Core" version="${CognitiveService.Nuspec.Version}" />
+            <dependency id="Unicorn" version="4.0.3" />
+        </dependencies>
+    </metadata>
+    <files>
+        <!-- app_include -->
+        <file src="serialization\**.yml" target="content/Feature/OleChat/code/serialization" />
+        <file src="App_Config/Include/SitecoreCognitiveServices/SitecoreCognitiveServices.Feature.OleChat.config"
+              target="content/App_Config/Include/SitecoreCognitiveServices/SitecoreCognitiveServices.Feature.OleChat.config" />
+        <file src="App_Config/Include/SitecoreCognitiveServices/Unicorn.Configs.SitecoreCognitiveServices.Feature.OleChat.config"
+              target="content/App_Config/Include/SitecoreCognitiveServices/Unicorn.Configs.SitecoreCognitiveServices.Feature.OleChat.config" />
+        <!-- assets -->
+        <file src="Areas/SitecoreCognitiveServices/Assets/css/SitecoreCognitiveServices.Feature.OleChat.css"
+              target="content/Areas/SitecoreCognitiveServices/Assets/css/SitecoreCognitiveServices.Feature.OleChat.css" />
+        <file src="Areas/SitecoreCognitiveServices/Assets/img/audio.jpg"
+              target="content/Areas/SitecoreCognitiveServices/Assets/img/audio.jpg" />
+        <file src="Areas/SitecoreCognitiveServices/Assets/img/mic.png"
+              target="content/Areas/SitecoreCognitiveServices/Assets/img/mic.png" />
+        <file src="Areas/SitecoreCognitiveServices/Assets/img/speech-animated.gif"
+              target="content/Areas/SitecoreCognitiveServices/Assets/img/speech-animated.gif" />
+        <file src="Areas/SitecoreCognitiveServices/Assets/img/speech.png"
+              target="content/Areas/SitecoreCognitiveServices/Assets/img/speech.png" />
+        <file src="Areas/SitecoreCognitiveServices/Assets/js/SitecoreCognitiveServices.Feature.OleChat.js"
+              target="content/Areas/SitecoreCognitiveServices/Assets/js/SitecoreCognitiveServices.Feature.OleChat.js" />
+        <file src="Areas/SitecoreCognitiveServices/Assets/js/SitecoreCognitiveServices.Feature.OleChat.Setup.js"
+              target="content/Areas/SitecoreCognitiveServices/Assets/js/SitecoreCognitiveServices.Feature.OleChat.Setup.js" />
+        <!-- views -->
+        <file src="Areas/SitecoreCognitiveServices/Views/OleChat/BackupOle.cshtml"
+              target="content/Areas/SitecoreCognitiveServices/Views/OleChat/BackupOle.cshtml" />
+        <file src="Areas/SitecoreCognitiveServices/Views/OleChat/Ole.cshtml"
+              target="content/Areas/SitecoreCognitiveServices/Views/OleChat/Ole.cshtml" />
+        <file src="Areas/SitecoreCognitiveServices/Views/OleChat/RestoreOle.cshtml"
+              target="content/Areas/SitecoreCognitiveServices/Views/OleChat/RestoreOle.cshtml" />
+        <file src="Areas/SitecoreCognitiveServices/Views/OleChat/Setup.cshtml"
+              target="content/Areas/SitecoreCognitiveServices/Views/OleChat/Setup.cshtml" />
+        <file src="Areas/SitecoreCognitiveServices/Views/OleChat/web.config"
+              target="content/Areas/SitecoreCognitiveServices/Views/OleChat/web.config" />
+        <!-- binaries -->
+        <file src="bin/SitecoreCognitiveServices.Feature.OleChat.dll"
+              target="lib/Net46/SitecoreCognitiveServices.Feature.OleChat.dll" />
+    </files>
+</package>

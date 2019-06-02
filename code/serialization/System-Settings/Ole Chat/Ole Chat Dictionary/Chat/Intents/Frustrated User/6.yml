@@ -1,0 +1,26 @@
+﻿---
+ID: "b420b2c6-cd10-442f-8178-180f2b987356"
+Parent: "61647145-4f57-431f-8ba0-137ecf33c940"
+Template: "6d1cd897-1936-4a3a-a511-289a94c2a7b1"
+Path: /sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Frustrated User/6
+DB: master
+BranchID: "25672703-93bd-4056-88a4-9c20ec501967"
+SharedFields:
+- ID: "06d5295c-ed2f-4a54-9bf2-26228d113318"
+  Hint: __Icon
+  Value: Office/32x32/document_text.png
+- ID: "580c75a8-c01a-4580-83cb-987776ceb3af"
+  Hint: Key
+  Value: Chat.Intents.FrustratedUser.6
+Languages:
+- Language: en
+  Fields:
+  - ID: "2ba3454a-9a9c-4cdf-a9f8-107fd484eb6e"
+    Hint: Phrase
+    Value: I'm here to help so let's try to stay calm
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20180214T202524Z

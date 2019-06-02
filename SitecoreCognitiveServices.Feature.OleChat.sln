@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.271
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SitecoreCognitiveServices.Feature.OleChat", "code\SitecoreCognitiveServices.Feature.OleChat.csproj", "{B6AFA26B-B8D7-4DF6-8AB2-5AD3A8D216E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SitecoreCognitiveServices.Feature.OleChat.Tests", "tests\SitecoreCognitiveServices.Feature.OleChat.Tests.csproj", "{FB32BF28-C112-4EA0-A45D-D117E69CAF87}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B6AFA26B-B8D7-4DF6-8AB2-5AD3A8D216E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6AFA26B-B8D7-4DF6-8AB2-5AD3A8D216E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6AFA26B-B8D7-4DF6-8AB2-5AD3A8D216E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6AFA26B-B8D7-4DF6-8AB2-5AD3A8D216E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB32BF28-C112-4EA0-A45D-D117E69CAF87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB32BF28-C112-4EA0-A45D-D117E69CAF87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB32BF28-C112-4EA0-A45D-D117E69CAF87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB32BF28-C112-4EA0-A45D-D117E69CAF87}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7B992A47-4EE8-407D-8F29-6E8D52A1D76C}
+	EndGlobalSection
+EndGlobal

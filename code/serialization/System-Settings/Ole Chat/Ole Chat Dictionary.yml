@@ -1,0 +1,25 @@
+﻿---
+ID: "1f8c210e-96cd-429e-b4d4-93071bbee32c"
+Parent: "bf7a09c8-0ff9-42e6-a3cf-01a6fddc2f49"
+Template: "0a2847e6-9885-450b-b61e-f9e6528480ef"
+Path: /sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary
+DB: master
+BranchID: "140c3dac-2fde-48e7-811f-21669e8ed84b"
+SharedFields:
+- ID: "06d5295c-ed2f-4a54-9bf2-26228d113318"
+  Hint: __Icon
+  Value: Office/32x32/book2.png
+- ID: "1172f251-dad4-4efb-a329-0c63500e4f1e"
+  Hint: __Masters
+  Type: TreelistEx
+  Value: |
+    {25672703-93BD-4056-88A4-9C20EC501967}
+    {46377307-DD97-43DC-AD21-5A32DAB844D6}
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20180210T191806Z

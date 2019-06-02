@@ -1,0 +1,26 @@
+﻿---
+ID: "cce837c7-c55d-41e1-a536-bb49f4f90e8a"
+Parent: "f63eaad7-7f1c-44e2-bc10-657a92826965"
+Template: "6d1cd897-1936-4a3a-a511-289a94c2a7b1"
+Path: /sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Rebuild Index/All Rebuilt Message
+DB: master
+BranchID: "25672703-93bd-4056-88a4-9c20ec501967"
+SharedFields:
+- ID: "06d5295c-ed2f-4a54-9bf2-26228d113318"
+  Hint: __Icon
+  Value: Office/32x32/document_text.png
+- ID: "580c75a8-c01a-4580-83cb-987776ceb3af"
+  Hint: Key
+  Value: Chat.Intents.RebuildIndex.AllRebuiltMessage
+Languages:
+- Language: en
+  Fields:
+  - ID: "2ba3454a-9a9c-4cdf-a9f8-107fd484eb6e"
+    Hint: Phrase
+    Value: All indexes are being rebuilt
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20180214T200420Z

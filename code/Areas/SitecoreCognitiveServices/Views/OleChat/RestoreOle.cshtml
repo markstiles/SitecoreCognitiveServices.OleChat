@@ -1,0 +1,24 @@
+﻿@using SitecoreCognitiveServices.Feature.OleChat.Statics
+@model bool
+
+@{
+    ViewBag.Title = "Cognitive Services: Restore Ole";
+    Layout = "~/Areas/SitecoreCognitiveServices/Views/Common/CognitiveLayout.cshtml";
+}
+
+<link href="/Areas/SitecoreCognitiveServices/Assets/css/SitecoreCognitiveServices.Feature.OleChat.css?x=@(new System.Random().Next())" rel="stylesheet" type="text/css" />
+
+<div class="frame restore-frame">
+    @if (Model)
+    {
+        <div class="result-success">
+            @Translator.Text("Chat.Restore.Success")
+        </div>
+    }
+    else
+    {
+        <div class="result-failure">
+            @Translator.Text("Chat.Restore.Failed")
+        </div>
+    }
+</div>

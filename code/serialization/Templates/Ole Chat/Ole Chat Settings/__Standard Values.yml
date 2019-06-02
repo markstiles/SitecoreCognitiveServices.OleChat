@@ -1,0 +1,29 @@
+﻿---
+ID: "79275ced-a317-4727-826f-3d29a7ad1db8"
+Parent: "db4ca9fb-21aa-42e8-9cf7-76b5e664e7c1"
+Template: "db4ca9fb-21aa-42e8-9cf7-76b5e664e7c1"
+Path: /sitecore/templates/Sitecore Cognitive Services/Features/Ole Chat/Ole Chat Settings/__Standard Values
+DB: master
+SharedFields:
+- ID: "a0cb3965-8884-4c7a-8815-b6b2e5ced162"
+  Hint: __Editors
+  Type: TreelistEx
+  Value: "{A104A805-2062-46C5-8FD7-DCD1B2DEEAE4}"
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "241f46b2-7fb5-419e-b267-4fd9a1c87237"
+      Hint: Application Backup
+      Value: 
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20180210T185841Z
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
+      Hint: __Created by
+      Value: |
+        sitecore\admin
+    - ID: "841dbce8-39d9-461f-bc38-45b3ff50ea7f"
+      Hint: Intent Confidence Threshold
+      Value: 0.4

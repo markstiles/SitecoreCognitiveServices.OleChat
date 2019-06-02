@@ -1,0 +1,18 @@
+﻿<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+    <metadata>
+        <id>SitecoreCognitiveServices.Feature.OleChat.BinariesOnly</id>
+        <version>${CognitiveService.Nuspec.Version}</version>
+        <description>Ole: Sitecore Cognitive Services Feature</description>
+        <authors>${CognitiveService.Nuspec.Author}</authors>
+        <owners>${CognitiveService.Nuspec.Author}</owners>
+        <licenseUrl>${CognitiveService.Nuspec.LicenseUrl}</licenseUrl>
+        <projectUrl>${CognitiveService.Nuspec.ProjectUrl}</projectUrl>
+        <requireLicenseAcceptance>${CognitiveService.Nuspec.RequireLicenseAcceptance}</requireLicenseAcceptance>
+        <copyright>${CognitiveService.Nuspec.Copyright}</copyright>
+    </metadata>
+    <files>
+        <file src="bin/SitecoreCognitiveServices.Feature.OleChat.dll" 
+              target="lib/Net46/SitecoreCognitiveServices.Feature.OleChat.dll" />
+    </files>
+</package>
