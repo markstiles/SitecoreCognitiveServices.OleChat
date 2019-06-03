@@ -397,7 +397,7 @@ jQuery(document).ready(function ()
         jQuery(itemSearchInput).focus();
     }
 
-    function SetupCheckboxList(userType, options)
+    function SetupRadioList(userType, options)
     {
     }
 
@@ -494,7 +494,6 @@ jQuery(document).ready(function ()
 
     function PlayAudioFile(audioFile)
     {
-        var audioFile = audioFile;
         if (audioFile === null || audioFile.length < 1)
             return;
 
