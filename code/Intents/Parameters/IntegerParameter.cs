@@ -2,13 +2,14 @@
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Enums;
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Factories;
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Models;
+using SitecoreCognitiveServices.Foundation.SCSDK.Wrappers;
 using System;
 using System.Collections.Generic;
 using System.Web.UI.WebControls;
 
 namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 {
-    public class YesOrNoParameter : IRequiredConversationParameter
+    public class IntegerParameter : IRequiredConversationParameter
     {
         #region Constructor
 
@@ -17,8 +18,8 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 
         public IIntentInputFactory IntentInputFactory { get; set; }
         public IParameterResultFactory ResultFactory { get; set; }
-        
-        public YesOrNoParameter(
+
+        public IntegerParameter(
             string paramName,
             string paramMessage,
             IIntentInputFactory inputFactory,
@@ -34,25 +35,15 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 
         public IParameterResult GetParameter(string paramValue, ItemContextParameters parameters, IConversation conversation)
         {
-            var isYes = Translator.Text("Chat.Parameters.Yes").Equals(paramValue, StringComparison.InvariantCultureIgnoreCase);
-            var isNo = Translator.Text("Chat.Parameters.No").Equals(paramValue, StringComparison.InvariantCultureIgnoreCase);
-
-            if (isYes)
-                return ResultFactory.GetSuccess(true);
-
-            if (isNo)
-                return ResultFactory.GetSuccess(false);
-
-            return ResultFactory.GetFailure(Translator.Text("Chat.Parameters.YesOrNoParameterValidationError"));
+            int intValue = -1;
+            return int.TryParse(paramValue, out intValue)
+                ? ResultFactory.GetSuccess(intValue)
+                : ResultFactory.GetFailure(Translator.Text("Chat.Parameters.IntegerParameterValidationError"));
         }
 
         public IntentInput GetInput(ItemContextParameters parameters, IConversation conversation)
         {
-            var yes = Translator.Text("Chat.Parameters.Yes");
-            var no = Translator.Text("Chat.Parameters.No");
-            var options = new List<ListItem> { new ListItem(yes, yes), new ListItem(no, no) };
-
-            return IntentInputFactory.Create(IntentInputType.LinkList, options);
+            return IntentInputFactory.Create(IntentInputType.None);
         }
     }
 }

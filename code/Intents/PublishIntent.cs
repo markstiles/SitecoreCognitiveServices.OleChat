@@ -58,15 +58,15 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents
             var toDb = (Database) conversation.Data[DBKey];
             var rootItem = (Item) conversation.Data[ItemKey];
             var langItem = (Language) conversation.Data[LangKey];
-            var recursion = (string) conversation.Data[RecursionKey];
-            var related = (string) conversation.Data[RelatedKey];
-            PublishWrapper.PublishItem(rootItem, new[] { toDb }, new[] { langItem }, recursion.Equals("y"), false, related.Equals("y"));
+            var recursion = (bool) conversation.Data[RecursionKey];
+            var related = (bool) conversation.Data[RelatedKey];
+            PublishWrapper.PublishItem(rootItem, new[] { toDb }, new[] { langItem }, recursion, false, related);
 
-            var recursionMessage = recursion.Equals("y") 
+            var recursionMessage = recursion
                 ? Translator.Text("Chat.Intents.Publish.ResponseRecursion") 
                 : string.Empty;
 
-            var relatedMessage = related.Equals("y")
+            var relatedMessage = related
                 ? Translator.Text("Chat.Intents.Publish.ResponseRelated")
                 : string.Empty;
 
