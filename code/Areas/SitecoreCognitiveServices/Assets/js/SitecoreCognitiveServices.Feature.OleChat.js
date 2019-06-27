@@ -44,7 +44,7 @@ jQuery(document).ready(function ()
         jQuery(chatInput).val("");
 
         jQuery
-            .post(jQuery(chatForm).attr("tokenaction"), {})
+            .post(jQuery(chatForm).attr("token-action"), {})
             .done(function (r) {
                 var speechConfig = SpeechSDK.SpeechConfig.fromAuthorizationToken(r.Token, r.Region);
                 speechConfig.speechRecognitionLanguage = r.Language;
@@ -57,7 +57,7 @@ jQuery(document).ready(function ()
                         if (result.text === undefined)
                             return;
 
-                        if (result.text != "") {
+                        if (result.text !== "") {
                             var adjustedText = result.text.toLowerCase().split("slash").join("/").replace(/.\s*$/, "");
 
                             UpdateChatWindow(adjustedText, null, "user");
@@ -85,7 +85,7 @@ jQuery(document).ready(function ()
         jQuery(itemSearchInput).val("");
 
         jQuery
-            .post(jQuery(chatForm).attr("tokenaction"), {})
+            .post(jQuery(chatForm).attr("token-action"), {})
             .done(function (r) {
                 var speechConfig = SpeechSDK.SpeechConfig.fromAuthorizationToken(r.Token, r.Region);
                 speechConfig.speechRecognitionLanguage = r.Language;
@@ -101,7 +101,7 @@ jQuery(document).ready(function ()
                         if (result.text !== "") {
                             var adjustedText = result.text.toLowerCase().split("slash").join("/").replace(/.\s*$/, "");
 
-                            jQuery(itemSearchInput).val(adjustedText).keyup();
+                            SpellCheckAndSet(adjustedText, itemSearchInput);
                         }
 
                         recognizer.close();
@@ -124,7 +124,7 @@ jQuery(document).ready(function ()
         jQuery(listSearchInput).val("");
 
         jQuery
-            .post(jQuery(chatForm).attr("tokenaction"), {})
+            .post(jQuery(chatForm).attr("token-action"), {})
             .done(function (r) {
                 var speechConfig = SpeechSDK.SpeechConfig.fromAuthorizationToken(r.Token, r.Region);
                 speechConfig.speechRecognitionLanguage = r.Language;
@@ -140,7 +140,7 @@ jQuery(document).ready(function ()
                         if (result.text !== "") {
                             var adjustedText = result.text.toLowerCase().split("slash").join("/").replace(/.\s*$/, "");
 
-                            jQuery(listSearchInput).val(adjustedText).keyup();
+                            SpellCheckAndSet(adjustedText, listSearchInput);
                         }
 
                         recognizer.close();
@@ -300,6 +300,18 @@ jQuery(document).ready(function ()
             });
     }
 
+    function SpellCheckAndSet(textValue, specifier)
+    {
+        jQuery
+            .post(jQuery(chatForm).attr("spell-check-action"),
+                {
+                    text: textValue
+                })
+            .done(function (r) {
+                jQuery(specifier).val(r.text).keyup();
+            });
+    }
+
     function SendChatRequest(queryValue)
     {
         var langValue = jQuery(".chat-lang").val();
@@ -354,7 +366,6 @@ jQuery(document).ready(function ()
             var action = channelData.Action;
             var selections = channelData.Selections;
             if (action !== null) {
-                console.log('action:' + action);
                 if (action === "logout")
                     HandleLogout();
                 else if (action === "confirm")

@@ -19,7 +19,8 @@
         <div class="cancel-message">@Translator.Text("Chat.Cancel")</div>
     </div>
     <form class="form chat-form" method="post" action="/SitecoreCognitiveServices/OleChat/Post"
-          tokenaction="/SitecoreCognitiveServices/OleChat/GetSpeechToken">
+          token-action="/SitecoreCognitiveServices/OleChat/GetSpeechToken"
+          spell-check-action="/SitecoreCognitiveServices/OleChat/SpellCheck">
         @Html.AntiForgeryToken()
         <div class="chat-conversation"></div>
         <div class="chat-input-wrap">

@@ -17,6 +17,7 @@ using SitecoreCognitiveServices.Feature.OleChat.Services;
 using SitecoreCognitiveServices.Feature.OleChat.Statics;
 using SitecoreCognitiveServices.Foundation.MSSDK.Enums;
 using SitecoreCognitiveServices.Foundation.MSSDK.Language.Models.Luis.Connector;
+using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Bing;
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language;
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Factories;
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Models;
@@ -39,6 +40,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Areas.SitecoreCognitiveServi
         protected readonly ISpeechService SpeechService;
         protected readonly ISearchService Searcher;
         protected readonly IConversationContextFactory ConversationContextFactory;
+        protected readonly ISpellCheckService SpellCheckService;
 
         protected ItemContextParameters Parameters;
 
@@ -52,7 +54,8 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Areas.SitecoreCognitiveServi
             ISetupService setupService,
             ISpeechService speechService,
             ISearchService searcher,
-            IConversationContextFactory conversationContextFactory)
+            IConversationContextFactory conversationContextFactory,
+            ISpellCheckService spellCheckService)
         {
             LuisService = luisService;
             LuisConversationService = luisConversationService;
@@ -64,7 +67,8 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Areas.SitecoreCognitiveServi
             SpeechService = speechService;
             Searcher = searcher;
             ConversationContextFactory = conversationContextFactory;
-
+            SpellCheckService = spellCheckService;
+            
             ThemeManager.GetImage("Office/32x32/man_8.png", 32, 32);
             
             var lang = WebUtil.GetQueryString("language");
@@ -177,6 +181,18 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Areas.SitecoreCognitiveServi
             };
 
             return model;
+        }
+
+        public ActionResult SpellCheck(string text)
+        {
+            var newText = text;
+            var tokens = SpellCheckService.SpellCheck(text, SpellCheckModeOptions.Spell).FlaggedTokens;
+            foreach(var t in tokens)
+            {
+                newText = newText.Replace(t.Token, t.Suggestions.OrderByDescending(a => a.Score).First().Suggestion);
+            }
+
+            return Json(new { text = newText });
         }
 
         public string CreateMD5Hash(string input)
