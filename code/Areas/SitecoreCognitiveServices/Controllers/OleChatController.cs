@@ -102,7 +102,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Areas.SitecoreCognitiveServi
 
             if (activity.Type == ActivityTypes.Message)
             {
-                var result = !string.IsNullOrWhiteSpace(activity.Text) ? LuisService.Query(ChatSettings.OleApplicationId, activity.Text) : null;
+                var result = !string.IsNullOrWhiteSpace(activity.Text) ? LuisService.Query(ChatSettings.OleApplicationId, activity.Text, true) : null;
 
                 var conversationContext = ConversationContextFactory.Create(
                     ChatSettings.OleApplicationId,

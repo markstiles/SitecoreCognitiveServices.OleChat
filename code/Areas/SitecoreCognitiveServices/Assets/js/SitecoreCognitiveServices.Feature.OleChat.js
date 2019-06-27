@@ -98,11 +98,10 @@ jQuery(document).ready(function ()
                         if (result.text === undefined)
                             return;
 
-                        if (result.text != "") {
+                        if (result.text !== "") {
                             var adjustedText = result.text.toLowerCase().split("slash").join("/").replace(/.\s*$/, "");
 
-                            jQuery(itemSearchInput).val(adjustedText);
-                            jQuery(itemSearchSubmit).click();
+                            jQuery(itemSearchInput).val(adjustedText).keyup();
                         }
 
                         recognizer.close();
@@ -138,11 +137,10 @@ jQuery(document).ready(function ()
                         if (result.text === undefined)
                             return;
 
-                        if (result.text != "") {
+                        if (result.text !== "") {
                             var adjustedText = result.text.toLowerCase().split("slash").join("/").replace(/.\s*$/, "");
 
-                            jQuery(listSearchInput).val(adjustedText);
-                            jQuery(listSearchSubmit).click();
+                            jQuery(listSearchInput).val(adjustedText).keyup();
                         }
 
                         recognizer.close();
