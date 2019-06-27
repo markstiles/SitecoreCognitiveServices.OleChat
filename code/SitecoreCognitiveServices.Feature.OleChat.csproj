@@ -164,6 +164,9 @@
     <Compile Include="Commands\RestoreOle.cs" />
     <Compile Include="Factories\SetupInformationFactory.cs" />
     <Compile Include="Intents\BaseOleIntent.cs" />
+    <Compile Include="Intents\Parameters\IntegerParameter.cs" />
+    <Compile Include="Intents\Parameters\StringParameter.cs" />
+    <Compile Include="Intents\SetupPersonalization.cs" />
     <Compile Include="Intents\CreateProfileIntent.cs" />
     <Compile Include="Intents\FrustratedUserIntent.cs" />
     <Compile Include="Intents\LogoutIntent.cs" />
