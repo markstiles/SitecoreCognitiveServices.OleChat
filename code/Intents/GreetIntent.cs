@@ -14,9 +14,9 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents
     {
         protected readonly IAuthenticationWrapper AuthenticationWrapper;
 
-        public override string Name => "greet";
+        public override string KeyName => "self - greet";
 
-        public override string Description => Translator.Text("Chat.Intents.Greet.Name");
+        public override string DisplayName => Translator.Text("Chat.Intents.Greet.Name");
 
         public override bool RequiresConfirmation => false;
 
@@ -42,7 +42,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents
                 Translator.Text("Chat.Intents.Greet.6")
             };
 
-            return ConversationResponseFactory.Create(Name, responses[new Random().Next(0, responses.Count)]);
+            return ConversationResponseFactory.Create(KeyName, responses[new Random().Next(0, responses.Count)]);
         }
     }
 }

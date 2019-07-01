@@ -13,9 +13,9 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents
 {
     public class ThanksIntent : BaseOleIntent
     {
-        public override string Name => "thanks";
+        public override string KeyName => "self - thanks";
 
-        public override string Description => "";
+        public override string DisplayName => "";
 
         public override bool RequiresConfirmation => false;
 
@@ -39,7 +39,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents
                 Translator.Text("Chat.Intents.Thanks.7")
             };
 
-            return ConversationResponseFactory.Create(Name, responses[new Random().Next(0, responses.Count)]);
+            return ConversationResponseFactory.Create(KeyName, responses[new Random().Next(0, responses.Count)]);
         }
     }
 }

@@ -17,9 +17,9 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents
         protected readonly HttpContextBase Context;
         protected readonly IAuthenticationWrapper AuthenticationWrapper;
 
-        public override string Name => "logout";
+        public override string KeyName => "profile - logout";
 
-        public override string Description => Translator.Text("Chat.Intents.Logout.Name");
+        public override string DisplayName => Translator.Text("Chat.Intents.Logout.Name");
 
         public override bool RequiresConfirmation => false;
 
@@ -35,7 +35,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents
 
         public override ConversationResponse Respond(LuisResult result, ItemContextParameters parameters, IConversation conversation)
         {
-            return ConversationResponseFactory.Create(Name, Translator.Text("Chat.Intents.Logout.Response"), true, "logout");
+            return ConversationResponseFactory.Create(KeyName, Translator.Text("Chat.Intents.Logout.Response"), true, "logout");
         }
     }
 }

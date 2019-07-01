@@ -19,9 +19,9 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents
         protected readonly ISitecoreDataWrapper DataWrapper;
         protected readonly IPublishWrapper PublishWrapper;
         
-        public override string Name => "publish";
+        public override string KeyName => "publishing - publish";
 
-        public override string Description => Translator.Text("Chat.Intents.Publish.Name");
+        public override string DisplayName => Translator.Text("Chat.Intents.Publish.Name");
 
         public override bool RequiresConfirmation => true;
         
@@ -70,7 +70,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents
                 ? Translator.Text("Chat.Intents.Publish.ResponseRelated")
                 : string.Empty;
 
-            return ConversationResponseFactory.Create(Name, string.Format(
+            return ConversationResponseFactory.Create(KeyName, string.Format(
                 Translator.Text("Chat.Intents.Publish.Response"), 
                 rootItem.DisplayName, 
                 toDb.Name, 

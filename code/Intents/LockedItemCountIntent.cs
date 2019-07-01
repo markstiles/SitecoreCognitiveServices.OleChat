@@ -16,9 +16,9 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents
         protected readonly IAuthenticationWrapper AuthenticationWrapper;
         protected readonly IContentSearchWrapper ContentSearchWrapper;
 
-        public override string Name => "locked item count";
+        public override string KeyName => "profile - locked item count";
 
-        public override string Description => Translator.Text("Chat.Intents.LockedItemCount.Name");
+        public override string DisplayName => Translator.Text("Chat.Intents.LockedItemCount.Name");
 
         public override bool RequiresConfirmation => false;
 
@@ -36,7 +36,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents
         {
             var items = GetCurrentUserUnlockedItems(parameters.Database);
             
-            return ConversationResponseFactory.Create(Name, string.Format(Translator.Text("Chat.Intents.LockedItemCount.Response"), items.Count));
+            return ConversationResponseFactory.Create(KeyName, string.Format(Translator.Text("Chat.Intents.LockedItemCount.Response"), items.Count));
         }
         
         protected List<SearchResultItem> GetCurrentUserUnlockedItems(string db)

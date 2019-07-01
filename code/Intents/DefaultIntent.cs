@@ -10,9 +10,9 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents
 {
     public class DefaultIntent : BaseOleIntent
     {
-        public override string Name => "none";
+        public override string KeyName => "none";
 
-        public override string Description => "";
+        public override string DisplayName => "";
 
         public override bool RequiresConfirmation => false;
 
@@ -24,7 +24,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents
         
         public override ConversationResponse Respond(LuisResult result, ItemContextParameters parameters, IConversation conversation)
         {
-            return ConversationResponseFactory.Create(Name, Translator.Text("Chat.Intents.Default.Response"));
+            return ConversationResponseFactory.Create(KeyName, Translator.Text("Chat.Intents.Default.Response"));
         }
     }
 }

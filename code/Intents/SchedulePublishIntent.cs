@@ -20,9 +20,9 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents
         protected readonly ISitecoreDataWrapper DataWrapper;
         protected readonly IPublishWrapper PublishWrapper;
         
-        public override string Name => "schedule publish";
+        public override string KeyName => "publishing - schedule publish";
 
-        public override string Description => Translator.Text("Chat.Intents.SchedulePublish.Name");
+        public override string DisplayName => Translator.Text("Chat.Intents.SchedulePublish.Name");
 
         public override bool RequiresConfirmation => true;
         
@@ -85,7 +85,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents
                 var at = Translator.Text("Chat.Intents.SchedulePublish.At");
                 dateResponse = $" {at} {dateResponse}";
             }
-            return ConversationResponseFactory.Create(Name, string.Format(Translator.Text("Chat.Intents.SchedulePublish.Response"), item.Paths.Path, string.Join(", ", dbs.Select(a => a.Name)), dateResponse));
+            return ConversationResponseFactory.Create(KeyName, string.Format(Translator.Text("Chat.Intents.SchedulePublish.Response"), item.Paths.Path, string.Join(", ", dbs.Select(a => a.Name)), dateResponse));
         }
 
         public virtual Dictionary<ID, string> GetFields(string publishDate, string validFrom)

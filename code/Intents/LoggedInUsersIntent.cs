@@ -14,9 +14,9 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents
     {
         protected readonly IAuthenticationWrapper AuthenticationWrapper;
         
-        public override string Name => "logged in users";
+        public override string KeyName => "user - logged in users";
 
-        public override string Description => Translator.Text("Chat.Intents.LoggedInUsers.Name");
+        public override string DisplayName => Translator.Text("Chat.Intents.LoggedInUsers.Name");
 
         public override bool RequiresConfirmation => false;
 
@@ -36,7 +36,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents
             var conjunction = (sessionCount != 1) ? Translator.Text("Chat.Intents.LoggedInUsers.PluralConjunction") : Translator.Text("Chat.Intents.LoggedInUsers.SingularConjuntion");
             var plurality = (sessionCount != 1) ? Translator.Text("Chat.Intents.LoggedInUsers.PluralLetter") : "";
             
-            return ConversationResponseFactory.Create(Name, $"{string.Format(Translator.Text("Chat.Intents.LoggedInUsers.Response"), conjunction, sessionCount, plurality)} <br/><ul><li>{string.Join("</li><li>", userNames)}</li></ul>");
+            return ConversationResponseFactory.Create(KeyName, $"{string.Format(Translator.Text("Chat.Intents.LoggedInUsers.Response"), conjunction, sessionCount, plurality)} <br/><ul><li>{string.Join("</li><li>", userNames)}</li></ul>");
         }
     }
 }

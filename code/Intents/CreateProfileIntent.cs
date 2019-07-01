@@ -21,9 +21,9 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents
         protected readonly ISitecoreDataWrapper DataWrapper;
         protected readonly IPublishWrapper PublishWrapper;
         
-        public override string Name => "create profile";
+        public override string KeyName => "personalization - create profile";
 
-        public override string Description => Translator.Text("Chat.Intents.CreateProfile.Name");
+        public override string DisplayName => Translator.Text("Chat.Intents.CreateProfile.Name");
 
         public override bool RequiresConfirmation => true;
         
@@ -65,7 +65,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents
                 ? Translator.Text("Chat.Intents.CreateProfile.ResponseRelated")
                 : string.Empty;
 
-            return ConversationResponseFactory.Create(Name, string.Format(
+            return ConversationResponseFactory.Create(KeyName, string.Format(
                 Translator.Text("Chat.Intents.CreateProfile.Response"), 
                 rootItem.DisplayName, 
                 toDb.Name, 

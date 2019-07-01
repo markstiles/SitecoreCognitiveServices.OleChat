@@ -18,9 +18,9 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents
     {
         protected readonly IContentSearchWrapper ContentSearchWrapper;
         
-        public override string Name => "rebuild index";
+        public override string KeyName => "system - rebuild index";
 
-        public override string Description => Translator.Text("Chat.Intents.RebuildIndex.Name");
+        public override string DisplayName => Translator.Text("Chat.Intents.RebuildIndex.Name");
 
         public override bool RequiresConfirmation => false;
 
@@ -58,7 +58,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents
                 message = string.Format(Translator.Text("Chat.Intents.RebuildIndex.RebuildIndexMessage"), index);
             }
 
-            return ConversationResponseFactory.Create(Name, message);
+            return ConversationResponseFactory.Create(KeyName, message);
         }
     }
 }

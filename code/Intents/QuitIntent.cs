@@ -13,9 +13,9 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents
 {
     public class QuitIntent : BaseOleIntent
     {
-        public override string Name => "quit";
+        public override string KeyName => "self - quit";
 
-        public override string Description => "";
+        public override string DisplayName => "";
 
         public override bool RequiresConfirmation => false;
 
@@ -28,7 +28,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents
 
         public override ConversationResponse Respond(LuisResult result, ItemContextParameters parameters, IConversation conversation)
         {
-            return ConversationResponseFactory.Create(Name, Translator.Text("Chat.Intents.Quit.Response"));
+            return ConversationResponseFactory.Create(KeyName, Translator.Text("Chat.Intents.Quit.Response"));
         }
     }
 }

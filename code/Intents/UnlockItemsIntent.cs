@@ -20,9 +20,9 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents
         protected readonly IAuthenticationWrapper AuthenticationWrapper;
         protected readonly IContentSearchWrapper ContentSearchWrapper;
 
-        public override string Name => "unlock items";
+        public override string KeyName => "profile - unlock items";
 
-        public override string Description => Translator.Text("Chat.Intents.UnlockItems.Name");
+        public override string DisplayName => Translator.Text("Chat.Intents.UnlockItems.Name");
 
         public override bool RequiresConfirmation => false;
 
@@ -51,7 +51,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents
                 }
             }
             
-            return ConversationResponseFactory.Create(Name, string.Format(Translator.Text("Chat.Intents.UnlockItems.Response"), items.Count));
+            return ConversationResponseFactory.Create(KeyName, string.Format(Translator.Text("Chat.Intents.UnlockItems.Response"), items.Count));
         }
 
         protected List<SearchResultItem> GetCurrentUserUnlockedItems(string db)

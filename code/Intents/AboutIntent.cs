@@ -12,9 +12,9 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents
     {
         protected readonly IServiceProvider Provider;
         
-        public override string Name => "about";
+        public override string KeyName => "self - about";
 
-        public override string Description => Translator.Text("Chat.Intents.About.Name");
+        public override string DisplayName => Translator.Text("Chat.Intents.About.Name");
 
         public override bool RequiresConfirmation => false;
 
@@ -29,13 +29,13 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents
         public override ConversationResponse Respond(LuisResult result, ItemContextParameters parameters, IConversation conversation)
         {
             var intents = Provider.GetServices<IIntent>()
-                .Where(g => g.ApplicationId.Equals(ApplicationId) && !g.Description.Equals(""))
-                .OrderBy(b => b.Description)
-                .Select(i => $"<li>{i.Description}</li>");
+                .Where(g => g.ApplicationId.Equals(ApplicationId) && !g.DisplayName.Equals(""))
+                .OrderBy(b => b.DisplayName)
+                .Select(i => $"<li>{i.DisplayName}</li>");
                 
             var str = string.Join("", intents);
 
-            return ConversationResponseFactory.Create(Name, $"{Translator.Text("Chat.Intents.About.Response")}: <br/><ul>{str}</ul>");
+            return ConversationResponseFactory.Create(KeyName, $"{Translator.Text("Chat.Intents.About.Response")}: <br/><ul>{str}</ul>");
         }
     }
 }

@@ -25,9 +25,9 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents
         protected readonly IPublishWrapper PublishWrapper;
 
 
-        public override string Name => "create goal";
+        public override string KeyName => "personalization - create goal";
 
-        public override string Description => Translator.Text("Chat.Intents.CreateGoal.Name");
+        public override string DisplayName => Translator.Text("Chat.Intents.CreateGoal.Name");
 
         public override bool RequiresConfirmation => true;
         
@@ -127,7 +127,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents
             DataWrapper.UpdateFields(pageItem, pageFields);
             PublishWrapper.PublishItem(goalFolder, new[] { toDb }, new[] { DataWrapper.ContentLanguage }, true, false, false);
             
-            return ConversationResponseFactory.Create(Name, string.Format(Translator.Text("Chat.Intents.CreateGoal.Response"), name));
+            return ConversationResponseFactory.Create(KeyName, string.Format(Translator.Text("Chat.Intents.CreateGoal.Response"), name));
         }
     }
 }

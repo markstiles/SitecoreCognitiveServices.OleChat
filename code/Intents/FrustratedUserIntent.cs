@@ -13,9 +13,9 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents
 {
     public class FrustratedUserIntent : BaseOleIntent
     {
-        public override string Name => "frustrated user";
+        public override string KeyName => "frustrated user";
 
-        public override string Description => "";
+        public override string DisplayName => "";
 
         public override bool RequiresConfirmation => false;
 
@@ -38,7 +38,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents
                 Translator.Text("Chat.Intents.FrustratedUser.6")
             };
 
-            return ConversationResponseFactory.Create(Name, responses[new Random().Next(0, responses.Count)]);
+            return ConversationResponseFactory.Create(KeyName, responses[new Random().Next(0, responses.Count)]);
         }
     }
 }

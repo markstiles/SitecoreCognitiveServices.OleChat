@@ -16,9 +16,9 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents
     {
         protected readonly HttpContextBase Context;
 
-        public override string Name => "version";
+        public override string KeyName => "system - version";
 
-        public override string Description => Translator.Text("Chat.Intents.Version.Name");
+        public override string DisplayName => Translator.Text("Chat.Intents.Version.Name");
 
         public override bool RequiresConfirmation => false;
 
@@ -34,7 +34,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents
 
             var path = Context.Server.MapPath("~/sitecore/shell/sitecore.version.xml");
             if (!File.Exists(path))
-                return ConversationResponseFactory.Create(Name, string.Empty);
+                return ConversationResponseFactory.Create(KeyName, string.Empty);
 
             string xmlText = File.ReadAllText(path);
             XDocument xdoc = XDocument.Parse(xmlText);
@@ -44,7 +44,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents
             var minor = version.Descendants("minor").First().Value;
             var revision = version.Descendants("revision").First().Value;
             
-            return ConversationResponseFactory.Create(Name, string.Format(Translator.Text("Chat.Intents.Version.Response"), major, minor, revision));
+            return ConversationResponseFactory.Create(KeyName, string.Format(Translator.Text("Chat.Intents.Version.Response"), major, minor, revision));
         }
     }
 }

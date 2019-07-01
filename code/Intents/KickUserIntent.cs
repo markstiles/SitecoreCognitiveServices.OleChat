@@ -17,9 +17,9 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents
     {
         protected readonly IAuthenticationWrapper AuthenticationWrapper;
 
-        public override string Name => "kick user";
+        public override string KeyName => "user - kick user";
 
-        public override string Description => Translator.Text("Chat.Intents.KickUser.Name");
+        public override string DisplayName => Translator.Text("Chat.Intents.KickUser.Name");
 
         public override bool RequiresConfirmation => true;
         
@@ -44,13 +44,13 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents
         public override ConversationResponse Respond(LuisResult result, ItemContextParameters parameters, IConversation conversation) {
             
             if (!AuthenticationWrapper.IsCurrentUserAdministrator())
-                return ConversationResponseFactory.Create(Name, Translator.Text("Chat.Intents.KickUser.MustBeAdminMessage"));
+                return ConversationResponseFactory.Create(KeyName, Translator.Text("Chat.Intents.KickUser.MustBeAdminMessage"));
 
             var userSession = (DomainAccessGuard.Session)conversation.Data[UserKey];
             var name = userSession.UserName;
             AuthenticationWrapper.Kick(userSession.SessionID);
             
-            return ConversationResponseFactory.Create(Name, string.Format(Translator.Text("Chat.Intents.KickUser.Response"), name));
+            return ConversationResponseFactory.Create(KeyName, string.Format(Translator.Text("Chat.Intents.KickUser.Response"), name));
         }
     }
 }
