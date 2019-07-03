@@ -166,6 +166,7 @@
     <Compile Include="Intents\BaseOleIntent.cs" />
     <Compile Include="Intents\Parameters\IntegerParameter.cs" />
     <Compile Include="Intents\Parameters\StringParameter.cs" />
+    <Compile Include="Intents\Personalization\AssignGoalIntent.cs" />
     <Compile Include="Intents\Personalization\SetupPersonalization.cs" />
     <Compile Include="Intents\Personalization\CreateProfileIntent.cs" />
     <Compile Include="Intents\ProfileUser\FrustratedIntent.cs" />

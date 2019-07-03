@@ -5,9 +5,6 @@ using System.Linq;
 using System.Web.UI.WebControls;
 using SitecoreCognitiveServices.Foundation.MSSDK.Language.Models.Luis;
 using SitecoreCognitiveServices.Foundation.SCSDK.Wrappers;
-using Sitecore.Data;
-using Sitecore.Data.Items;
-using Sitecore.Globalization;
 using SitecoreCognitiveServices.Feature.OleChat.Statics;
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Enums;
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Factories;
@@ -41,13 +38,13 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
         {
             var itemList = new List<ListItem>
             {
-                new ListItem("Create a goal"),
-                new ListItem("Assign a goal"),
-                new ListItem("Create a persona")
+                new ListItem(Translator.Text("Chat.Intents.SetupPersonalization.CreateGoal")),
+                new ListItem(Translator.Text("Chat.Intents.SetupPersonalization.AssignGoal")),
+                new ListItem(Translator.Text("Chat.Intents.SetupPersonalization.CreatePersona"))
             };
             var intentList = IntentInputFactory.Create(IntentInputType.LinkList, itemList);
 
-            return ConversationResponseFactory.Create(KeyName, "To setup personalization, you'll need to do the following:", true, intentList);
+            return ConversationResponseFactory.Create(KeyName, Translator.Text("Chat.Intents.SetupPersonalization.ToSetup"), true, intentList);
         }
     }
 }

@@ -2,15 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.UI.WebControls;
 using SitecoreCognitiveServices.Foundation.MSSDK.Language.Models.Luis;
 using SitecoreCognitiveServices.Foundation.SCSDK.Wrappers;
 using Sitecore.Data;
 using Sitecore.Data.Items;
-using Sitecore.Globalization;
 using SitecoreCognitiveServices.Feature.OleChat.Statics;
-using Sitecore.Data.Managers;
-using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Enums;
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Factories;
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Models;
 using SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters;
@@ -79,16 +75,15 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             var name = (string) conversation.Data[NameKey];
             var points = (int) conversation.Data[PointsKey];
             var isFailure = (bool) conversation.Data[IsFailureKey];
-            var pageItem = (Item)conversation.Data[PageItemKey];
 
             var fields = new Dictionary<ID, string>
             {
-                { new ID("{AC3BC9B6-46A2-4EAD-AF5E-6BDB532EB832}"), "1" }, // IsGoal
-                { new ID("{BD5D2A52-027F-4CC8-9606-C5CE6CBBF437}"), isFailure ? "1" : "" }, // IsFailure
-                // { new ID("{71EBDEBD-9560-48C6-A66F-E17FC018232C}"), "" }, // Rule
-                { new ID("{AC6BA888-4213-43BD-B787-D8DA2B6B881F}"), name },
-                { new ID("{33AE0E84-74A0-437F-AB2B-859DFA96F6C9}"), points.ToString() },
-                { Sitecore.FieldIDs.WorkflowState, "{EDCBB550-BED3-490F-82B8-7B2F14CCD26E}" } // workflow state
+                { new ID("{AC3BC9B6-46A2-4EAD-AF5E-6BDB532EB832}"), "1" },                      // IsGoal
+                { new ID("{BD5D2A52-027F-4CC8-9606-C5CE6CBBF437}"), isFailure ? "1" : "" },     // IsFailure
+                // { new ID("{71EBDEBD-9560-48C6-A66F-E17FC018232C}"), "" },                    // Rule
+                { new ID("{AC6BA888-4213-43BD-B787-D8DA2B6B881F}"), name },                     // Name
+                { new ID("{33AE0E84-74A0-437F-AB2B-859DFA96F6C9}"), points.ToString() },        // Points
+                { Sitecore.FieldIDs.WorkflowState, "{EDCBB550-BED3-490F-82B8-7B2F14CCD26E}" }   // workflow state
             };
 
             //create goal and folder if needed
@@ -102,31 +97,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             var newGoalItem = DataWrapper.CreateItem(goalFolder.ID, GoalId, fromDb, name, fields);
 
             PublishWrapper.PublishItem(goalFolder, new[] { toDb }, new[] { DataWrapper.ContentLanguage }, true, false, false);
-
-            //get the item's tracking field and append the new goal to it
-            var trackingFieldId = new ID("{B0A67B2A-8B07-4E0B-8809-69F751709806}");
-            var trackingField = pageItem.Fields[trackingFieldId];
-            var newFieldValue = new StringBuilder("<tracking>");
-            if (!string.IsNullOrWhiteSpace(trackingField?.Value))
-            {
-                XDocument xdoc = XDocument.Parse(trackingField.Value);
-                var events = xdoc.Descendants("event");
-                foreach(XElement e in events)
-                {
-                    newFieldValue.Append(e.ToString());
-                }
-            }
-            newFieldValue.Append($"<event id=\"{newGoalItem.ID}\" name=\"{name}\" />");
-            newFieldValue.Append("</tracking>");
-
-            var pageFields = new Dictionary<ID, string>
-            {
-                { trackingFieldId, newFieldValue.ToString() } // tracking
-            };
-            
-            DataWrapper.UpdateFields(pageItem, pageFields);
-            PublishWrapper.PublishItem(goalFolder, new[] { toDb }, new[] { DataWrapper.ContentLanguage }, true, false, false);
-            
+                        
             return ConversationResponseFactory.Create(KeyName, string.Format(Translator.Text("Chat.Intents.CreateGoal.Response"), name));
         }
     }

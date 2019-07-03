@@ -1,8 +1,8 @@
 ﻿---
-ID: "d91a83c5-be5e-4565-97d2-5ac9a7beb3f4"
-Parent: "617722c5-ddcd-4187-8d89-e701618f2164"
+ID: "2d986e91-8944-4e12-8561-ff86ba41c898"
+Parent: "e3ff8d9e-d837-4cf6-ba7b-525f6b114088"
 Template: "6d1cd897-1936-4a3a-a511-289a94c2a7b1"
-Path: /sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Parameters/User Parameter Request
+Path: /sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Personalization/Setup Personalization/Assign Goal
 DB: master
 BranchID: "25672703-93bd-4056-88a4-9c20ec501967"
 SharedFields:
@@ -11,20 +11,19 @@ SharedFields:
   Value: Office/32x32/document_text.png
 - ID: "580c75a8-c01a-4580-83cb-987776ceb3af"
   Hint: Key
-  Value: Chat.Parameters.UserParameterRequest
-- ID: "ba3f86a2-4a1c-4d78-b63d-91c2779c1b5e"
-  Hint: __Sortorder
-  Value: 100
+  Value: Chat.Intents.SetupPersonalization.AssignGoal
+- ID: "f6d8a61c-2f84-4401-bd24-52d2068172bc"
+  Hint: __Originator
+  Value: "{A473F5DA-770D-4CE6-A868-450D6DFCAB24}"
 Languages:
 - Language: en
   Fields:
   - ID: "2ba3454a-9a9c-4cdf-a9f8-107fd484eb6e"
     Hint: Phrase
-    Value: |
-      What user do you want to kick? (ie: domain\\username)
+    Value: Assign a goal
   Versions:
   - Version: 1
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20180214T201803Z
+      Value: 20190703T195628Z

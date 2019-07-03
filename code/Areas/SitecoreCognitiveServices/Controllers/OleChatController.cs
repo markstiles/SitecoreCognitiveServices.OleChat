@@ -115,7 +115,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Areas.SitecoreCognitiveServi
                     "decision - yes",
                     "decision - no",
                     "frustrated",
-                    "quit",
+                    "profile user - quit",
                     activity.Text,
                     parameters,
                     result);
