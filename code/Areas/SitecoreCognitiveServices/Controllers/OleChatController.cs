@@ -110,14 +110,15 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Areas.SitecoreCognitiveServi
 
                 var conversationContext = ConversationContextFactory.Create(
                     ChatSettings.OleApplicationId,
-                    Translator.Text("Chat.Accept"),
                     Translator.Text("Chat.Clear"),
                     Translator.Text("Chat.ConfirmMessage"),
-                    "frustrated", 
+                    "decision - yes",
+                    "decision - no",
+                    "frustrated",
+                    "quit",
                     activity.Text,
                     parameters,
-                    result,
-                    "quit");
+                    result);
                 var response = LuisConversationService.HandleMessage(conversationContext);
                 var newMessage = Regex.Replace(response.Message, "<.*?>", " ");
 
