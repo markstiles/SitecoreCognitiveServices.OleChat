@@ -5,9 +5,13 @@ using SitecoreCognitiveServices.Feature.OleChat.Areas.SitecoreCognitiveServices.
 using SitecoreCognitiveServices.Feature.OleChat.Intents;
 using SitecoreCognitiveServices.Feature.OleChat.Factories;
 using SitecoreCognitiveServices.Feature.OleChat.Services;
-using SitecoreCognitiveServices.Feature.OleChat.Statics;
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Models;
-using SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters;
+using SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization;
+using SitecoreCognitiveServices.Feature.OleChat.Intents.Self;
+using SitecoreCognitiveServices.Feature.OleChat.Intents.Publishing;
+using SitecoreCognitiveServices.Feature.OleChat.Intents.User;
+using SitecoreCognitiveServices.Feature.OleChat.Intents.ProfileUser;
+using SitecoreCognitiveServices.Feature.OleChat.Intents.System;
 
 namespace SitecoreCognitiveServices.Feature.OleChat.App_Start
 {
@@ -40,7 +44,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.App_Start
             serviceCollection.AddTransient<IIntent, ThanksIntent>();
             serviceCollection.AddTransient<IIntent, LogoutIntent>();
             serviceCollection.AddTransient<IIntent, RebuildIndexIntent>();
-            serviceCollection.AddTransient<IIntent, FrustratedUserIntent>();
+            serviceCollection.AddTransient<IIntent, FrustratedIntent>();
 
             //factories
             serviceCollection.AddTransient<ISetupInformationFactory, SetupInformationFactory>();

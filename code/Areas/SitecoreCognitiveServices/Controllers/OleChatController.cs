@@ -113,7 +113,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Areas.SitecoreCognitiveServi
                     Translator.Text("Chat.Accept"),
                     Translator.Text("Chat.Clear"),
                     Translator.Text("Chat.ConfirmMessage"),
-                    "frustrated user", 
+                    "frustrated", 
                     activity.Text,
                     parameters,
                     result,

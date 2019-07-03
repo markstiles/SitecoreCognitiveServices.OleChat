@@ -52,7 +52,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
                 return ResultFactory.GetFailure(error);
 
             DomainAccessGuard.Session userSession = null;
-            if (User.Exists(username))
+            if (Sitecore.Security.Accounts.User.Exists(username))
                 userSession = AuthenticationWrapper.GetDomainAccessSessions().FirstOrDefault(
                     s => string.Equals(s.UserName, username, StringComparison.OrdinalIgnoreCase));
 
