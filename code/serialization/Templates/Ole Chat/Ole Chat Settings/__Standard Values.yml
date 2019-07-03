@@ -24,6 +24,3 @@ Languages:
       Hint: __Created by
       Value: |
         sitecore\admin
-    - ID: "841dbce8-39d9-461f-bc38-45b3ff50ea7f"
-      Hint: Intent Confidence Threshold
-      Value: 0.4
