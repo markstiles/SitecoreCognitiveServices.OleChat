@@ -30,13 +30,10 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
         #region Local Properties
 
         protected string NameKey = "Goal Name";
-        protected string IsFailureKey = "Is Failure";
+        //protected string IsFailureKey = "Is Failure";
         protected string PointsKey = "Points";
         protected string PageItemKey = "Page Item";
-
-        protected ID GoalNodeId = new ID("{0CB97A9F-CAFB-42A0-8BE1-89AB9AE32BD9}");
-        protected ID GoalCategoryId = new ID("{DB6E13B8-786C-4DD6-ACF2-3E5E6A959905}");
-        protected ID GoalId = new ID("{475E9026-333F-432D-A4DC-52E03B75CB6B}");
+        
         protected List<string> SystemGoalIds = new List<string>
         {
             "{968897F1-328A-489D-88E8-BE78F4370958}", //create brochure
@@ -65,21 +62,20 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
 
             ConversationParameters.Add(new StringParameter(NameKey, Translator.Text("Chat.Intents.CreateGoal.NameParameterRequest"), inputFactory, resultFactory));
             ConversationParameters.Add(new IntegerParameter(PointsKey, Translator.Text("Chat.Intents.CreateGoal.PointsParameterRequest"), inputFactory, resultFactory));
-            ConversationParameters.Add(new YesOrNoParameter(IsFailureKey, Translator.Text("Chat.Intents.CreateGoal.IsFailureParameterRequest"), inputFactory, resultFactory));
+            //ConversationParameters.Add(new YesOrNoParameter(IsFailureKey, Translator.Text("Chat.Intents.CreateGoal.IsFailureParameterRequest"), inputFactory, resultFactory));
             // rule parameter - ConversationParameters.Add(new YesOrNoParameter(RecursionKey, Translator.Text("Chat.Intents.CreateGoal.IsFailure"), inputFactory, resultFactory));
-            ConversationParameters.Add(new ItemParameter(PageItemKey, dataWrapper, inputFactory, resultFactory));
         }
 
         public override ConversationResponse Respond(LuisResult result, ItemContextParameters parameters, IConversation conversation)
         {
             var name = (string) conversation.Data[NameKey];
             var points = (int) conversation.Data[PointsKey];
-            var isFailure = (bool) conversation.Data[IsFailureKey];
+            //var isFailure = (bool) conversation.Data[IsFailureKey];
 
             var fields = new Dictionary<ID, string>
             {
                 { new ID("{AC3BC9B6-46A2-4EAD-AF5E-6BDB532EB832}"), "1" },                      // IsGoal
-                { new ID("{BD5D2A52-027F-4CC8-9606-C5CE6CBBF437}"), isFailure ? "1" : "" },     // IsFailure
+                // { new ID("{BD5D2A52-027F-4CC8-9606-C5CE6CBBF437}"), isFailure ? "1" : "" },  // IsFailure
                 // { new ID("{71EBDEBD-9560-48C6-A66F-E17FC018232C}"), "" },                    // Rule
                 { new ID("{AC6BA888-4213-43BD-B787-D8DA2B6B881F}"), name },                     // Name
                 { new ID("{33AE0E84-74A0-437F-AB2B-859DFA96F6C9}"), points.ToString() },        // Points
@@ -89,12 +85,12 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             //create goal and folder if needed
             var fromDb = "master";
             var toDb = DataWrapper.GetDatabase("web");
-            var goalItem = DataWrapper.GetItemById(GoalNodeId, fromDb);
-            var folderName = "Custom Goals";
+            var goalItem = DataWrapper.GetItemById(Constants.ItemIds.GoalNodeId, fromDb);
+            var folderName = "User Defined";
             var goalFolder = goalItem.Axes.GetChild(folderName);
             if(goalFolder == null)
-                goalFolder = DataWrapper.CreateItem(GoalNodeId, GoalCategoryId, fromDb, folderName, new Dictionary<ID, string>());
-            var newGoalItem = DataWrapper.CreateItem(goalFolder.ID, GoalId, fromDb, name, fields);
+                goalFolder = DataWrapper.CreateItem(Constants.ItemIds.GoalNodeId, Constants.TemplateIds.GoalCategoryTemplateId, fromDb, folderName, new Dictionary<ID, string>());
+            var newGoalItem = DataWrapper.CreateItem(goalFolder.ID, Constants.TemplateIds.GoalTemplateId, fromDb, name, fields);
 
             PublishWrapper.PublishItem(goalFolder, new[] { toDb }, new[] { DataWrapper.ContentLanguage }, true, false, false);
                         

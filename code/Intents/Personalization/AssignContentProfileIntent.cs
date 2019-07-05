@@ -16,12 +16,12 @@ using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Models;
 
 namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
 {
-    public class CreateProfileIntent : BaseOleIntent
+    public class AssignContentProfileIntent : BaseOleIntent
     {
         protected readonly ISitecoreDataWrapper DataWrapper;
         protected readonly IPublishWrapper PublishWrapper;
         
-        public override string KeyName => "personalization - create profile";
+        public override string KeyName => "personalization - assign content profile";
 
         public override string DisplayName => Translator.Text("Chat.Intents.CreateProfile.Name");
 
@@ -35,9 +35,11 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
         protected string RecursionKey = "Descendants";
         protected string RelatedKey = "Related";
 
+        protected ID ProfileCardTemplateId = new ID("{0FC09EA4-8D87-4B0E-A5C9-8076AE863D9C}");
+
         #endregion
 
-        public CreateProfileIntent(
+        public AssignContentProfileIntent(
             IOleSettings settings,
             ISitecoreDataWrapper dataWrapper,
             IIntentInputFactory inputFactory,

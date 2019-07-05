@@ -21,12 +21,13 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 
         public ItemParameter(
             string paramName,
+            string paramMessage,
             ISitecoreDataWrapper dataWrapper,
             IIntentInputFactory inputFactory,
             IParameterResultFactory resultFactory) 
         {
             ParamName = paramName;
-            ParamMessage = Translator.Text("Chat.Parameters.ItemParameterRequest");
+            ParamMessage = paramMessage;
             DataWrapper = dataWrapper;
             IntentInputFactory = inputFactory;
             ResultFactory = resultFactory;

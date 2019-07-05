@@ -28,7 +28,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Publishing
         #region Local Properties
 
         protected string DBKey = "Database Name";
-        protected string ItemKey = "Item Path";
+        protected string ItemKey = "Item";
         protected string LangKey = "Language";
         protected string RecursionKey = "Descendants";
         protected string RelatedKey = "Related Items";
@@ -46,7 +46,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Publishing
             DataWrapper = dataWrapper;
             PublishWrapper = publishWrapper;
             
-            ConversationParameters.Add(new ItemParameter(ItemKey, dataWrapper, inputFactory, resultFactory));
+            ConversationParameters.Add(new ItemParameter(ItemKey, "What item do you want to publish?", dataWrapper, inputFactory, resultFactory));
             ConversationParameters.Add(new DatabaseParameter(DBKey, settings, dataWrapper, inputFactory, publishWrapper, resultFactory));
             ConversationParameters.Add(new LanguageParameter(LangKey, settings, dataWrapper, inputFactory, resultFactory));
             ConversationParameters.Add(new YesOrNoParameter(RecursionKey, Translator.Text("Chat.Intents.Publish.RecursionParameterRequest"), inputFactory, resultFactory));

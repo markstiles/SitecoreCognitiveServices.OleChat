@@ -47,8 +47,8 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             DataWrapper = dataWrapper;
             PublishWrapper = publishWrapper;
 
-            ConversationParameters.Add(new ItemParameter(GoalItemKey, dataWrapper, inputFactory, resultFactory));
-            ConversationParameters.Add(new ItemParameter(PageItemKey, dataWrapper, inputFactory, resultFactory));
+            ConversationParameters.Add(new ItemParameter(GoalItemKey, "What goal do you want to assign?", dataWrapper, inputFactory, resultFactory));
+            ConversationParameters.Add(new ItemParameter(PageItemKey, "What page do you want to assign to?", dataWrapper, inputFactory, resultFactory));
         }
 
         public override ConversationResponse Respond(LuisResult result, ItemContextParameters parameters, IConversation conversation)
@@ -82,7 +82,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             var toDb = DataWrapper.GetDatabase("web");
             PublishWrapper.PublishItem(pageItem, new[] { toDb }, new[] { DataWrapper.ContentLanguage }, true, false, false);
             
-            return ConversationResponseFactory.Create(KeyName, Translator.Text("Chat.Intents.AssignGoal.Response"));
+            return ConversationResponseFactory.Create(KeyName, string.Format(Translator.Text("Chat.Intents.AssignGoal.Response"), goalItem.DisplayName, pageItem.DisplayName));
         }
     }
 }
