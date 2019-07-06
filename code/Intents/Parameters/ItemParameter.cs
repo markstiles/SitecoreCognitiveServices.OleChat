@@ -49,7 +49,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 
         public IntentInput GetInput(ItemContextParameters parameters, IConversation conversation)
         {
-            return IntentInputFactory.Create(IntentInputType.ItemSearch);
+            return IntentInputFactory.Create(IntentInputType.ItemSearch, ParamMessage);
         }
     }
 }

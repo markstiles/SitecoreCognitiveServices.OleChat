@@ -17,6 +17,7 @@ var itemSearchForm = ".item-search-form";
 var itemSearchClose = ".item-search-header img";
 var itemSearchInput = ".item-search-input";
 var itemSearchResults = ".item-search-results";
+var itemSearchTitle = ".item-search-title";
 var itemSearchTimer;
 var listSearchForm = ".list-search-form";
 var listSearchClose = ".list-search-header img";
@@ -248,7 +249,7 @@ jQuery(document).ready(function ()
         var resultHtml = "";
         for (var d = 0; d < options.length; d++)
         {
-            if (queryValue != "" && options[d].indexOf(queryValue) == -1)
+            if (queryValue !== "" && options[d].indexOf(queryValue) === -1)
                 continue;
 
             resultHtml += "<div class='result-item'>";
@@ -328,7 +329,7 @@ jQuery(document).ready(function ()
                 UpdateChatWindow(r.Text, r.ChannelData, "bot");
             })
             .fail(function (xhr, status, error) {
-                var statusMsg = (xhr.status != null) 
+                var statusMsg = (xhr.status !== null) 
                     ? xhr.status + ":" + error
                     : error;
 
@@ -353,7 +354,7 @@ jQuery(document).ready(function ()
                 else if (formInput.InputType === "Password")
                     SetupPasswordInput();
                 else if (formInput.InputType === "ItemSearch")
-                    SetupItemSearch();
+                    SetupItemSearch(formInput.InputLabel);
                 else if (formInput.InputType === "Radio")
                     SetupRadioList(userType, formInput.Options);
                 else if (formInput.InputType === "Checkbox" && hasOptions)
@@ -400,9 +401,10 @@ jQuery(document).ready(function ()
         jQuery(searchInput).attr("type", "password");
     }
 
-    function SetupItemSearch()
+    function SetupItemSearch(inputLabel)
     {
         jQuery(itemSearchForm).show();
+        jQuery(itemSearchTitle).text(inputLabel);
         jQuery(itemSearchInput).focus();
     }
 
@@ -431,7 +433,7 @@ jQuery(document).ready(function ()
         jQuery(".enabled .option-submit")
             .on("click", function () {
                 var checkedItems = jQuery(this).parent().find(".user-checkbox-option input:checked");
-                if (checkedItems.length == 0)
+                if (checkedItems.length === 0)
                     return;
 
                 var checkedLabels = jQuery(this).parent().find(".user-checkbox-option.checked label");
@@ -485,7 +487,7 @@ jQuery(document).ready(function ()
 
         var selectionList = "";
         for (var i in selections) {
-            var displayValue = (i == "builtin.datetimeV2.datetime") ? "Date" : i;
+            var displayValue = (i === "builtin.datetimeV2.datetime") ? "Date" : i;
             selectionList += "<li class='user-selection' data-selection='" + clearText + " " + i + "'><span class='field-name'>" + displayValue + ": </span><span class='field-value'>" + selections[i] + "</span></li>";
         }
         selectionList += "<div class='user-selection confirm-continue' data-selection='" + continueText + "'>" + continueText + "</div>";
