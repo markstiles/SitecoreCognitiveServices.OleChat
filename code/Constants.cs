@@ -21,6 +21,11 @@ namespace SitecoreCognitiveServices.Feature.OleChat
 
         public static class FieldIds
         {
+            public static class StandardFields
+            {
+                public static ID TrackingFieldId = new ID("{B0A67B2A-8B07-4E0B-8809-69F751709806}");
+            }
+
             public static class Profile
             {
                 public static ID NameFieldId = new ID("{5D9FE5D7-4C45-4A98-A1F5-4796A6DA428B}");

@@ -13,6 +13,9 @@ using Sitecore.Data.Managers;
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Enums;
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Factories;
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Models;
+using SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters;
+using System.Text;
+using System.Xml.Linq;
 
 namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
 {
@@ -26,17 +29,12 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
         public override string DisplayName => Translator.Text("Chat.Intents.CreateProfile.Name");
 
         public override bool RequiresConfirmation => true;
-        
+
         #region Local Properties
 
-        protected string DBKey = "Database Name";
-        protected string ItemKey = "Item Path";
-        protected string LangKey = "Language";
-        protected string RecursionKey = "Descendants";
-        protected string RelatedKey = "Related";
-
-        protected ID ProfileCardTemplateId = new ID("{0FC09EA4-8D87-4B0E-A5C9-8076AE863D9C}");
-
+        protected string ContentProfileItemKey = "Content Profile Item";
+        protected string PageItemKey = "Page Item";
+        
         #endregion
 
         public AssignContentProfileIntent(
@@ -44,36 +42,68 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             ISitecoreDataWrapper dataWrapper,
             IIntentInputFactory inputFactory,
             IConversationResponseFactory responseFactory,
+            IParameterResultFactory resultFactory,
             IPublishWrapper publishWrapper) : base(inputFactory, responseFactory, settings)
         {
             DataWrapper = dataWrapper;
             PublishWrapper = publishWrapper;
+
+            ConversationParameters.Add(new ItemParameter(ContentProfileItemKey, "What content profile do you want to assign?", dataWrapper, inputFactory, resultFactory));
+            ConversationParameters.Add(new ItemParameter(PageItemKey, "What page do you want to assign this profile to?", dataWrapper, inputFactory, resultFactory));
         }
-        
+
         public override ConversationResponse Respond(LuisResult result, ItemContextParameters parameters, IConversation conversation)
         {
-            var toDb = (Database) conversation.Data[DBKey];
-            var rootItem = (Item) conversation.Data[ItemKey];
-            var langItem = (Language) conversation.Data[LangKey];
-            var recursion = (string) conversation.Data[RecursionKey];
-            var related = (string) conversation.Data[RelatedKey];
-            PublishWrapper.PublishItem(rootItem, new[] { toDb }, new[] { langItem }, recursion.Equals("y"), false, related.Equals("y"));
+            var contentProfile = (Item) conversation.Data[ContentProfileItemKey];
+            var pageItem = (Item) conversation.Data[PageItemKey];
 
-            var recursionMessage = recursion.Equals("y") 
-                ? Translator.Text("Chat.Intents.CreateProfile.ResponseRecursion") 
-                : string.Empty;
+            //<tracking>  
+            //<profile id="{24DFF2CF-B30A-4B75-8967-2FE3DED82271}" name="Focus" presets="profile card|100||">    
+            //<key name="Background" value="2" />    
+            //<key name="Practical" value="1" />    
+            //<key name="Process" value="5" />    
+            //<key name="Scope" value="7" />  
+            //</profile>
+            //</tracking>
 
-            var relatedMessage = related.Equals("y")
-                ? Translator.Text("Chat.Intents.CreateProfile.ResponseRelated")
-                : string.Empty;
+            //< tracking >
+            //    < profile id = "{24DFF2CF-B30A-4B75-8967-2FE3DED82271}" name = "Focus" presets = "profile card|100||" >
+            //        < key name = "Background" value = "2" />
+            //        < key name = "Practical" value = "1" />
+            //        < key name = "Process" value = "5" />
+            //        < key name = "Scope" value = "7" />
+            //    </ profile >
+            //    <event id="{CC2CC47C-8CC8-469D-B8C6-C11F202FD20A}" name="Google Plus One" />
+            //    <event id="{28A7C944-B8B6-45AD-A635-6F72E8F81F69}" name="Instant Demo" />
+            //</tracking>
+
+            //get the item's tracking field and append the new goal to it
+            var trackingField = pageItem.Fields[Constants.FieldIds.StandardFields.TrackingFieldId];
+            var newFieldValue = new StringBuilder("<tracking>");
+            if (!string.IsNullOrWhiteSpace(trackingField?.Value))
+            {
+                XDocument xdoc = XDocument.Parse(trackingField.Value);
+                //var events = xdoc.Descendants("event");
+                //foreach (XElement e in events)
+                //{
+                    
+                //}
+            }
+            newFieldValue.Append("</tracking>");
+
+            var pageFields = new Dictionary<ID, string>
+            {
+                { Constants.FieldIds.StandardFields.TrackingFieldId, newFieldValue.ToString() }
+            };
+
+            DataWrapper.UpdateFields(pageItem, pageFields);
+            var toDb = DataWrapper.GetDatabase("web");
+            PublishWrapper.PublishItem(pageItem, new[] { toDb }, new[] { DataWrapper.ContentLanguage }, true, false, false);
+
 
             return ConversationResponseFactory.Create(KeyName, string.Format(
-                Translator.Text("Chat.Intents.CreateProfile.Response"), 
-                rootItem.DisplayName, 
-                toDb.Name, 
-                LanguageManager.GetLanguageItem(langItem, toDb).DisplayName, 
-                recursionMessage, 
-                relatedMessage));
+                Translator.Text("Chat.Intents.AssignContentProfile.Response"),
+                contentProfile.DisplayName, pageItem.DisplayName));
         }
     }
 }

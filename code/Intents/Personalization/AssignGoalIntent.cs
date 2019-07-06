@@ -56,9 +56,10 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             var goalItem = (Item)conversation.Data[GoalItemKey];
             var pageItem = (Item)conversation.Data[PageItemKey];
             
+            //todo make sure this doesn't lose any tracking field data
+
             //get the item's tracking field and append the new goal to it
-            var trackingFieldId = new ID("{B0A67B2A-8B07-4E0B-8809-69F751709806}");
-            var trackingField = pageItem.Fields[trackingFieldId];
+            var trackingField = pageItem.Fields[Constants.FieldIds.StandardFields.TrackingFieldId];
             var newFieldValue = new StringBuilder("<tracking>");
             if (!string.IsNullOrWhiteSpace(trackingField?.Value))
             {
@@ -75,7 +76,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
 
             var pageFields = new Dictionary<ID, string>
             {
-                { trackingFieldId, newFieldValue.ToString() } // tracking
+                { Constants.FieldIds.StandardFields.TrackingFieldId, newFieldValue.ToString() }
             };
             
             DataWrapper.UpdateFields(pageItem, pageFields);
