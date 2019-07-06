@@ -5,6 +5,7 @@ using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Enums;
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Factories;
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Models;
 using SitecoreCognitiveServices.Foundation.SCSDK.Wrappers;
+using System.Collections.Generic;
 
 namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 {
@@ -14,6 +15,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 
         public string ParamName { get; set; }
         public string ParamMessage { get; set; }
+        public Dictionary<string, string> Parameters { get; set; }
 
         public ISitecoreDataWrapper DataWrapper { get; set; }
         public IIntentInputFactory IntentInputFactory { get; set; }
@@ -22,12 +24,14 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
         public ItemParameter(
             string paramName,
             string paramMessage,
+            Dictionary<string, string> parameters,
             ISitecoreDataWrapper dataWrapper,
             IIntentInputFactory inputFactory,
             IParameterResultFactory resultFactory) 
         {
             ParamName = paramName;
             ParamMessage = paramMessage;
+            Parameters = parameters;
             DataWrapper = dataWrapper;
             IntentInputFactory = inputFactory;
             ResultFactory = resultFactory;
@@ -49,7 +53,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 
         public IntentInput GetInput(ItemContextParameters parameters, IConversation conversation)
         {
-            return IntentInputFactory.Create(IntentInputType.ItemSearch, ParamMessage);
+            return IntentInputFactory.Create(IntentInputType.ItemSearch, ParamMessage, Parameters);
         }
     }
 }

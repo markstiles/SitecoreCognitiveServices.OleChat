@@ -48,8 +48,17 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             DataWrapper = dataWrapper;
             PublishWrapper = publishWrapper;
 
-            ConversationParameters.Add(new ItemParameter(ContentProfileItemKey, "What content profile do you want to assign?", dataWrapper, inputFactory, resultFactory));
-            ConversationParameters.Add(new ItemParameter(PageItemKey, "What page do you want to assign this profile to?", dataWrapper, inputFactory, resultFactory));
+            var profileParameters = new Dictionary<string, string>
+            {
+                { Constants.SearchParameters.FilterPath, Constants.Paths.ProfilePath },
+                { Constants.SearchParameters.TemplateId, Constants.TemplateIds.ProfileTemplateId.ToString() }
+            };
+            ConversationParameters.Add(new ItemParameter(ContentProfileItemKey, "What content profile do you want to assign?", profileParameters, dataWrapper, inputFactory, resultFactory));
+            var contentParameters = new Dictionary<string, string>
+            {
+                { Constants.SearchParameters.FilterPath, Constants.Paths.ContentPath }
+            };
+            ConversationParameters.Add(new ItemParameter(PageItemKey, "What page do you want to assign this profile to?", contentParameters, dataWrapper, inputFactory, resultFactory));
         }
 
         public override ConversationResponse Respond(LuisResult result, ItemContextParameters parameters, IConversation conversation)

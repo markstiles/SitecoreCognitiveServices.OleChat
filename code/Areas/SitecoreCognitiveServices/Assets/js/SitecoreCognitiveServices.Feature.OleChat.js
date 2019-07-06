@@ -224,13 +224,15 @@ jQuery(document).ready(function ()
         
         var langValue = jQuery(".item-search-lang").val();
         var dbValue = jQuery(".item-search-db").val();
-        
+        var parametersValue = jQuery(itemSearchForm).data("parameters");
+
         jQuery
             .post(jQuery(itemSearchForm).attr("action"),
             {
                 db: dbValue,
                 language: langValue,
-                query: queryValue
+                query: queryValue,
+                parameters: parametersValue
             })
             .done(function (r) {
                 HandleItemSearchResults(r);
@@ -354,7 +356,7 @@ jQuery(document).ready(function ()
                 else if (formInput.InputType === "Password")
                     SetupPasswordInput();
                 else if (formInput.InputType === "ItemSearch")
-                    SetupItemSearch(formInput.InputLabel);
+                    SetupItemSearch(formInput.InputLabel, formInput.Parameters);
                 else if (formInput.InputType === "Radio")
                     SetupRadioList(userType, formInput.Options);
                 else if (formInput.InputType === "Checkbox" && hasOptions)
@@ -401,10 +403,11 @@ jQuery(document).ready(function ()
         jQuery(searchInput).attr("type", "password");
     }
 
-    function SetupItemSearch(inputLabel)
+    function SetupItemSearch(inputLabel, parameters)
     {
-        jQuery(itemSearchForm).show();
+        jQuery(itemSearchForm).data("parameters", parameters);
         jQuery(itemSearchTitle).text(inputLabel);
+        jQuery(itemSearchForm).show();
         jQuery(itemSearchInput).focus();
     }
 

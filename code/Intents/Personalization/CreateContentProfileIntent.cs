@@ -47,7 +47,12 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             PublishWrapper = publishWrapper;
 
             ConversationParameters.Add(new StringParameter(NameKey, "What is the name of this content profile", inputFactory, resultFactory));
-            ConversationParameters.Add(new ItemParameter(ItemKey, "what demographic feature do you want to create a content profile for?", dataWrapper, inputFactory, resultFactory));
+            var parameters = new Dictionary<string, string>
+            {
+                { Constants.SearchParameters.FilterPath, Constants.Paths.ProfilePath },
+                { Constants.SearchParameters.TemplateId, Constants.TemplateIds.ProfileTemplateId.ToString() }
+            };
+            ConversationParameters.Add(new ItemParameter(ItemKey, "what demographic feature do you want to create a content profile for?", parameters, dataWrapper, inputFactory, resultFactory));
             //ask for the numeric value for each key in the profile 
         }
 

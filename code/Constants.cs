@@ -8,6 +8,20 @@ namespace SitecoreCognitiveServices.Feature.OleChat
 {
     public static class Constants
     {
+        public static class SearchParameters
+        {
+            public static string FilterPath = "filterPath";
+            public static string TemplateId = "templateId";
+        }
+
+        public static class Paths
+        {
+            public static string ContentPath = "{0DE95AE4-41AB-4D01-9EB0-67441B7C2450}";
+            public static string SystemPath = "{13D6D6C6-C50B-4BBD-B331-2B04F1A58F21}";
+            public static string GoalPath = "{0CB97A9F-CAFB-42A0-8BE1-89AB9AE32BD9}";
+            public static string ProfilePath = "{12BD7E35-437B-449C-B931-23CFA12C03D8}";
+        }
+
         public static class TemplateIds
         {
             public static ID FolderTemplateId = new ID("{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}");

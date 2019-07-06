@@ -44,8 +44,12 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Publishing
         {
             DataWrapper = dataWrapper;
             PublishWrapper = publishWrapper;
-            
-            ConversationParameters.Add(new ItemParameter(ItemKey, Translator.Text("Chat.Intents.Unpublish.ItemParameterRequest"), dataWrapper, inputFactory, resultFactory));
+
+            var parameters = new Dictionary<string, string>
+            {
+                { Constants.SearchParameters.FilterPath, Constants.Paths.ContentPath }
+            };
+            ConversationParameters.Add(new ItemParameter(ItemKey, Translator.Text("Chat.Intents.Unpublish.ItemParameterRequest"), parameters, dataWrapper, inputFactory, resultFactory));
             ConversationParameters.Add(new ItemVersionParameter(VersionKey, ItemKey, inputFactory, resultFactory));
             ConversationParameters.Add(new DateParameter(DateKey, Translator.Text("Chat.Intents.Unpublish.DateParameterRequest"), inputFactory, dataWrapper, resultFactory));
             ConversationParameters.Add(new DatabaseParameter(DBKey, settings, dataWrapper, inputFactory, publishWrapper, resultFactory));

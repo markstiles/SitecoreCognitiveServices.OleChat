@@ -47,8 +47,17 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             DataWrapper = dataWrapper;
             PublishWrapper = publishWrapper;
 
-            ConversationParameters.Add(new ItemParameter(GoalItemKey, "What goal do you want to assign?", dataWrapper, inputFactory, resultFactory));
-            ConversationParameters.Add(new ItemParameter(PageItemKey, "What page do you want to assign to?", dataWrapper, inputFactory, resultFactory));
+            var goalParameters = new Dictionary<string, string>
+            {
+                { Constants.SearchParameters.FilterPath, Constants.Paths.GoalPath },
+                { Constants.SearchParameters.TemplateId, Constants.TemplateIds.GoalTemplateId.ToString() }
+            };
+            ConversationParameters.Add(new ItemParameter(GoalItemKey, "What goal do you want to assign?", goalParameters, dataWrapper, inputFactory, resultFactory));
+            var contentParameters = new Dictionary<string, string>
+            {
+                { Constants.SearchParameters.FilterPath, Constants.Paths.ContentPath }
+            };
+            ConversationParameters.Add(new ItemParameter(PageItemKey, "What page do you want to assign to?", contentParameters, dataWrapper, inputFactory, resultFactory));
         }
 
         public override ConversationResponse Respond(LuisResult result, ItemContextParameters parameters, IConversation conversation)

@@ -42,7 +42,7 @@
         <input type="hidden" name="chat-id" class="chat-id" value="@Model.Id" />
         <button class="chat-submit scButton">@Translator.Text("Chat.Send")</button>
     </form>
-    <form class="form item-search-form" method="post" action="/SitecoreCognitiveServices/OleChat/ItemSearch">
+    <form class="form item-search-form" method="post" action="/SitecoreCognitiveServices/OleChat/ItemSearch" data-parameters="">
         @Html.AntiForgeryToken()
         <div class="item-search-header">
             <span class="item-search-title"></span>

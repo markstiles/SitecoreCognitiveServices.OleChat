@@ -8,6 +8,6 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Services
 {
     public interface ISearchService
     {
-        List<SearchResultItem> GetResults(string db, string query);
+        List<SearchResultItem> GetResults(string db, string language, string query, Dictionary<string, string> parameters);
     }
 }

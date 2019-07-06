@@ -147,13 +147,13 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Areas.SitecoreCognitiveServi
             return null;
         }
 
-        public ActionResult ItemSearch(string db, string language, string query)
+        public ActionResult ItemSearch(string db, string language, string query, Dictionary<string, string> parameters)
         {
             //query search
             var results = new List<SearchResultItem>();
             try
             {
-                results = Searcher.GetResults(db, query);
+                results = Searcher.GetResults(db, language, query, parameters);
             }
             catch (Exception ex)
             {

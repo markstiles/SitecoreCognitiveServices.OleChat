@@ -42,8 +42,12 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             DataWrapper = dataWrapper;
             PublishWrapper = publishWrapper;
 
-
-            ConversationParameters.Add(new ItemParameter(ItemKey, "What demographic feature do you want to know about?", dataWrapper, inputFactory, resultFactory));
+            var parameters = new Dictionary<string, string>
+            {
+                { Constants.SearchParameters.FilterPath, Constants.Paths.ProfilePath },
+                { Constants.SearchParameters.TemplateId, Constants.TemplateIds.ProfileTemplateId.ToString() }
+            };
+            ConversationParameters.Add(new ItemParameter(ItemKey, "What demographic feature do you want to know about?", parameters, dataWrapper, inputFactory, resultFactory));
         }
         
         public override ConversationResponse Respond(LuisResult result, ItemContextParameters parameters, IConversation conversation)
