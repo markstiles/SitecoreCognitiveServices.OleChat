@@ -9,7 +9,5 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Areas.SitecoreCognitiveServi
     {
         string LuisApiKey { get; set; }
         string LuisApiEndpoint { get; set; }
-        string TextAnalyticsApiKey { get; set; }
-        string TextAnalyticsApiEndpoint { get; set; }
     }
 }

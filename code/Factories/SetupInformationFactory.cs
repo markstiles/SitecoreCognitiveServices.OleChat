@@ -30,8 +30,6 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Factories
 
             obj.LuisApiKey = ApiKeys.Luis;
             obj.LuisApiEndpoint = ApiKeys.LuisEndpoint;
-            obj.TextAnalyticsApiKey = ApiKeys.TextAnalytics;
-            obj.TextAnalyticsApiEndpoint = ApiKeys.TextAnalyticsEndpoint;
 
             return obj;
         }
