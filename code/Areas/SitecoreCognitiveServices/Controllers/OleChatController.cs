@@ -116,7 +116,6 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Areas.SitecoreCognitiveServi
                     "decision - no",
                     "frustrated",
                     "profile user - quit",
-                    activity.Text,
                     parameters,
                     result);
                 var response = LuisConversationService.HandleMessage(conversationContext);
