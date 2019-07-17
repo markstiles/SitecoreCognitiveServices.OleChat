@@ -11,7 +11,7 @@ SharedFields:
   Value: Office/32x32/document_text.png
 - ID: "580c75a8-c01a-4580-83cb-987776ceb3af"
   Hint: Key
-  Value: Chat.Intents.LoggedInUsers.PluralConjuntion
+  Value: Chat.Intents.LoggedInUsers.PluralConjunction
 Languages:
 - Language: en
   Fields:
