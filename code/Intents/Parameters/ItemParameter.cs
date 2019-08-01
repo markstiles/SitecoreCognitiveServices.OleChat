@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 {
-    public class ItemParameter : IRequiredConversationParameter
+    public class ItemParameter : IConversationParameter
     {
         #region Constructor
 

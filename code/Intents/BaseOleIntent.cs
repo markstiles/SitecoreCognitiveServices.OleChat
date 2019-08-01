@@ -24,7 +24,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents
 
         public virtual Guid ApplicationId => Settings.OleApplicationId;
 
-        public virtual List<IRequiredConversationParameter> ConversationParameters { get; }
+        public virtual List<IConversationParameter> ConversationParameters { get; }
         
         protected BaseOleIntent(
             IIntentInputFactory inputFactory,
@@ -34,7 +34,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents
             Settings = settings;
             ConversationResponseFactory = responseFactory;
             IntentInputFactory = inputFactory;
-            ConversationParameters = new List<IRequiredConversationParameter>();
+            ConversationParameters = new List<IConversationParameter>();
         }
         
         #endregion

@@ -13,7 +13,7 @@ using System.Web.UI.WebControls;
 
 namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 {
-    public class UserParameter : IRequiredConversationParameter
+    public class UserParameter : IConversationParameter
     {
         #region Constructor
 
