@@ -51,8 +51,8 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Publishing
                 { Constants.SearchParameters.FilterPath, Constants.Paths.ContentPath }
             };
             ConversationParameters.Add(new ItemParameter(ItemKey, Translator.Text("Chat.Intents.Publish.ItemParameterRequest"), parameters, dataWrapper, inputFactory, resultFactory));
-            ConversationParameters.Add(new DatabaseParameter(DBKey, settings, dataWrapper, inputFactory, publishWrapper, resultFactory));
-            ConversationParameters.Add(new LanguageParameter(LangKey, settings, dataWrapper, inputFactory, resultFactory));
+            ConversationParameters.Add(new DatabaseParameter(DBKey, Translator.Text("Chat.Parameters.DBParameterRequest"), settings, dataWrapper, inputFactory, publishWrapper, resultFactory));
+            ConversationParameters.Add(new LanguageParameter(LangKey, Translator.Text("Chat.Parameters.LangParameterRequest"), settings, dataWrapper, inputFactory, resultFactory));
             ConversationParameters.Add(new YesOrNoParameter(RecursionKey, Translator.Text("Chat.Intents.Publish.RecursionParameterRequest"), inputFactory, resultFactory));
             ConversationParameters.Add(new YesOrNoParameter(RelatedKey, Translator.Text("Chat.Intents.Publish.RelatedParameterRequest"), inputFactory, resultFactory));
         }

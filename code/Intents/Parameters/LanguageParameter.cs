@@ -23,13 +23,14 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 
         public LanguageParameter(
             string paramName,
+            string paramMessage,
             IOleSettings settings,
             ISitecoreDataWrapper dataWrapper,
             IIntentInputFactory inputFactory,
             IParameterResultFactory resultFactory)
         {
             ParamName = paramName;
-            ParamMessage = Translator.Text("Chat.Parameters.LangParameterRequest");
+            ParamMessage = paramMessage;
             Settings = settings;
             DataWrapper = dataWrapper;
             IntentInputFactory = inputFactory;

@@ -26,6 +26,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 
         public DatabaseParameter(
             string paramName,
+            string paramMessage,
             IOleSettings settings,
             ISitecoreDataWrapper dataWrapper,
             IIntentInputFactory inputFactory,
@@ -33,7 +34,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
             IParameterResultFactory resultFactory)
         {
             ParamName = paramName;
-            ParamMessage = Translator.Text("Chat.Parameters.DBParameterRequest");
+            ParamMessage = paramMessage;
             Settings = settings;
             DataWrapper = dataWrapper;
             IntentInputFactory = inputFactory;
