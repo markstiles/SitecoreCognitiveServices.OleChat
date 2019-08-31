@@ -8,6 +8,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Areas.SitecoreCognitiveServi
     public interface ISetupInformation
     {
         string LuisApiKey { get; set; }
+        string LuisAuthoringApiKey { get; set; }
         string LuisApiEndpoint { get; set; }
     }
 }

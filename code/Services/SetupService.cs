@@ -49,11 +49,13 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Services
 
         #endregion
 
-        public void SaveKeys(string luisApi, string luisApiEndpoint)
+        public void SaveKeys(string luisApi, string luisAuthoringApi, string luisApiEndpoint)
         {
             //save items to fields
             if (MSCSApiKeys.Luis != luisApi)
                 UpdateKey(SCSDKSettings.MSSDK_LuisFieldId, luisApi);
+            if (MSCSApiKeys.LuisAuthoring != luisAuthoringApi)
+                UpdateKey(SCSDKSettings.MSSDK_LuisAuthoringFieldId, luisAuthoringApi);
             if (MSCSApiKeys.LuisEndpoint != luisApiEndpoint)
                 UpdateKey(SCSDKSettings.MSSDK_LuisEndpointFieldId, luisApiEndpoint);
         }

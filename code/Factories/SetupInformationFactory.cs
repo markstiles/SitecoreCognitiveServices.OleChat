@@ -29,6 +29,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Factories
             var obj = Provider.GetService<ISetupInformation>();
 
             obj.LuisApiKey = ApiKeys.Luis;
+            obj.LuisAuthoringApiKey = ApiKeys.LuisAuthoring;
             obj.LuisApiEndpoint = ApiKeys.LuisEndpoint;
 
             return obj;

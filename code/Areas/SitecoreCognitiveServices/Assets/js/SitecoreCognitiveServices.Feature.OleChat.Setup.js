@@ -10,6 +10,7 @@ jQuery(document).ready(function () {
 
             var overwriteValue = jQuery(setupForm + " input[name='overwriteOption']:checked").val();
             var luisValue = jQuery(setupForm + " #luisApi").val();
+            var luisAuthoringValue = jQuery(setupForm + " #luisAuthoringApi").val();
             var luisEndpointValue = jQuery(setupForm + " #luisApiEndpoint").val();
             
             jQuery(".result-failure").hide();
@@ -21,6 +22,7 @@ jQuery(document).ready(function () {
                 {
                     overwriteOption: overwriteValue,
                     luisApi: luisValue,
+                    luisAuthoringApi: luisAuthoringValue,
                     luisApiEndpoint: luisEndpointValue
                 }
             ).done(function (r) {

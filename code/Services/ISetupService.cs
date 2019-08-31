@@ -8,7 +8,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Services
 {
     public interface ISetupService
     {
-        void SaveKeys(string luisApi, string luisApiEndpoint);
+        void SaveKeys(string luisApi, string luisAuthoringApi, string luisApiEndpoint);
         void UpdateKey(ID fieldId, string value);
         bool BackupOle();
         bool RestoreOle(bool overwrite);

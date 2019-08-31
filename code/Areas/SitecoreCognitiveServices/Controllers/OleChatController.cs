@@ -264,14 +264,14 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Areas.SitecoreCognitiveServi
             }
         }
         
-        public ActionResult SetupSubmit(bool overwriteOption, string luisApi, string luisApiEndpoint)
+        public ActionResult SetupSubmit(bool overwriteOption, string luisApi, string luisAuthoringApi, string luisApiEndpoint)
         {
             if (!IsSitecoreUser())
                 return LoginPage();
 
             List<string> items = new List<string>();
 
-            SetupService.SaveKeys(luisApi, luisApiEndpoint);
+            SetupService.SaveKeys(luisApi, luisAuthoringApi, luisApiEndpoint);
             
             var restoreResult = SetupService.RestoreOle(overwriteOption);
             if(!restoreResult)
