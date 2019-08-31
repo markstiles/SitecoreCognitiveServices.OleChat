@@ -39,7 +39,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 
             return string.IsNullOrWhiteSpace(cleanParam)
                 ? ResultFactory.GetFailure(Translator.Text("Chat.Parameters.StringParameterValidationError"))
-                : ResultFactory.GetSuccess(cleanParam);
+                : ResultFactory.GetSuccess(cleanParam, cleanParam);
         }
 
         public IntentInput GetInput(ItemContextParameters parameters, IConversation conversation)

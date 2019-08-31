@@ -104,46 +104,44 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Areas.SitecoreCognitiveServi
                 ? JsonConvert.DeserializeObject<ItemContextParameters>(d[0])
                 : new ItemContextParameters();
 
-            if (activity.Type == ActivityTypes.Message)
+            if (activity.Type != ActivityTypes.Message)
+                return null;
+
+            var result = !string.IsNullOrWhiteSpace(activity.Text) ? LuisService.Query(ChatSettings.OleApplicationId, activity.Text, true) : null;
+
+            var conversationContext = ConversationContextFactory.Create(
+                ChatSettings.OleApplicationId,
+                Translator.Text("Chat.Clear"),
+                Translator.Text("Chat.ConfirmMessage"),
+                "decision - yes",
+                "decision - no",
+                "frustrated",
+                "profile user - quit",
+                parameters,
+                result);
+            var response = LuisConversationService.HandleMessage(conversationContext);
+            var newMessage = Regex.Replace(response.Message, "<.*?>", " ");
+
+            var relativePath = $"temp\\ole-{CreateMD5Hash(newMessage)}.mp3";
+            var filePath = $"{Request.PhysicalApplicationPath}{relativePath}";
+
+            var locale = SpeechLocaleOptions.enUS;
+            var voice = VoiceName.EnUsGuyNeural;
+            var gender = GenderOptions.Male;
+            var audioFormat = AudioOutputFormatOptions.Audio24Khz160KBitRateMonoMp3;
+                
+            SpeechService.TextToFile(newMessage, filePath, locale, voice, gender, audioFormat);
+                
+            var reply = activity.CreateReply(response.Message, "en-US");
+            reply.ChannelData = new ChannelData
             {
-                var result = !string.IsNullOrWhiteSpace(activity.Text) ? LuisService.Query(ChatSettings.OleApplicationId, activity.Text, true) : null;
+                Input = response.Input,
+                Selections = response.Selections?.ToDictionary(a => a.Key, b => b.Value.DisplayName) ?? null,
+                Action = response.Action,
+                AudioFile = $"\\{relativePath}"
+            };
 
-                var conversationContext = ConversationContextFactory.Create(
-                    ChatSettings.OleApplicationId,
-                    Translator.Text("Chat.Clear"),
-                    Translator.Text("Chat.ConfirmMessage"),
-                    "decision - yes",
-                    "decision - no",
-                    "frustrated",
-                    "profile user - quit",
-                    parameters,
-                    result);
-                var response = LuisConversationService.HandleMessage(conversationContext);
-                var newMessage = Regex.Replace(response.Message, "<.*?>", " ");
-
-                var relativePath = $"temp\\ole-{CreateMD5Hash(newMessage)}.mp3";
-                var filePath = $"{Request.PhysicalApplicationPath}{relativePath}";
-
-                var locale = SpeechLocaleOptions.enUS;
-                var voice = VoiceName.EnUsGuyNeural;
-                var gender = GenderOptions.Male;
-                var audioFormat = AudioOutputFormatOptions.Audio24Khz160KBitRateMonoMp3;
-                
-                SpeechService.TextToFile(newMessage, filePath, locale, voice, gender, audioFormat);
-                
-                var reply = activity.CreateReply(response.Message, "en-US");
-                reply.ChannelData = new ChannelData
-                {
-                    Input = response.Input,
-                    Selections = response.Selections,
-                    Action = response.Action,
-                    AudioFile = $"\\{relativePath}"
-                };
-
-                return Json(reply);
-            }
-
-            return null;
+            return Json(reply);
         }
 
         public ActionResult ItemSearch(string db, string language, string query, Dictionary<string, string> parameters)
@@ -171,8 +169,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Areas.SitecoreCognitiveServi
         {
             var item = result.GetItem();
             var iconPath = item.Template.InnerItem.Fields[Sitecore.FieldIDs.Icon].Value;
-
-
+            
             var model = new ItemSearchResultViewModel
             {
                 Title = result.Name,

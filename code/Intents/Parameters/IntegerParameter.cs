@@ -37,7 +37,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
         {
             int intValue = -1;
             return int.TryParse(paramValue, out intValue)
-                ? ResultFactory.GetSuccess(intValue)
+                ? ResultFactory.GetSuccess(paramValue, intValue)
                 : ResultFactory.GetFailure(Translator.Text("Chat.Parameters.IntegerParameterValidationError"));
         }
 

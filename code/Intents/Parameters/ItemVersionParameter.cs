@@ -40,11 +40,11 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
         public IParameterResult GetParameter(string paramValue, IConversationContext context, ItemContextParameters parameters, IConversation conversation)
         {
             if (paramValue.ToLower() == Translator.Text("Chat.Parameters.All"))
-                return ResultFactory.GetSuccess("0");
+                return ResultFactory.GetSuccess(paramValue, "0");
 
             int result;
             if (int.TryParse(paramValue, out result))
-                return ResultFactory.GetSuccess(paramValue);
+                return ResultFactory.GetSuccess(paramValue, paramValue);
 
             return ResultFactory.GetFailure(Translator.Text("Chat.Parameters.VersionParameterValidationError"));
         }
@@ -52,7 +52,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
         public IntentInput GetInput(ItemContextParameters parameters, IConversation conversation)
         {
             var all = Translator.Text("Chat.Parameters.All");
-            var item = (Item)conversation.Data[ItemParamName];
+            var item = (Item)conversation.Data[ItemParamName].Data;
             var versions = item
                 .Versions
                 .GetVersionNumbers()

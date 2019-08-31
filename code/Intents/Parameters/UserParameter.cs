@@ -58,7 +58,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 
             return userSession == null
                 ? ResultFactory.GetFailure(error)
-                : ResultFactory.GetSuccess(userSession);
+                : ResultFactory.GetSuccess(username, userSession);
         }
 
         public IntentInput GetInput(ItemContextParameters parameters, IConversation conversation)

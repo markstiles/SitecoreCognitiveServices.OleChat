@@ -62,8 +62,8 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
 
         public override ConversationResponse Respond(LuisResult result, ItemContextParameters parameters, IConversation conversation)
         {
-            var goalItem = (Item)conversation.Data[GoalItemKey];
-            var pageItem = (Item)conversation.Data[PageItemKey];
+            var goalItem = (Item)conversation.Data[GoalItemKey].Data;
+            var pageItem = (Item)conversation.Data[PageItemKey].Data;
             
             //todo make sure this doesn't lose any tracking field data
 

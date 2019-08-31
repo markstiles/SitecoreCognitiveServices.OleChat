@@ -52,7 +52,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
         
         public override ConversationResponse Respond(LuisResult result, ItemContextParameters parameters, IConversation conversation)
         {
-            var profileItem = (Item) conversation.Data[ItemKey];
+            var profileItem = (Item) conversation.Data[ItemKey].Data;
             var profileKeys = profileItem.GetChildren().Where(a => a.TemplateID == Constants.TemplateIds.ProfileKeyTemplateId);
 
             var response = new StringBuilder();

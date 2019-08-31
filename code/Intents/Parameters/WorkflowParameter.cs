@@ -1,44 +1,40 @@
-﻿using SitecoreCognitiveServices.Feature.OleChat.Statics;
-using SitecoreCognitiveServices.Foundation.MSSDK.Language.Models.Luis;
+﻿using Sitecore.Data;
+using Sitecore.Data.Items;
+using Sitecore.Globalization;
+using SitecoreCognitiveServices.Feature.OleChat.Statics;
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Enums;
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Factories;
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Models;
 using SitecoreCognitiveServices.Foundation.SCSDK.Wrappers;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 {
-    public class DatabaseParameter : IConversationParameter
+    public class WorkflowParameter : IConversationParameter
     {
         #region Constructor
 
         public string ParamName { get; set; }
         public string ParamMessage { get; set; }
+        public Dictionary<string, string> Parameters { get; set; }
 
-        public IOleSettings Settings { get; set; }
         public ISitecoreDataWrapper DataWrapper { get; set; }
         public IIntentInputFactory IntentInputFactory { get; set; }
-        public IPublishWrapper PublishWrapper { get; set; }
         public IParameterResultFactory ResultFactory { get; set; }
 
-        public DatabaseParameter(
+        public WorkflowParameter(
             string paramName,
             string paramMessage,
-            IOleSettings settings,
+            Dictionary<string, string> parameters,
             ISitecoreDataWrapper dataWrapper,
             IIntentInputFactory inputFactory,
-            IPublishWrapper publishWrapper,
-            IParameterResultFactory resultFactory)
+            IParameterResultFactory resultFactory) 
         {
             ParamName = paramName;
             ParamMessage = paramMessage;
-            Settings = settings;
+            Parameters = parameters;
             DataWrapper = dataWrapper;
             IntentInputFactory = inputFactory;
-            PublishWrapper = publishWrapper;
             ResultFactory = resultFactory;
         }
 
@@ -46,21 +42,31 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 
         public IParameterResult GetParameter(string paramValue, IConversationContext context, ItemContextParameters parameters, IConversation conversation)
         {
-            try
-            {
-                return ResultFactory.GetSuccess(paramValue, DataWrapper.GetDatabase(paramValue.ToLower()));
-            }
-            catch { }
+            var rootItem = (Item)conversation.Data[ParamName].Data;
+            var language = (Language)conversation.Data[ParamName].Data;
+            var langItem = rootItem.Database.GetItem(rootItem.ID, language);
+            
+            var worflowId = langItem.Fields[Sitecore.FieldIDs.Workflow].Value;
+            var workflowItem = ID.IsID(worflowId)
+                ? rootItem.Database.GetItem(new ID(worflowId))
+                : null;
 
-            return ResultFactory.GetFailure(Translator.Text("Chat.Parameters.DBParameterValidationError"));
+            var workflow = workflowItem != null 
+                ? rootItem.Database.WorkflowProvider.GetWorkflow(workflowItem)
+                : null;
+
+            var isFinal = workflow != null
+                ? workflow.GetState(rootItem).FinalState
+                : true;
+
+            return isFinal
+                ? ResultFactory.GetSuccess(rootItem.DisplayName, rootItem)
+                : ResultFactory.GetFailure(ParamMessage);
         }
 
         public IntentInput GetInput(ItemContextParameters parameters, IConversation conversation)
         {
-            var dbName = (!string.IsNullOrEmpty(parameters.Database)) ? parameters.Database : Settings.MasterDatabase;
-            var publishingTargets = PublishWrapper.GetPublishingTargets(dbName);
-
-            return IntentInputFactory.Create(IntentInputType.LinkList, publishingTargets);
+            return IntentInputFactory.Create(IntentInputType.ItemSearch, ParamMessage, Parameters);
         }
     }
 }

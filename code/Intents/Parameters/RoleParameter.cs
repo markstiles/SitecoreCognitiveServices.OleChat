@@ -1,5 +1,6 @@
-﻿using SitecoreCognitiveServices.Feature.OleChat.Statics;
-using SitecoreCognitiveServices.Foundation.MSSDK.Language.Models.Luis;
+﻿using Sitecore.Data;
+using Sitecore.Data.Items;
+using SitecoreCognitiveServices.Feature.OleChat.Statics;
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Enums;
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Factories;
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Models;
@@ -7,38 +8,35 @@ using SitecoreCognitiveServices.Foundation.SCSDK.Wrappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 {
-    public class DatabaseParameter : IConversationParameter
+    public class RoleParameter : IConversationParameter
     {
         #region Constructor
 
         public string ParamName { get; set; }
         public string ParamMessage { get; set; }
+        public List<string> Roles { get; set; }
 
-        public IOleSettings Settings { get; set; }
         public ISitecoreDataWrapper DataWrapper { get; set; }
         public IIntentInputFactory IntentInputFactory { get; set; }
-        public IPublishWrapper PublishWrapper { get; set; }
         public IParameterResultFactory ResultFactory { get; set; }
 
-        public DatabaseParameter(
+        public RoleParameter(
             string paramName,
             string paramMessage,
-            IOleSettings settings,
+            List<string> roles,
             ISitecoreDataWrapper dataWrapper,
             IIntentInputFactory inputFactory,
-            IPublishWrapper publishWrapper,
-            IParameterResultFactory resultFactory)
+            IParameterResultFactory resultFactory) 
         {
             ParamName = paramName;
-            ParamMessage = paramMessage;
-            Settings = settings;
+            Roles = roles;
+            var roleNames = Roles.Select(a => GetRoleDisplayName(a));
+            ParamMessage = string.Format(paramMessage, string.Join(", ", roleNames));
             DataWrapper = dataWrapper;
             IntentInputFactory = inputFactory;
-            PublishWrapper = publishWrapper;
             ResultFactory = resultFactory;
         }
 
@@ -46,21 +44,31 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 
         public IParameterResult GetParameter(string paramValue, IConversationContext context, ItemContextParameters parameters, IConversation conversation)
         {
-            try
-            {
-                return ResultFactory.GetSuccess(paramValue, DataWrapper.GetDatabase(paramValue.ToLower()));
-            }
-            catch { }
-
-            return ResultFactory.GetFailure(Translator.Text("Chat.Parameters.DBParameterValidationError"));
+            var isInRole = Roles.Any(r => DataWrapper.ContextUser.IsInRole(r));
+            
+            return isInRole || DataWrapper.ContextUser.IsAdministrator
+                ? ResultFactory.GetSuccess(paramValue, isInRole)
+                : ResultFactory.GetFailure(ParamMessage);
         }
 
         public IntentInput GetInput(ItemContextParameters parameters, IConversation conversation)
         {
-            var dbName = (!string.IsNullOrEmpty(parameters.Database)) ? parameters.Database : Settings.MasterDatabase;
-            var publishingTargets = PublishWrapper.GetPublishingTargets(dbName);
+            conversation.IsEnded = true;
 
-            return IntentInputFactory.Create(IntentInputType.LinkList, publishingTargets);
+            return IntentInputFactory.Create(IntentInputType.None, ParamMessage);
+        }
+
+        protected string GetRoleDisplayName(string roleName)
+        {
+            var splitter = @"\";
+            if (!roleName.Contains(splitter))
+                return roleName;
+
+            var parts = roleName.Split(new[] { splitter }, StringSplitOptions.RemoveEmptyEntries);
+
+            return parts.Length > 1
+                ? parts[1]
+                : parts[0];
         }
     }
 }

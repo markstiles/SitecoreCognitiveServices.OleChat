@@ -45,7 +45,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
                 .Replace($" {at} ", " ")
                 .Replace($" {on} ", " ");
             if (DateTime.TryParse(cleanParamValue, out result))
-                return ResultFactory.GetSuccess(DataWrapper.GetDateFieldValue(result));
+                return ResultFactory.GetSuccess(paramValue, DataWrapper.GetDateFieldValue(result));
 
             return ResultFactory.GetFailure(Translator.Text("Chat.Parameters.DateParameterValidationError"));
         }

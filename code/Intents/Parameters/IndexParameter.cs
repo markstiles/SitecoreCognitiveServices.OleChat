@@ -51,7 +51,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
                 return ResultFactory.GetFailure(error);
             }
 
-            return ResultFactory.GetSuccess(paramValue);
+            return ResultFactory.GetSuccess(paramValue, paramValue);
         }
 
         public IntentInput GetInput(ItemContextParameters parameters, IConversation conversation)

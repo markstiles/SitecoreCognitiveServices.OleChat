@@ -38,10 +38,10 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
             var isNo = context.Result.TopScoringIntent.Intent.Equals(context.NoIntentName, StringComparison.InvariantCultureIgnoreCase);
 
             if (isYes)
-                return ResultFactory.GetSuccess(true);
+                return ResultFactory.GetSuccess(paramValue, true);
 
             if (isNo)
-                return ResultFactory.GetSuccess(false);
+                return ResultFactory.GetSuccess(paramValue, false);
 
             return ResultFactory.GetFailure(Translator.Text("Chat.Parameters.YesOrNoParameterValidationError"));
         }

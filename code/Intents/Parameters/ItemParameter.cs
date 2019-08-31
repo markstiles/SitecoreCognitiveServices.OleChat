@@ -48,7 +48,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 
             return (returnItem == null)
                 ? ResultFactory.GetFailure(Translator.Text("Chat.Parameters.ItemParameterValidationError"))
-                : ResultFactory.GetSuccess(returnItem);
+                : ResultFactory.GetSuccess(returnItem.DisplayName, returnItem);
         }
 
         public IntentInput GetInput(ItemContextParameters parameters, IConversation conversation)

@@ -50,7 +50,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 
             return lang == null
                 ? ResultFactory.GetFailure(Translator.Text("Chat.Parameters.LangParameterValidationError"))
-                : ResultFactory.GetSuccess(lang);
+                : ResultFactory.GetSuccess(lang.GetDisplayName(), lang);
         }
 
         public IntentInput GetInput(ItemContextParameters parameters, IConversation conversation)

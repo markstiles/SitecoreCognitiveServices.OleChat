@@ -57,10 +57,10 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Publishing
         
         public override ConversationResponse Respond(LuisResult result, ItemContextParameters parameters, IConversation conversation)
         {
-            var item = (Item)conversation.Data[ItemKey];
-            var version = (string)conversation.Data[VersionKey];
-            var date = (string)conversation.Data[DateKey];
-            var dbs = (List<Database>)conversation.Data[DBKey];
+            var item = (Item)conversation.Data[ItemKey].Data;
+            var version = (string)conversation.Data[VersionKey].Data;
+            var date = (string)conversation.Data[DateKey].Data;
+            var dbs = (List<Database>)conversation.Data[DBKey].Data;
 
             var fields = new Dictionary<ID, string>();
             int versionInt;
