@@ -45,7 +45,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.System
         public override ConversationResponse Respond(LuisResult result, ItemContextParameters parameters, IConversation conversation)
         {
             var message = "";
-            var index = (string)conversation.Data[IndexKey].Data;
+            var index = (string)conversation.Data[IndexKey].Value;
             if (index == Translator.Text("Chat.Intents.RebuildIndex.All"))
             {
                 IndexCustodian.RebuildAll(new [] { IndexGroup.Experience });

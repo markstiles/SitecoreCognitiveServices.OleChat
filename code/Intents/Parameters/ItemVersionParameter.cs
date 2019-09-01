@@ -52,7 +52,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
         public IntentInput GetInput(ItemContextParameters parameters, IConversation conversation)
         {
             var all = Translator.Text("Chat.Parameters.All");
-            var item = (Item)conversation.Data[ItemParamName].Data;
+            var item = (Item)conversation.Data[ItemParamName].Value;
             var versions = item
                 .Versions
                 .GetVersionNumbers()

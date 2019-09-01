@@ -42,8 +42,8 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 
         public IParameterResult GetParameter(string paramValue, IConversationContext context, ItemContextParameters parameters, IConversation conversation)
         {
-            var rootItem = (Item)conversation.Data[ParamName].Data;
-            var language = (Language)conversation.Data[ParamName].Data;
+            var rootItem = (Item)conversation.Data[ParamName].Value;
+            var language = (Language)conversation.Data[ParamName].Value;
             var langItem = rootItem.Database.GetItem(rootItem.ID, language);
             
             var worflowId = langItem.Fields[Sitecore.FieldIDs.Workflow].Value;

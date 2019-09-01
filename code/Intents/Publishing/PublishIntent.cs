@@ -63,11 +63,11 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Publishing
         
         public override ConversationResponse Respond(LuisResult result, ItemContextParameters parameters, IConversation conversation)
         {
-            var toDb = (Database) conversation.Data[DBKey].Data;
-            var rootItem = (Item) conversation.Data[ItemKey].Data;
-            var langItem = (Language) conversation.Data[LangKey].Data;
-            var recursion = (bool) conversation.Data[RecursionKey].Data;
-            var related = (bool) conversation.Data[RelatedKey].Data;
+            var toDb = (Database) conversation.Data[DBKey].Value;
+            var rootItem = (Item) conversation.Data[ItemKey].Value;
+            var langItem = (Language) conversation.Data[LangKey].Value;
+            var recursion = (bool) conversation.Data[RecursionKey].Value;
+            var related = (bool) conversation.Data[RelatedKey].Value;
             PublishWrapper.PublishItem(rootItem, new[] { toDb }, new[] { langItem }, recursion, false, related);
 
             var recursionMessage = recursion

@@ -52,8 +52,8 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
         
         public override ConversationResponse Respond(LuisResult result, ItemContextParameters parameters, IConversation conversation)
         {
-            var name = (string) conversation.Data[NameKey].Data;
-            var traits = (List<string>) conversation.Data[TraitsKey].Data;
+            var name = (string) conversation.Data[NameKey].Value;
+            var traits = (List<string>) conversation.Data[TraitsKey].Value;
 
             var fields = new Dictionary<ID, string>
             {

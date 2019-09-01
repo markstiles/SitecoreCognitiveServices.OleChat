@@ -46,7 +46,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.User
             if (!AuthenticationWrapper.IsCurrentUserAdministrator())
                 return ConversationResponseFactory.Create(KeyName, Translator.Text("Chat.Intents.KickUser.MustBeAdminMessage"));
 
-            var userSession = (DomainAccessGuard.Session)conversation.Data[UserKey].Data;
+            var userSession = (DomainAccessGuard.Session)conversation.Data[UserKey].Value;
             var name = userSession.UserName;
             AuthenticationWrapper.Kick(userSession.SessionID);
             

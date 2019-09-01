@@ -63,8 +63,8 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
 
         public override ConversationResponse Respond(LuisResult result, ItemContextParameters parameters, IConversation conversation)
         {
-            var contentProfile = (Item) conversation.Data[ContentProfileItemKey].Data;
-            var pageItem = (Item) conversation.Data[PageItemKey].Data;
+            var contentProfile = (Item) conversation.Data[ContentProfileItemKey].Value;
+            var pageItem = (Item) conversation.Data[PageItemKey].Value;
 
             //<tracking>  
             //<profile id="{24DFF2CF-B30A-4B75-8967-2FE3DED82271}" name="Focus" presets="profile card|100||">    
