@@ -26,9 +26,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Publishing
         public override bool RequiresConfirmation => true;
 
         #region Local Properties
-
-        protected string WorkflowKey = "Workflow Role";
-        protected string RoleKey = "User Role";
+        
         protected string DBKey = "Database Name";
         protected string ItemKey = "Item";
         protected string LangKey = "Language";
@@ -48,14 +46,14 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Publishing
             DataWrapper = dataWrapper;
             PublishWrapper = publishWrapper;
 
-            ConversationParameters.Add(new RoleParameter(RoleKey, Translator.Text("Chat.Intents.Publish.RoleParameterWarning"), new List<string> { @"sitecore\Sitecore Client Publishing", @"sitecore\Sitecore Client Advanced Publishing" }, dataWrapper, inputFactory, resultFactory));
+            ConversationParameters.Add(new RoleParameter(Translator.Text("Chat.Intents.Publish.RoleParameterWarning"), new List<string> { @"sitecore\Sitecore Client Publishing", @"sitecore\Sitecore Client Advanced Publishing" }, DataWrapper));
             var parameters = new Dictionary<string, string>
             {
                 { Constants.SearchParameters.FilterPath, Constants.Paths.ContentPath }
             };
             ConversationParameters.Add(new ItemParameter(ItemKey, Translator.Text("Chat.Intents.Publish.ItemParameterRequest"), parameters, dataWrapper, inputFactory, resultFactory));
             ConversationParameters.Add(new LanguageParameter(LangKey, Translator.Text("Chat.Parameters.LangParameterRequest"), settings, dataWrapper, inputFactory, resultFactory));
-            ConversationParameters.Add(new WorkflowParameter(WorkflowKey, Translator.Text("Chat.Intents.Publish.WorkflowParameterWarning"),parameters, dataWrapper, inputFactory, resultFactory));
+            ConversationParameters.Add(new WorkflowParameter(ItemKey, LangKey, Translator.Text("Chat.Intents.Publish.WorkflowParameterWarning")));
             ConversationParameters.Add(new DatabaseParameter(DBKey, Translator.Text("Chat.Parameters.DBParameterRequest"), settings, dataWrapper, inputFactory, publishWrapper, resultFactory));
             ConversationParameters.Add(new YesOrNoParameter(RecursionKey, Translator.Text("Chat.Intents.Publish.RecursionParameterRequest"), inputFactory, resultFactory));
             ConversationParameters.Add(new YesOrNoParameter(RelatedKey, Translator.Text("Chat.Intents.Publish.RelatedParameterRequest"), inputFactory, resultFactory));

@@ -10,40 +10,30 @@ using System.Collections.Generic;
 
 namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 {
-    public class WorkflowParameter : IConversationParameter
+    public class WorkflowParameter : IValidationParameter
     {
         #region Constructor
 
-        public string ParamName { get; set; }
         public string ParamMessage { get; set; }
-        public Dictionary<string, string> Parameters { get; set; }
-
-        public ISitecoreDataWrapper DataWrapper { get; set; }
-        public IIntentInputFactory IntentInputFactory { get; set; }
-        public IParameterResultFactory ResultFactory { get; set; }
+        public string ItemKey { get; set; }
+        public string LangKey { get; set; }
 
         public WorkflowParameter(
-            string paramName,
-            string paramMessage,
-            Dictionary<string, string> parameters,
-            ISitecoreDataWrapper dataWrapper,
-            IIntentInputFactory inputFactory,
-            IParameterResultFactory resultFactory) 
+            string itemKey,
+            string langKey,
+            string paramMessage) 
         {
-            ParamName = paramName;
+            ItemKey = itemKey;
+            LangKey = langKey;
             ParamMessage = paramMessage;
-            Parameters = parameters;
-            DataWrapper = dataWrapper;
-            IntentInputFactory = inputFactory;
-            ResultFactory = resultFactory;
         }
 
         #endregion
 
-        public IParameterResult GetParameter(string paramValue, IConversationContext context, ItemContextParameters parameters, IConversation conversation)
+        public bool IsValid(IConversationContext context, IConversation conversation)
         {
-            var rootItem = (Item)conversation.Data[ParamName].Value;
-            var language = (Language)conversation.Data[ParamName].Value;
+            var rootItem = (Item)conversation.Data[ItemKey].Value;
+            var language = (Language)conversation.Data[LangKey].Value;
             var langItem = rootItem.Database.GetItem(rootItem.ID, language);
             
             var worflowId = langItem.Fields[Sitecore.FieldIDs.Workflow].Value;
@@ -55,18 +45,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
                 ? rootItem.Database.WorkflowProvider.GetWorkflow(workflowItem)
                 : null;
 
-            var isFinal = workflow != null
-                ? workflow.GetState(rootItem).FinalState
-                : true;
-
-            return isFinal
-                ? ResultFactory.GetSuccess(rootItem.DisplayName, rootItem)
-                : ResultFactory.GetFailure(ParamMessage);
-        }
-
-        public IntentInput GetInput(ItemContextParameters parameters, IConversation conversation)
-        {
-            return IntentInputFactory.Create(IntentInputType.ItemSearch, ParamMessage, Parameters);
+            return workflow == null || workflow.GetState(rootItem).FinalState;
         }
     }
 }

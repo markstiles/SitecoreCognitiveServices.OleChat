@@ -11,7 +11,7 @@ using System.Web;
 
 namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 {
-    public class DatabaseParameter : IConversationParameter
+    public class DatabaseParameter : IRequiredParameter
     {
         #region Constructor
 
