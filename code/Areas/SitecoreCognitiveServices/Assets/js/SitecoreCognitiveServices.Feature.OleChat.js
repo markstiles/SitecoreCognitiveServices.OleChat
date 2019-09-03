@@ -490,6 +490,9 @@ jQuery(document).ready(function ()
 
         var selectionList = "";
         for (var i in selections) {
+            if (i === "RequestConfirm")
+                continue;
+
             var displayValue = (i === "builtin.datetimeV2.datetime") ? "Date" : i;
             selectionList += "<li class='user-selection' data-selection='" + clearText + " " + i + "'><span class='field-name'>" + displayValue + ": </span><span class='field-value'>" + selections[i] + "</span></li>";
         }
