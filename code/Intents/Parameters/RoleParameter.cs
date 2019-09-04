@@ -33,7 +33,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 
         #endregion
 
-        public bool IsValid(IConversationContext context, IConversation conversation)
+        public bool IsValid(IConversationContext context)
         {
             var isInRole = Roles.Any(r => DataWrapper.ContextUser.IsInRole(r));
 

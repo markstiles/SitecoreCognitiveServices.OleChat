@@ -32,7 +32,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 
         #endregion
 
-        public IParameterResult GetParameter(string paramValue, IConversationContext context, ItemContextParameters parameters, IConversation conversation)
+        public IParameterResult GetParameter(string paramValue, IConversationContext context)
         {
             var isYes = context.Result.TopScoringIntent.Intent.Equals(context.YesIntentName, StringComparison.InvariantCultureIgnoreCase);
             var isNo = context.Result.TopScoringIntent.Intent.Equals(context.NoIntentName, StringComparison.InvariantCultureIgnoreCase);

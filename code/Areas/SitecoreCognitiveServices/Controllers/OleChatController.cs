@@ -119,7 +119,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Areas.SitecoreCognitiveServi
                 "profile user - quit",
                 parameters,
                 result);
-            var response = LuisConversationService.HandleMessage(conversationContext);
+            var response = LuisConversationService.ProcessUserInput(conversationContext);
             var newMessage = Regex.Replace(response.Message, "<.*?>", " ");
 
             var relativePath = $"temp\\ole-{CreateMD5Hash(newMessage)}.mp3";

@@ -39,9 +39,9 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 
         #endregion
 
-        public IParameterResult GetParameter(string paramValue, IConversationContext context, ItemContextParameters parameters, IConversation conversation)
+        public IParameterResult GetParameter(string paramValue, IConversationContext context)
         {
-            var dbName = (!string.IsNullOrEmpty(parameters.Database)) ? parameters.Database : Settings.MasterDatabase;
+            var dbName = (!string.IsNullOrEmpty(context.Parameters.Database)) ? context.Parameters.Database : Settings.MasterDatabase;
             var db = DataWrapper.GetDatabase(dbName);
             var lang = DataWrapper.GetLanguages(db)
                 .FirstOrDefault(l => LanguageManager

@@ -17,12 +17,12 @@ using SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters;
 
 namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
 {
-    public class CreateDemographicFeatureIntent : BaseOleIntent
+    public class CreateSegmentIntent : BaseOleIntent
     {
         protected readonly ISitecoreDataWrapper DataWrapper;
         protected readonly IPublishWrapper PublishWrapper;
         
-        public override string KeyName => "personalization - create demographic feature";
+        public override string KeyName => "personalization - create segment";
 
         public override string DisplayName => Translator.Text("Chat.Intents.CreateDemographicFeature.Name");
 
@@ -35,7 +35,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
         
         #endregion
 
-        public CreateDemographicFeatureIntent(
+        public CreateSegmentIntent(
             IOleSettings settings,
             ISitecoreDataWrapper dataWrapper,
             IIntentInputFactory inputFactory,
@@ -46,8 +46,8 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             DataWrapper = dataWrapper;
             PublishWrapper = publishWrapper;
 
-            ConversationParameters.Add(new StringParameter(NameKey, "What do you want to name this demographic feature?", inputFactory, resultFactory));
-            ConversationParameters.Add(new StringParameter(TraitsKey, "What are the traits of this feature? (comma separated)", inputFactory, resultFactory));
+            ConversationParameters.Add(new StringParameter(NameKey, "What do you want to name this segment?", inputFactory, resultFactory));
+            ConversationParameters.Add(new StringParameter(TraitsKey, "What are the traits of this segment? (comma separated)", inputFactory, resultFactory));
         }
         
         public override ConversationResponse Respond(LuisResult result, ItemContextParameters parameters, IConversation conversation)

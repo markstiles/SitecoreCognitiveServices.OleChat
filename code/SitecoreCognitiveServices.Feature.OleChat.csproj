@@ -173,10 +173,10 @@
     <Compile Include="Intents\Personalization\AssignContentProfileIntent.cs" />
     <Compile Include="Intents\Personalization\CreateContentProfileIntent.cs" />
     <Compile Include="Intents\Personalization\CreateAudienceProfileIntent.cs" />
-    <Compile Include="Intents\Personalization\ListDemographicTraitsIntent.cs" />
-    <Compile Include="Intents\Personalization\ListDemographicFeaturesIntent.cs" />
+    <Compile Include="Intents\Personalization\ListSegmentTraitsIntent.cs" />
+    <Compile Include="Intents\Personalization\ListSegmentsIntent.cs" />
     <Compile Include="Intents\Personalization\SetupPersonalization.cs" />
-    <Compile Include="Intents\Personalization\CreateDemographicFeatureIntent.cs" />
+    <Compile Include="Intents\Personalization\CreateSegmentIntent.cs" />
     <Compile Include="Intents\ProfileUser\FrustratedIntent.cs" />
     <Compile Include="Intents\ProfileUser\LogoutIntent.cs" />
     <Compile Include="Intents\Personalization\CreateGoalIntent.cs" />

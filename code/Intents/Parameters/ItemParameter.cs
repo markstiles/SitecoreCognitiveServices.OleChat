@@ -39,11 +39,11 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 
         #endregion
 
-        public IParameterResult GetParameter(string paramValue, IConversationContext context, ItemContextParameters parameters, IConversation conversation)
+        public IParameterResult GetParameter(string paramValue, IConversationContext context)
         {
-            var fromDb = DataWrapper.GetDatabase(parameters.Database);
+            var fromDb = DataWrapper.GetDatabase(context.Parameters.Database);
             var returnItem = (paramValue.Contains("this"))
-                ? fromDb.GetItem(new ID(parameters.Id)) ?? fromDb.GetItem(paramValue)
+                ? fromDb.GetItem(new ID(context.Parameters.Id)) ?? fromDb.GetItem(paramValue)
                 : fromDb.GetItem(paramValue);
 
             return (returnItem == null)

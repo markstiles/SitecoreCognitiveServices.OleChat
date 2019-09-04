@@ -44,7 +44,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 
         #endregion
 
-        public IParameterResult GetParameter(string paramValue, IConversationContext context, ItemContextParameters parameters, IConversation conversation)
+        public IParameterResult GetParameter(string paramValue, IConversationContext context)
         {
             try
             {

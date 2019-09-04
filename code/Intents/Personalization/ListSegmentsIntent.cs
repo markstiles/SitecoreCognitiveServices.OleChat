@@ -2,26 +2,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.UI.WebControls;
 using SitecoreCognitiveServices.Foundation.MSSDK.Language.Models.Luis;
 using SitecoreCognitiveServices.Foundation.SCSDK.Wrappers;
+using Sitecore.Data;
 using Sitecore.Data.Items;
+using Sitecore.Globalization;
 using SitecoreCognitiveServices.Feature.OleChat.Statics;
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Factories;
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Models;
-using SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters;
 using System.Text;
 
 namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
 {
-    public class ListDemographicTraitsIntent : BaseOleIntent
+    public class ListSegmentsIntent : BaseOleIntent
     {
         protected readonly ISitecoreDataWrapper DataWrapper;
         protected readonly IPublishWrapper PublishWrapper;
         
-        public override string KeyName => "personalization - list demographic traits";
+        public override string KeyName => "personalization - list segments";
 
-        public override string DisplayName => Translator.Text("Chat.Intents.ListDemographicTraits.Name");
+        public override string DisplayName => Translator.Text("Chat.Intents.CreateProfile.Name");
 
         public override bool RequiresConfirmation => true;
         
@@ -31,7 +31,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
         
         #endregion
 
-        public ListDemographicTraitsIntent(
+        public ListSegmentsIntent(
             IOleSettings settings,
             ISitecoreDataWrapper dataWrapper,
             IIntentInputFactory inputFactory,
@@ -41,23 +41,17 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
         {
             DataWrapper = dataWrapper;
             PublishWrapper = publishWrapper;
-
-            var parameters = new Dictionary<string, string>
-            {
-                { Constants.SearchParameters.FilterPath, Constants.Paths.ProfilePath },
-                { Constants.SearchParameters.TemplateId, Constants.TemplateIds.ProfileTemplateId.ToString() }
-            };
-            ConversationParameters.Add(new ItemParameter(ItemKey, "What demographic feature do you want to know about?", parameters, dataWrapper, inputFactory, resultFactory));
         }
         
         public override ConversationResponse Respond(LuisResult result, ItemContextParameters parameters, IConversation conversation)
         {
-            var profileItem = (Item) conversation.Data[ItemKey].Value;
-            var profileKeys = profileItem.GetChildren().Where(a => a.TemplateID == Constants.TemplateIds.ProfileKeyTemplateId);
+            var profiles = Sitecore.Context.Database.GetItem(Constants.ItemIds.ProfileNodeId)
+                .Axes.GetDescendants()
+                .Where(a => a.TemplateID == Constants.TemplateIds.ProfileTemplateId);
 
             var response = new StringBuilder();
-            response.AppendFormat(Translator.Text("Chat.Intents.ListDemographicTraits.Response"), profileItem.DisplayName);
-            foreach (var p in profileKeys)
+            response.Append(Translator.Text("Chat.Intents.ListDemographicTraits.Response"));
+            foreach(var p in profiles)
             {
                 response.Append($", {p.DisplayName}");
             }
