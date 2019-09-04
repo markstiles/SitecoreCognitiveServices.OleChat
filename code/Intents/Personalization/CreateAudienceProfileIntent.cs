@@ -51,7 +51,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             {
                 { Constants.SearchParameters.FilterPath, Constants.Paths.ContentPath }
             };
-            ConversationParameters.Add(new ItemParameter(ItemKey, "What demographic feature do you want to create and audience profile for?", contentParameters, dataWrapper, inputFactory, resultFactory));
+            ConversationParameters.Add(new ItemParameter(ItemKey, "What segment feature do you want to create and audience profile for?", contentParameters, dataWrapper, inputFactory, resultFactory));
             //ask for the numeric value for each key in the profile 
         }
 

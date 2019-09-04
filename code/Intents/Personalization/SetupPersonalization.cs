@@ -38,7 +38,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
         {
             var itemList = new List<ListItem>
             {
-                new ListItem(Translator.Text("Chat.Intents.SetupPersonalization.CreateDemographicFeature")), // profile
+                new ListItem(Translator.Text("Chat.Intents.SetupPersonalization.CreateSegment")), // profile
                 new ListItem(Translator.Text("Chat.Intents.SetupPersonalization.CreateTargetAudienceProfile")), // pattern card
                 new ListItem(Translator.Text("Chat.Intents.SetupPersonalization.CreateContentProfile")), // profile card
                 new ListItem(Translator.Text("Chat.Intents.SetupPersonalization.AssignContentProfile")), // add profile card to page or search action

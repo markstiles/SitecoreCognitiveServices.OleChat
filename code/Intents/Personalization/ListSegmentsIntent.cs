@@ -21,13 +21,13 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
         
         public override string KeyName => "personalization - list segments";
 
-        public override string DisplayName => Translator.Text("Chat.Intents.CreateProfile.Name");
+        public override string DisplayName => Translator.Text("Chat.Intents.ListSegments.Name");
 
         public override bool RequiresConfirmation => true;
         
         #region Local Properties
 
-        protected string ItemKey = "Demographic Feature";
+        protected string ItemKey = "Segment";
         
         #endregion
 
@@ -50,7 +50,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
                 .Where(a => a.TemplateID == Constants.TemplateIds.ProfileTemplateId);
 
             var response = new StringBuilder();
-            response.Append(Translator.Text("Chat.Intents.ListDemographicTraits.Response"));
+            response.Append(Translator.Text("Chat.Intents.ListSegmentTraits.Response"));
             foreach(var p in profiles)
             {
                 response.Append($", {p.DisplayName}");
