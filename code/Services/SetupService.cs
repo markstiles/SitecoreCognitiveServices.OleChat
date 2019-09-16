@@ -98,7 +98,8 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Services
             var jsonText = OleSettings.ApplicationBackup;
             var appDefinition = JsonConvert.DeserializeObject<ApplicationDefinition>(jsonText);
 
-            var infoResponse = LuisService.GetUserApplications().FirstOrDefault(a => a.Name.Equals(appDefinition.Name));
+            var apps = LuisService.GetUserApplications();
+            var infoResponse = (apps != null && apps.Any()) ?  apps.FirstOrDefault(a => a.Name.Equals(appDefinition.Name)) : null;
             bool shouldOverwrite = infoResponse != null && overwrite;
             bool isNoApp = infoResponse == null;
             bool hasAppId = !string.IsNullOrWhiteSpace(infoResponse?.Id);
