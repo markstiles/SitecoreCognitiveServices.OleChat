@@ -268,26 +268,20 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Areas.SitecoreCognitiveServi
         {
             if (!IsSitecoreUser())
                 return LoginPage();
-
-            List<string> items = new List<string>();
-
+            
             SetupService.SaveKeys(luisApi, luisAuthoringApi, luisApiEndpoint);
             
             var restoreResult = SetupService.RestoreOle(overwriteOption);
-            if(!restoreResult)
-                items.Add("Restore Ole");
-
+            if (!restoreResult)
+                return Json(new { Failed = true, Items = new List<string> { "Restore Ole" }});
+                
             var queryResult = SetupService.QueryOle();
             if(!queryResult)
-                items.Add("Query Ole");
-
+                return Json(new { Failed = true, Items = new List<string> { "Query Ole" }});
+            
             SetupService.PublishOleContent();
 
-            return Json(new
-            {
-                Failed = items.Count > 0,
-                Items = string.Join(",", items)
-            });
+            return Json(new { Failed = true, Items = "" });
         }
         
         #endregion
