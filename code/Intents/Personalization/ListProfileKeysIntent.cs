@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.UI.WebControls;
 using SitecoreCognitiveServices.Foundation.MSSDK.Language.Models.Luis;
 using SitecoreCognitiveServices.Foundation.SCSDK.Wrappers;
 using Sitecore.Data.Items;
@@ -14,24 +13,24 @@ using System.Text;
 
 namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
 {
-    public class ListSegmentTraitsIntent : BaseOleIntent
+    public class ListProfileKeysIntent : BaseOleIntent
     {
         protected readonly ISitecoreDataWrapper DataWrapper;
         protected readonly IPublishWrapper PublishWrapper;
         
-        public override string KeyName => "personalization - list segment traits";
+        public override string KeyName => "personalization - list profile keys";
 
-        public override string DisplayName => Translator.Text("Chat.Intents.ListSegmentTraits.Name");
+        public override string DisplayName => Translator.Text("Chat.Intents.ListProfileKeys.Name");
 
-        public override bool RequiresConfirmation => true;
+        public override bool RequiresConfirmation => false;
         
         #region Local Properties
 
-        protected string ItemKey = "Segment";
+        protected string ItemKey = "Profile";
         
         #endregion
 
-        public ListSegmentTraitsIntent(
+        public ListProfileKeysIntent(
             IOleSettings settings,
             ISitecoreDataWrapper dataWrapper,
             IIntentInputFactory inputFactory,
@@ -47,7 +46,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
                 { Constants.SearchParameters.FilterPath, Constants.Paths.ProfilePath },
                 { Constants.SearchParameters.TemplateId, Constants.TemplateIds.ProfileTemplateId.ToString() }
             };
-            ConversationParameters.Add(new ItemParameter(ItemKey, "What segment do you want to know about?", parameters, dataWrapper, inputFactory, resultFactory));
+            ConversationParameters.Add(new ItemParameter(ItemKey, Translator.Text("Chat.Intents.ListProfileKeys.WhichProfile"), parameters, dataWrapper, inputFactory, resultFactory));
         }
         
         public override ConversationResponse Respond(LuisResult result, ItemContextParameters parameters, IConversation conversation)
@@ -56,11 +55,8 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             var profileKeys = profileItem.GetChildren().Where(a => a.TemplateID == Constants.TemplateIds.ProfileKeyTemplateId);
 
             var response = new StringBuilder();
-            response.AppendFormat(Translator.Text("Chat.Intents.ListSegmentTraits.Response"), profileItem.DisplayName);
-            foreach (var p in profileKeys)
-            {
-                response.Append($", {p.DisplayName}");
-            }
+            var profileKeyList = string.Join(", ", profileKeys.Select(a => a.DisplayName));
+            response.AppendFormat(Translator.Text("Chat.Intents.ListProfileKeys.Response"), profileKeys.Count(), profileItem.DisplayName, profileKeyList);
 
             return ConversationResponseFactory.Create(KeyName, response.ToString());
         }

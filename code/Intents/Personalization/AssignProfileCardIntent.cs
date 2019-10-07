@@ -19,12 +19,12 @@ using System.Xml.Linq;
 
 namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
 {
-    public class AssignContentProfileIntent : BaseOleIntent
+    public class AssignProfileCardIntent : BaseOleIntent
     {
         protected readonly ISitecoreDataWrapper DataWrapper;
         protected readonly IPublishWrapper PublishWrapper;
         
-        public override string KeyName => "personalization - assign content profile";
+        public override string KeyName => "personalization - assign profile card";
 
         public override string DisplayName => Translator.Text("Chat.Intents.CreateProfile.Name");
 
@@ -37,7 +37,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
         
         #endregion
 
-        public AssignContentProfileIntent(
+        public AssignProfileCardIntent(
             IOleSettings settings,
             ISitecoreDataWrapper dataWrapper,
             IIntentInputFactory inputFactory,

@@ -17,25 +17,25 @@ using SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters;
 
 namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
 {
-    public class CreateAudienceProfileIntent : BaseOleIntent
+    public class CreateProfileCardIntent : BaseOleIntent
     {
         protected readonly ISitecoreDataWrapper DataWrapper;
         protected readonly IPublishWrapper PublishWrapper;
         
-        public override string KeyName => "personalization - create audience profile";
+        public override string KeyName => "personalization - create profile card";
 
-        public override string DisplayName => Translator.Text("Chat.Intents.CreateAudienceProfile.Name");
+        public override string DisplayName => Translator.Text("Chat.Intents.CreateContentProfile.Name");
 
         public override bool RequiresConfirmation => true;
-
+        
         #region Local Properties
 
-        protected string NameKey = "Target Audience Name";
-        protected string ItemKey = "Item ";
-        
+        protected string NameKey = "Content Profile Name";
+        protected string ItemKey = "Item";
+
         #endregion
 
-        public CreateAudienceProfileIntent(
+        public CreateProfileCardIntent(
             IOleSettings settings,
             ISitecoreDataWrapper dataWrapper,
             IIntentInputFactory inputFactory,
@@ -46,12 +46,13 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             DataWrapper = dataWrapper;
             PublishWrapper = publishWrapper;
 
-            ConversationParameters.Add(new StringParameter(NameKey, "What is the name of this target audience?", inputFactory, resultFactory));
-            var contentParameters = new Dictionary<string, string>
+            ConversationParameters.Add(new StringParameter(NameKey, "What is the name of this content profile", inputFactory, resultFactory));
+            var parameters = new Dictionary<string, string>
             {
-                { Constants.SearchParameters.FilterPath, Constants.Paths.ContentPath }
+                { Constants.SearchParameters.FilterPath, Constants.Paths.ProfilePath },
+                { Constants.SearchParameters.TemplateId, Constants.TemplateIds.ProfileTemplateId.ToString() }
             };
-            ConversationParameters.Add(new ItemParameter(ItemKey, "What segment feature do you want to create and audience profile for?", contentParameters, dataWrapper, inputFactory, resultFactory));
+            ConversationParameters.Add(new ItemParameter(ItemKey, "what segment feature do you want to create a content profile for?", parameters, dataWrapper, inputFactory, resultFactory));
             //ask for the numeric value for each key in the profile 
         }
 
@@ -60,30 +61,29 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             var name = (string) conversation.Data[NameKey].Value;
             var profileItem = (Item) conversation.Data[ItemKey].Value;
 
-            // profile card value field
-            var profileCardValue = "";
+            var patternFieldValue = "";
             //<tracking>  
             //<profile id="{24DFF2CF-B30A-4B75-8967-2FE3DED82271}" name="Focus">    
-            //<key name="Background" value="2" />    
-            //<key name="Practical" value="1" />    
+            //<key name="Background" value="3" />    
+            //<key name="Practical" value="5" />    
             //<key name="Process" value="5" />    
-            //<key name="Scope" value="7" />  
+            //<key name="Scope" value="5" />  
             //</profile>
             //</tracking>
 
             var fields = new Dictionary<ID, string>
             {
-                { Constants.FieldIds.ProfileCard.NameFieldId, name },
-                { Constants.FieldIds.ProfileCard.ProfileCardValueFieldId, profileCardValue }
+                { Constants.FieldIds.PatternCard.NameFieldId, name },    
+                { Constants.FieldIds.PatternCard.PatternFieldId, patternFieldValue }    
             };
-            
-            //create profile card
+
+            //create pattern card
             var fromDb = "master";
-            var profileCardFolder = profileItem.Axes.GetChild("Profile Cards");
-            var newProfileItem = DataWrapper.CreateItem(profileCardFolder.ID, Constants.TemplateIds.ProfileCardTemplateId, fromDb, name, fields);
+            var patternCardFolder = profileItem.Axes.GetChild("Pattern Cards");
+            var newProfileItem = DataWrapper.CreateItem(patternCardFolder.ID, Constants.TemplateIds.PatternCardTemplateId, fromDb, name, fields);
 
             return ConversationResponseFactory.Create(KeyName, string.Format(
-                Translator.Text("Chat.Intents.CreateAudienceProfile.Response"),
+                Translator.Text("Chat.Intents.CreateContentProfile.Response"),
                 profileItem.DisplayName));
         }
     }

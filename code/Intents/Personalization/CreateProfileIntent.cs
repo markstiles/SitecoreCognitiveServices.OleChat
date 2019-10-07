@@ -17,12 +17,12 @@ using SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters;
 
 namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
 {
-    public class CreateSegmentIntent : BaseOleIntent
+    public class CreateProfileIntent : BaseOleIntent
     {
         protected readonly ISitecoreDataWrapper DataWrapper;
         protected readonly IPublishWrapper PublishWrapper;
         
-        public override string KeyName => "personalization - create segment";
+        public override string KeyName => "personalization - create profile";
 
         public override string DisplayName => Translator.Text("Chat.Intents.CreateSegment.Name");
 
@@ -30,12 +30,12 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
         
         #region Local Properties
 
-        protected string NameKey = "Segment Name";
-        protected string TraitsKey = "Feature Traits";
+        protected string NameKey = "Profile Name";
+        protected string ProfileKeysKey = "Profile Keys";
         
         #endregion
 
-        public CreateSegmentIntent(
+        public CreateProfileIntent(
             IOleSettings settings,
             ISitecoreDataWrapper dataWrapper,
             IIntentInputFactory inputFactory,
@@ -46,14 +46,14 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             DataWrapper = dataWrapper;
             PublishWrapper = publishWrapper;
 
-            ConversationParameters.Add(new StringParameter(NameKey, "What do you want to name this segment?", inputFactory, resultFactory));
-            ConversationParameters.Add(new StringParameter(TraitsKey, "What are the traits of this segment? (comma separated)", inputFactory, resultFactory));
+            ConversationParameters.Add(new StringParameter(NameKey, "What do you want to name this profile?", inputFactory, resultFactory));
+            ConversationParameters.Add(new StringParameter(ProfileKeysKey, "What are the keys for this profile? (comma separated)", inputFactory, resultFactory));
         }
         
         public override ConversationResponse Respond(LuisResult result, ItemContextParameters parameters, IConversation conversation)
         {
             var name = (string) conversation.Data[NameKey].Value;
-            var traits = (List<string>) conversation.Data[TraitsKey].Value;
+            var keys = (List<string>) conversation.Data[ProfileKeysKey].Value;
 
             var fields = new Dictionary<ID, string>
             {
@@ -74,16 +74,16 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             var newProfileItem = DataWrapper.CreateItem(profileFolder.ID, Constants.TemplateIds.ProfileTemplateId, fromDb, name, fields);
 
             //create the profile keys
-            foreach (var t in traits)
+            foreach (var k in keys)
             {
-                var traitFields = new Dictionary<ID, string>
+                var keyFields = new Dictionary<ID, string>
                 {
                     { Constants.FieldIds.ProfileKey.NameFieldId, name },     
                     { Constants.FieldIds.ProfileKey.MinValueFieldId, "0" },  
-                    { Constants.FieldIds.ProfileKey.MaxValueFieldId, "110" },
+                    { Constants.FieldIds.ProfileKey.MaxValueFieldId, "10" },
                 };
 
-                var traitItem = DataWrapper.CreateItem(newProfileItem.ID, Constants.TemplateIds.ProfileKeyTemplateId, fromDb, t, traitFields);
+                var keyItem = DataWrapper.CreateItem(newProfileItem.ID, Constants.TemplateIds.ProfileKeyTemplateId, fromDb, k, keyFields);
             }
 
             //publish
