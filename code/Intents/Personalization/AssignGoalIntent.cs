@@ -28,8 +28,8 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
         
         #region Local Properties
         
-        protected string GoalItemKey = "Goal Item";
-        protected string PageItemKey = "Page Item";
+        protected string GoalItemKey = "Goal";
+        protected string PageItemKey = "Page";
         
         #endregion
 
@@ -49,12 +49,12 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
                 { Constants.SearchParameters.FilterPath, Constants.Paths.GoalPath },
                 { Constants.SearchParameters.TemplateId, Constants.TemplateIds.GoalTemplateId.ToString() }
             };
-            ConversationParameters.Add(new ItemParameter(GoalItemKey, "What goal do you want to assign?", goalParameters, dataWrapper, inputFactory, resultFactory));
+            ConversationParameters.Add(new ItemParameter(GoalItemKey, "Chat.Intents.AssignGoal.GoalParameterRequest", goalParameters, dataWrapper, inputFactory, resultFactory));
             var contentParameters = new Dictionary<string, string>
             {
                 { Constants.SearchParameters.FilterPath, Constants.Paths.ContentPath }
             };
-            ConversationParameters.Add(new ItemParameter(PageItemKey, "What page do you want to assign to?", contentParameters, dataWrapper, inputFactory, resultFactory));
+            ConversationParameters.Add(new ItemParameter(PageItemKey, "Chat.Intents.AssignGoal.PageParameterRequest", contentParameters, dataWrapper, inputFactory, resultFactory));
         }
 
         public override ConversationResponse Respond(LuisResult result, ItemContextParameters parameters, IConversation conversation)

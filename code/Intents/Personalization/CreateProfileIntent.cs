@@ -46,8 +46,8 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             DataWrapper = dataWrapper;
             PublishWrapper = publishWrapper;
 
-            ConversationParameters.Add(new StringParameter(NameKey, "What do you want to name this profile?", inputFactory, resultFactory));
-            ConversationParameters.Add(new StringParameter(ProfileKeysKey, "What are the keys for this profile? (comma separated)", inputFactory, resultFactory));
+            ConversationParameters.Add(new StringParameter(NameKey, "Chat.Intents.CreateProfile.NameParameterRequest", inputFactory, resultFactory));
+            ConversationParameters.Add(new StringParameter(ProfileKeysKey, "Chat.Intents.CreateProfile.KeysParameterRequest", inputFactory, resultFactory));
         }
         
         public override ConversationResponse Respond(LuisResult result, ItemContextParameters parameters, IConversation conversation)
@@ -65,13 +65,9 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             //create goal and folder if needed
             var fromDb = "master";
             var profileNode = DataWrapper.GetItemById(Constants.ItemIds.ProfileNodeId, fromDb);
-            var folderName = "User Defined";
-            var profileFolder = profileNode.Axes.GetChild(folderName);
-            if (profileFolder == null)
-                profileFolder = DataWrapper.CreateItem(Constants.ItemIds.ProfileNodeId, Constants.TemplateIds.FolderTemplateId, fromDb, folderName, new Dictionary<ID, string>());
-
+            
             //create the profile
-            var newProfileItem = DataWrapper.CreateItem(profileFolder.ID, Constants.TemplateIds.ProfileTemplateId, fromDb, name, fields);
+            var newProfileItem = DataWrapper.CreateItem(profileNode.ID, Constants.TemplateIds.ProfileTemplateId, fromDb, name, fields);
 
             //create the profile keys
             foreach (var k in keys)
@@ -88,10 +84,10 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
 
             //publish
             var toDb = DataWrapper.GetDatabase("web");
-            PublishWrapper.PublishItem(profileFolder, new[] { toDb }, new[] { DataWrapper.ContentLanguage }, true, false, false);
+            PublishWrapper.PublishItem(profileNode, new[] { toDb }, new[] { DataWrapper.ContentLanguage }, true, false, false);
 
             
-            return ConversationResponseFactory.Create(KeyName, string.Format(Translator.Text("Chat.Intents.CreateSegment.Response"), newProfileItem.DisplayName));
+            return ConversationResponseFactory.Create(KeyName, string.Format(Translator.Text("Chat.Intents.CreateProfile.Response"), newProfileItem.DisplayName));
         }
     }
 }

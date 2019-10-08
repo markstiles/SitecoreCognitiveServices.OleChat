@@ -5,13 +5,10 @@ using System.Linq;
 using SitecoreCognitiveServices.Foundation.MSSDK.Language.Models.Luis;
 using SitecoreCognitiveServices.Foundation.SCSDK.Wrappers;
 using Sitecore.Data;
-using Sitecore.Data.Items;
 using SitecoreCognitiveServices.Feature.OleChat.Statics;
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Factories;
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Models;
 using SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters;
-using System.Text;
-using System.Xml.Linq;
 
 namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
 {
