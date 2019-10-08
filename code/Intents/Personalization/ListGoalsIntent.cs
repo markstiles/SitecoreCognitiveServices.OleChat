@@ -11,18 +11,18 @@ using System.Text;
 
 namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
 {
-    public class ListProfilesIntent : BaseOleIntent
+    public class ListGoalsIntent : BaseOleIntent
     {
         protected readonly ISitecoreDataWrapper DataWrapper;
         protected readonly IPublishWrapper PublishWrapper;
         
-        public override string KeyName => "personalization - list profiles";
+        public override string KeyName => "personalization - list goals";
 
-        public override string DisplayName => Translator.Text("Chat.Intents.ListProfiles.Name");
+        public override string DisplayName => Translator.Text("Chat.Intents.ListGoals.Name");
 
         public override bool RequiresConfirmation => false;
        
-        public ListProfilesIntent(
+        public ListGoalsIntent(
             IOleSettings settings,
             ISitecoreDataWrapper dataWrapper,
             IIntentInputFactory inputFactory,
@@ -36,13 +36,13 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
         
         public override ConversationResponse Respond(LuisResult result, ItemContextParameters parameters, IConversation conversation)
         {
-            var profiles = Sitecore.Context.Database.GetItem(Constants.ItemIds.ProfileNodeId)
+            var profiles = Sitecore.Context.Database.GetItem(Constants.ItemIds.GoalNodeId)
                 .Axes.GetDescendants()
-                .Where(a => a.TemplateID == Constants.TemplateIds.ProfileTemplateId);
+                .Where(a => a.TemplateID == Constants.TemplateIds.GoalTemplateId);
 
             var response = new StringBuilder();
             var profileList = string.Join(", ", profiles.Select(a => a.DisplayName));
-            response.AppendFormat(Translator.Text("Chat.Intents.ListProfiles.Response"), profiles.Count(), profileList);
+            response.AppendFormat(Translator.Text("Chat.Intents.ListGoals.Response"), profiles.Count(), profileList);
 
             return ConversationResponseFactory.Create(KeyName, response.ToString());
         }

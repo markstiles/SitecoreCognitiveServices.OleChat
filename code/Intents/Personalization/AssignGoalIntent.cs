@@ -2,17 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.UI.WebControls;
 using SitecoreCognitiveServices.Foundation.MSSDK.Language.Models.Luis;
 using SitecoreCognitiveServices.Foundation.SCSDK.Wrappers;
 using Sitecore.Data;
 using Sitecore.Data.Items;
-using Sitecore.Globalization;
 using SitecoreCognitiveServices.Feature.OleChat.Statics;
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Factories;
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Models;
 using SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters;
-using System.Text;
 using System.Xml.Linq;
 
 namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
@@ -64,28 +61,25 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
         {
             var goalItem = (Item)conversation.Data[GoalItemKey].Value;
             var pageItem = (Item)conversation.Data[PageItemKey].Value;
-            
-            //todo make sure this doesn't lose any tracking field data
 
             //get the item's tracking field and append the new goal to it
             var trackingField = pageItem.Fields[Constants.FieldIds.StandardFields.TrackingFieldId];
-            var newFieldValue = new StringBuilder("<tracking>");
+            XDocument xdoc = XDocument.Parse(trackingField.Value);
             if (!string.IsNullOrWhiteSpace(trackingField?.Value))
             {
-                XDocument xdoc = XDocument.Parse(trackingField.Value);
-                var events = xdoc.Descendants("event");
-                foreach(XElement e in events)
-                {
-                    if(e.Attribute("id").Value != goalItem.ID.ToString())
-                        newFieldValue.Append(e.ToString());
+                var events = xdoc.Root.Descendants("event");
+                XElement eventNode = events.FirstOrDefault(a => a.Attribute("id").Value != goalItem.ID.ToString());
+                if(eventNode == null) { 
+                    eventNode = new XElement("event", 
+                        new XAttribute("id", goalItem.ID.ToString()), 
+                        new XAttribute("name", goalItem.DisplayName));
                 }
+                xdoc.Root.Add(eventNode);
             }
-            newFieldValue.Append($"<event id=\"{goalItem.ID}\" name=\"{goalItem.DisplayName}\" />");
-            newFieldValue.Append("</tracking>");
 
             var pageFields = new Dictionary<ID, string>
             {
-                { Constants.FieldIds.StandardFields.TrackingFieldId, newFieldValue.ToString() }
+                { Constants.FieldIds.StandardFields.TrackingFieldId, xdoc.Root.ToString() }
             };
             
             DataWrapper.UpdateFields(pageItem, pageFields);

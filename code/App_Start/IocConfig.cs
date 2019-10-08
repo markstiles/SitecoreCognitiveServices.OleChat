@@ -30,6 +30,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.App_Start
             serviceCollection.AddTransient<IIntent, SetupPersonalizationIntent>();
             serviceCollection.AddTransient<IIntent, CreateGoalIntent>();
             serviceCollection.AddTransient<IIntent, AssignGoalIntent>();
+            serviceCollection.AddTransient<IIntent, ListGoalsIntent>();
             serviceCollection.AddTransient<IIntent, CreateProfileIntent>();
             serviceCollection.AddTransient<IIntent, CreateProfileCardIntent>();
             serviceCollection.AddTransient<IIntent, AssignProfileCardIntent>();

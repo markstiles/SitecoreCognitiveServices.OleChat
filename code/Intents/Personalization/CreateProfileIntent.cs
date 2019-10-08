@@ -24,7 +24,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
         
         public override string KeyName => "personalization - create profile";
 
-        public override string DisplayName => Translator.Text("Chat.Intents.CreateSegment.Name");
+        public override string DisplayName => Translator.Text("Chat.Intents.CreateProfile.Name");
 
         public override bool RequiresConfirmation => true;
         
