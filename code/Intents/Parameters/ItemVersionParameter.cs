@@ -15,7 +15,8 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
         #region Constructor
 
         public string ParamName { get; set; }
-        public string ParamMessage { get; set; }
+        protected string ParamMessage { get; set; }
+        public string GetParamMessage(IConversation conversation) => ParamMessage;
         public string ItemParamName { get; set; }
 
         public IIntentInputFactory IntentInputFactory { get; set; }

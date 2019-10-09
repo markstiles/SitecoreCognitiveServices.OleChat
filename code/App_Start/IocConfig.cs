@@ -55,8 +55,9 @@ namespace SitecoreCognitiveServices.Feature.OleChat.App_Start
 
             //factories
             serviceCollection.AddTransient<ISetupInformationFactory, SetupInformationFactory>();
-            
+
             //setup
+            serviceCollection.AddTransient<IProfileService, ProfileService>();
             serviceCollection.AddTransient<ISetupService, SetupService>();
             serviceCollection.AddTransient<ISearchService, SearchService>();
 

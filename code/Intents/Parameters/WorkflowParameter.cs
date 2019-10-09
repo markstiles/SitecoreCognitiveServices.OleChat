@@ -1,12 +1,7 @@
 ﻿using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Globalization;
-using SitecoreCognitiveServices.Feature.OleChat.Statics;
-using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Enums;
-using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Factories;
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Models;
-using SitecoreCognitiveServices.Foundation.SCSDK.Wrappers;
-using System.Collections.Generic;
 
 namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 {
@@ -14,7 +9,8 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
     {
         #region Constructor
 
-        public string ParamMessage { get; set; }
+        protected string ParamMessage { get; set; }
+        public string GetParamMessage(IConversation conversation) => ParamMessage;
         public string ItemKey { get; set; }
         public string LangKey { get; set; }
 

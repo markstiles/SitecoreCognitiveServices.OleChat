@@ -61,7 +61,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             var name = (string) conversation.Data[NameKey].Value;
             var profileItem = (Item) conversation.Data[ItemKey].Value;
 
-            var patternFieldValue = "";
+            var profileCardValue = "";
             //<tracking>  
             //<profile id="{24DFF2CF-B30A-4B75-8967-2FE3DED82271}" name="Focus">    
             //<key name="Background" value="3" />    
@@ -73,8 +73,8 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
 
             var fields = new Dictionary<ID, string>
             {
-                { Constants.FieldIds.PatternCard.NameFieldId, name },    
-                { Constants.FieldIds.PatternCard.PatternFieldId, patternFieldValue }    
+                { Constants.FieldIds.ProfileCard.NameFieldId, name },
+                { Constants.FieldIds.ProfileCard.ProfileCardValueFieldId, profileCardValue }
             };
 
             //create pattern card

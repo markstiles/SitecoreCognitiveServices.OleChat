@@ -158,6 +158,7 @@
   <ItemGroup>
     <Compile Include="Areas\SitecoreCognitiveServices\Models\ISetupInformation.cs" />
     <Compile Include="Areas\SitecoreCognitiveServices\Models\ItemSearchResultViewModel.cs" />
+    <Compile Include="Areas\SitecoreCognitiveServices\Models\ProfileKeyData.cs" />
     <Compile Include="Areas\SitecoreCognitiveServices\Models\SetupInformation.cs" />
     <Compile Include="Commands\BackupOle.cs" />
     <Compile Include="Commands\BaseOleChatCommand.cs" />
@@ -166,6 +167,7 @@
     <Compile Include="Factories\SetupInformationFactory.cs" />
     <Compile Include="Intents\BaseOleIntent.cs" />
     <Compile Include="Intents\Parameters\IntegerParameter.cs" />
+    <Compile Include="Intents\Parameters\ProfileKeysParameter.cs" />
     <Compile Include="Intents\Parameters\WorkflowParameter.cs" />
     <Compile Include="Intents\Parameters\RoleParameter.cs" />
     <Compile Include="Intents\Parameters\StringParameter.cs" />
@@ -212,6 +214,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ISearchService.cs" />
     <Compile Include="Services\ISetupService.cs" />
+    <Compile Include="Services\IProfileService.cs" />
+    <Compile Include="Services\ProfileService.cs" />
     <Compile Include="Services\SearchService.cs" />
     <Compile Include="Services\SetupService.cs" />
     <Compile Include="Statics\Translator.cs" />

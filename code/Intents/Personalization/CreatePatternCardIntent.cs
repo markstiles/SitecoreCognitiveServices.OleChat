@@ -2,18 +2,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.UI.WebControls;
 using SitecoreCognitiveServices.Foundation.MSSDK.Language.Models.Luis;
 using SitecoreCognitiveServices.Foundation.SCSDK.Wrappers;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Globalization;
 using SitecoreCognitiveServices.Feature.OleChat.Statics;
-using Sitecore.Data.Managers;
-using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Enums;
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Factories;
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Models;
 using SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters;
+using SitecoreCognitiveServices.Feature.OleChat.Services;
+using SitecoreCognitiveServices.Feature.OleChat.Areas.SitecoreCognitiveServices.Models;
 
 namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
 {
@@ -21,6 +20,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
     {
         protected readonly ISitecoreDataWrapper DataWrapper;
         protected readonly IPublishWrapper PublishWrapper;
+        protected readonly IProfileService ProfileService;
         
         public override string KeyName => "personalization - create pattern card";
 
@@ -31,8 +31,9 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
         #region Local Properties
 
         protected string NameKey = "Target Audience Name";
-        protected string ItemKey = "Item ";
-        
+        protected string ProfileItemKey = "Profile";
+        protected string ProfileKeyValuesKey = "Profile Key Values";
+
         #endregion
 
         public CreatePatternCardIntent(
@@ -41,49 +42,45 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             IIntentInputFactory inputFactory,
             IConversationResponseFactory responseFactory,
             IParameterResultFactory resultFactory,
-            IPublishWrapper publishWrapper) : base(inputFactory, responseFactory, settings)
+            IPublishWrapper publishWrapper,
+            IProfileService profileService) : base(inputFactory, responseFactory, settings)
         {
             DataWrapper = dataWrapper;
             PublishWrapper = publishWrapper;
+            ProfileService = profileService;
 
-            ConversationParameters.Add(new StringParameter(NameKey, "What is the name of this target audience?", inputFactory, resultFactory));
             var contentParameters = new Dictionary<string, string>
             {
-                { Constants.SearchParameters.FilterPath, Constants.Paths.ContentPath }
+                { Constants.SearchParameters.FilterPath, Constants.Paths.ProfilePath }
             };
-            ConversationParameters.Add(new ItemParameter(ItemKey, "What segment feature do you want to create and audience profile for?", contentParameters, dataWrapper, inputFactory, resultFactory));
-            //ask for the numeric value for each key in the profile 
+            ConversationParameters.Add(new ItemParameter(ProfileItemKey, "What profile do you want to create this pattern card for?", contentParameters, dataWrapper, inputFactory, resultFactory));
+            ConversationParameters.Add(new StringParameter(NameKey, "What is the name of the target audience?", inputFactory, resultFactory));
+            ConversationParameters.Add(new ProfileKeysParameter(ProfileItemKey, ProfileKeyValuesKey, "What value do you want for {0} ({1} - {2})", inputFactory, resultFactory, profileService));
         }
 
         public override ConversationResponse Respond(LuisResult result, ItemContextParameters parameters, IConversation conversation)
         {
             var name = (string) conversation.Data[NameKey].Value;
-            var profileItem = (Item) conversation.Data[ItemKey].Value;
+            var profileItem = (Item) conversation.Data[ProfileItemKey].Value;
+            var profileKeyData = (ProfileKeyData)conversation.Data[ProfileKeyValuesKey].Value;
+            var keys = ProfileService.GetProfileKeys(profileItem);
 
-            // profile card value field
-            var profileCardValue = "";
-            //<tracking>  
-            //<profile id="{24DFF2CF-B30A-4B75-8967-2FE3DED82271}" name="Focus">    
-            //<key name="Background" value="2" />    
-            //<key name="Practical" value="1" />    
-            //<key name="Process" value="5" />    
-            //<key name="Scope" value="7" />  
-            //</profile>
-            //</tracking>
-
+            // pattern card value field
+            var patternCardValue = ProfileService.GetTrackingFieldValue(profileItem, profileKeyData.KeyValuePairs);
+            
             var fields = new Dictionary<ID, string>
             {
-                { Constants.FieldIds.ProfileCard.NameFieldId, name },
-                { Constants.FieldIds.ProfileCard.ProfileCardValueFieldId, profileCardValue }
+                { Constants.FieldIds.PatternCard.NameFieldId, name },
+                { Constants.FieldIds.PatternCard.PatternFieldId, patternCardValue }
             };
             
             //create profile card
             var fromDb = "master";
-            var profileCardFolder = profileItem.Axes.GetChild("Profile Cards");
-            var newProfileItem = DataWrapper.CreateItem(profileCardFolder.ID, Constants.TemplateIds.ProfileCardTemplateId, fromDb, name, fields);
+            var profileCardFolder = profileItem.Axes.GetChild("Pattern Cards");
+            var newPatternCardItem = DataWrapper.CreateItem(profileCardFolder.ID, Constants.TemplateIds.PatternCardTemplateId, fromDb, name, fields);
 
             return ConversationResponseFactory.Create(KeyName, string.Format(
-                Translator.Text("Chat.Intents.CreateAudienceProfile.Response"),
+                Translator.Text("Chat.Intents.CreatePatternCard.Response"),
                 profileItem.DisplayName));
         }
     }

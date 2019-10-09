@@ -15,7 +15,8 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
     {
         #region Constructor
         
-        public string ParamMessage { get; set; }
+        protected string ParamMessage { get; set; }
+        public string GetParamMessage(IConversation conversation) => ParamMessage;
         public List<string> Roles { get; set; }
 
         public ISitecoreDataWrapper DataWrapper { get; set; }
