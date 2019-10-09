@@ -62,11 +62,11 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
         {
             var name = (string) conversation.Data[NameKey].Value;
             var profileItem = (Item) conversation.Data[ProfileItemKey].Value;
-            var profileKeyData = (ProfileKeyData)conversation.Data[ProfileKeyValuesKey].Value;
+            var profileKeyData = (Dictionary<string, string>)conversation.Data[ProfileKeyValuesKey].Value;
             var keys = ProfileService.GetProfileKeys(profileItem);
 
             // pattern card value field
-            var patternCardValue = ProfileService.GetTrackingFieldValue(profileItem, profileKeyData.KeyValuePairs);
+            var patternCardValue = ProfileService.GetTrackingFieldValue(profileItem, profileKeyData);
             
             var fields = new Dictionary<ID, string>
             {

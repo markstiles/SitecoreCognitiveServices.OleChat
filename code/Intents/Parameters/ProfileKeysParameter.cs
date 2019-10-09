@@ -69,8 +69,8 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
             //find or setup temp storage
             var dataExists = conversation.Data.ContainsKey(DataKey);
             var data = dataExists
-                ? (ProfileKeyData)conversation.Data[DataKey].Value
-                : new ProfileKeyData(profileItem.ID.Guid);
+                ? (Dictionary<string, string>)conversation.Data[DataKey].Value
+                : new Dictionary<string, string>();
 
             if(!dataExists)
                 conversation.Data[DataKey] = new ParameterData { Value = data };
@@ -80,14 +80,14 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
             {
                 var k = keys[i];
                 var keyName = k.Fields["Name"].Value;
-                if (data.KeyValuePairs.ContainsKey(keyName))
+                if (data.ContainsKey(keyName))
                     continue;
 
                 int outInt = 0;
                 if (!int.TryParse(paramValue, out outInt))
                     return ResultFactory.GetFailure(Translator.Text("Chat.Parameters.ProfileKeysValidationError"));
 
-                data.KeyValuePairs[keyName] = paramValue;
+                data[keyName] = paramValue;
                 
                 //if no next param them return 
                 var j = i + 1;
@@ -105,7 +105,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
             //remove temp storage
             conversation.Data.Remove(DataKey);
 
-            return ResultFactory.GetSuccess(string.Join(", ", data.KeyValuePairs.Values), data);
+            return ResultFactory.GetSuccess(string.Join(", ", data.Values), data);
         }
 
         public IntentInput GetInput(ItemContextParameters parameters, IConversation conversation)

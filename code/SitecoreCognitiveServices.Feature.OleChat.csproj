@@ -158,7 +158,6 @@
   <ItemGroup>
     <Compile Include="Areas\SitecoreCognitiveServices\Models\ISetupInformation.cs" />
     <Compile Include="Areas\SitecoreCognitiveServices\Models\ItemSearchResultViewModel.cs" />
-    <Compile Include="Areas\SitecoreCognitiveServices\Models\ProfileKeyData.cs" />
     <Compile Include="Areas\SitecoreCognitiveServices\Models\SetupInformation.cs" />
     <Compile Include="Commands\BackupOle.cs" />
     <Compile Include="Commands\BaseOleChatCommand.cs" />
