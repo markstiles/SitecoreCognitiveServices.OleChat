@@ -53,7 +53,8 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
         public override ConversationResponse Respond(LuisResult result, ItemContextParameters parameters, IConversation conversation)
         {
             var name = (string) conversation.Data[NameKey].Value;
-            var keys = (List<string>) conversation.Data[ProfileKeysKey].Value;
+            var keyString = (string) conversation.Data[ProfileKeysKey].Value;
+            var keys = keyString.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries).Select(a => a.Trim()).ToList();
 
             var fields = new Dictionary<ID, string>
             {
@@ -65,16 +66,16 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             //create goal and folder if needed
             var fromDb = "master";
             var profileNode = DataWrapper.GetItemById(Constants.ItemIds.ProfileNodeId, fromDb);
-            
+
             //create the profile
-            var newProfileItem = DataWrapper.CreateItem(profileNode.ID, Constants.TemplateIds.ProfileTemplateId, fromDb, name, fields);
+            var newProfileItem = DataWrapper.CreateItemFromBranch(profileNode.ID, Constants.TemplateIds.ProfileTemplateBranchId, fromDb, name, fields);
 
             //create the profile keys
             foreach (var k in keys)
             {
                 var keyFields = new Dictionary<ID, string>
                 {
-                    { Constants.FieldIds.ProfileKey.NameFieldId, name },     
+                    { Constants.FieldIds.ProfileKey.NameFieldId, k },     
                     { Constants.FieldIds.ProfileKey.MinValueFieldId, "0" },  
                     { Constants.FieldIds.ProfileKey.MaxValueFieldId, "10" },
                 };

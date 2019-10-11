@@ -26,6 +26,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat
         {
             public static ID FolderTemplateId = new ID("{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}");
             public static ID ProfileTemplateId = new ID("{8E0C1738-3591-4C60-8151-54ABCC9807D1}");
+            public static ID ProfileTemplateBranchId = new ID("{07624A03-BB2F-45D8-ABE1-15E2B1705FF3}");
             public static ID ProfileKeyTemplateId = new ID("{44AB5107-3C73-42F0-A427-BEC549F944B9}");
             public static ID GoalCategoryTemplateId = new ID("{DB6E13B8-786C-4DD6-ACF2-3E5E6A959905}");
             public static ID GoalTemplateId = new ID("{475E9026-333F-432D-A4DC-52E03B75CB6B}");

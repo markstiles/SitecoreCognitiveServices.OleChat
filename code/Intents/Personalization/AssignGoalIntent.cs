@@ -68,13 +68,13 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             if (!string.IsNullOrWhiteSpace(trackingField?.Value))
             {
                 var events = xdoc.Root.Descendants("event");
-                XElement eventNode = events.FirstOrDefault(a => a.Attribute("id").Value != goalItem.ID.ToString());
+                XElement eventNode = events.FirstOrDefault(a => a.Attribute("id").Value == goalItem.ID.ToString());
                 if(eventNode == null) { 
                     eventNode = new XElement("event", 
                         new XAttribute("id", goalItem.ID.ToString()), 
                         new XAttribute("name", goalItem.DisplayName));
-                }
-                xdoc.Root.Add(eventNode);
+                    xdoc.Root.Add(eventNode);
+                }                
             }
 
             var pageFields = new Dictionary<ID, string>

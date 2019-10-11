@@ -9,7 +9,16 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Services
 {
     public class ProfileService : IProfileService
     {
+        public Item GetProfileItem(Item profileDescendant)
+        {
+            var profile = profileDescendant
+                .Axes
+                .GetAncestors()
+                .FirstOrDefault(a => a.TemplateID.Guid.Equals(Constants.TemplateIds.ProfileTemplateId.Guid));
 
+            return profile;
+        }
+    
         public List<Item> GetProfileKeys(Item profileItem)
         {
             if (!profileItem.TemplateID.Guid.Equals(Constants.TemplateIds.ProfileTemplateId.Guid))
@@ -63,7 +72,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Services
         {
             var minValue = profileKeyItem.Fields["MinValue"].Value;
 
-            return minValue;
+            return string.IsNullOrWhiteSpace(minValue) ? "0" : minValue;
         }
 
         public string GetMaxValue(Item profileKeyItem)

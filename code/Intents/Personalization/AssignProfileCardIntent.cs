@@ -16,6 +16,7 @@ using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Models;
 using SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters;
 using System.Text;
 using System.Xml.Linq;
+using SitecoreCognitiveServices.Feature.OleChat.Services;
 
 namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
 {
@@ -23,7 +24,8 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
     {
         protected readonly ISitecoreDataWrapper DataWrapper;
         protected readonly IPublishWrapper PublishWrapper;
-        
+        protected readonly IProfileService ProfileService;
+
         public override string KeyName => "personalization - assign profile card";
 
         public override string DisplayName => Translator.Text("Chat.Intents.CreateProfile.Name");
@@ -43,10 +45,12 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             IIntentInputFactory inputFactory,
             IConversationResponseFactory responseFactory,
             IParameterResultFactory resultFactory,
-            IPublishWrapper publishWrapper) : base(inputFactory, responseFactory, settings)
+            IPublishWrapper publishWrapper,
+            IProfileService profileService) : base(inputFactory, responseFactory, settings)
         {
             DataWrapper = dataWrapper;
             PublishWrapper = publishWrapper;
+            ProfileService = profileService;
 
             var profileParameters = new Dictionary<string, string>
             {
@@ -65,6 +69,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
         {
             var profileCardItem = (Item)conversation.Data[ProfileCardItemKey].Value;
             var pageItem = (Item)conversation.Data[PageItemKey].Value;
+            var profileItem = ProfileService.GetProfileItem(profileCardItem);
 
             //get the item's tracking field and append the new goal to it
             var trackingField = pageItem.Fields[Constants.FieldIds.StandardFields.TrackingFieldId];
@@ -72,26 +77,35 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             if (!string.IsNullOrWhiteSpace(trackingField?.Value))
             {
                 var profile = xdoc.Root.Descendants("profile");
-                XElement eventNode = profile.FirstOrDefault();
-                if (eventNode == null)
+                XElement profileNode = profile.FirstOrDefault(a => a.Attribute("id").Value == profileItem.ID.ToString());
+                if (profileNode == null)
                 {
-                    eventNode = new XElement("profile",
+                    profileNode = new XElement("profile",
                         new XAttribute("id", profileCardItem.ID.ToString()),
                         new XAttribute("name", profileCardItem.DisplayName),
-                        new XAttribute("presets", ""));
+                        new XAttribute("presets", $"{profileCardItem.DisplayName}|100||"));
+                    xdoc.Root.Add(profileNode);
                 }
-                xdoc.Root.Add(eventNode);
+
+                var profileCardValueField = profileCardItem.Fields[Constants.FieldIds.ProfileCard.ProfileCardValueFieldId];
+                XDocument.Parse(profileCardValueField.Value);
+                if (!string.IsNullOrWhiteSpace(profileCardValueField?.Value))
+                {
+                    var cardProfile = xdoc.Root.Descendants("profile");
+                    XElement cardProfileNode = profile.FirstOrDefault(a => a.Attribute("id").Value == profileItem.ID.ToString());
+                    var keys = cardProfileNode.Descendants("key");
+                    foreach(var k in keys)
+                    {
+                        profileNode.Add(k);
+                    }
+                }
             }
 
             var pageFields = new Dictionary<ID, string>
             {
                 { Constants.FieldIds.StandardFields.TrackingFieldId, xdoc.Root.ToString() }
             };
-
-
-            var contentProfile = (Item) conversation.Data[ContentProfileItemKey].Value;
-            var pageItem = (Item) conversation.Data[PageItemKey].Value;
-
+            
             /* added 2 profiles
              <tracking>  
                  <event id="{4B518240-1A88-4A9D-B71A-1C21BE173060}" name="Download brochure" />  
@@ -144,11 +158,10 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             DataWrapper.UpdateFields(pageItem, pageFields);
             var toDb = DataWrapper.GetDatabase("web");
             PublishWrapper.PublishItem(pageItem, new[] { toDb }, new[] { DataWrapper.ContentLanguage }, true, false, false);
-
-
+            
             return ConversationResponseFactory.Create(KeyName, string.Format(
                 Translator.Text("Chat.Intents.AssignContentProfile.Response"),
-                contentProfile.DisplayName, pageItem.DisplayName));
+                profileCardItem.DisplayName, pageItem.DisplayName));
         }
     }
 }

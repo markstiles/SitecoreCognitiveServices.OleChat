@@ -83,13 +83,9 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             var fromDb = "master";
             var toDb = DataWrapper.GetDatabase("web");
             var goalItem = DataWrapper.GetItemById(Constants.ItemIds.GoalNodeId, fromDb);
-            var folderName = "User Defined";
-            var goalFolder = goalItem.Axes.GetChild(folderName);
-            if(goalFolder == null)
-                goalFolder = DataWrapper.CreateItem(Constants.ItemIds.GoalNodeId, Constants.TemplateIds.GoalCategoryTemplateId, fromDb, folderName, new Dictionary<ID, string>());
-            var newGoalItem = DataWrapper.CreateItem(goalFolder.ID, Constants.TemplateIds.GoalTemplateId, fromDb, name, fields);
+            var newGoalItem = DataWrapper.CreateItem(goalItem.ID, Constants.TemplateIds.GoalTemplateId, fromDb, name, fields);
 
-            PublishWrapper.PublishItem(goalFolder, new[] { toDb }, new[] { DataWrapper.ContentLanguage }, true, false, false);
+            PublishWrapper.PublishItem(goalItem, new[] { toDb }, new[] { DataWrapper.ContentLanguage }, true, false, false);
                         
             return ConversationResponseFactory.Create(KeyName, string.Format(Translator.Text("Chat.Intents.CreateGoal.Response"), name));
         }
