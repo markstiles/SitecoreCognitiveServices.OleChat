@@ -1,4 +1,5 @@
 ﻿using Sitecore.Data.Items;
+using SitecoreCognitiveServices.Foundation.SCSDK.Wrappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,13 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Services
 {
     public class ProfileService : IProfileService
     {
+        protected readonly ISitecoreDataWrapper DataWrapper;
+
+        public ProfileService(ISitecoreDataWrapper dataWrapper)
+        {
+            DataWrapper = dataWrapper;
+        }
+
         public Item GetProfileItem(Item profileDescendant)
         {
             var profile = profileDescendant
@@ -80,6 +88,88 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Services
             var maxValue = profileKeyItem.Fields["MaxValue"].Value;
 
             return maxValue;
+        }
+
+        public List<Item> GetGoals(string db)
+        {
+            var goalItem = DataWrapper.GetItemByPath(Constants.Paths.GoalPath, db);
+            if (goalItem == null)
+                return new List<Item>();
+
+            var goals = goalItem
+                .Axes
+                .GetDescendants()
+                .Where(a => a.TemplateID.Guid.Equals(Constants.TemplateIds.GoalTemplateId.Guid))
+                .ToList();
+
+            return goals;
+        }
+
+        public List<Item> GetProfiles(string db)
+        {
+            var profileItem = DataWrapper.GetItemByPath(Constants.Paths.ProfilePath, db);
+            if (profileItem == null)
+                return new List<Item>();
+
+            var profiles = profileItem
+                .Axes
+                .GetDescendants()
+                .Where(a => a.TemplateID.Guid.Equals(Constants.TemplateIds.ProfileTemplateId.Guid))
+                .ToList();
+
+            return profiles;
+        }
+
+        public List<Item> GetProfileCards(Item profileItem)
+        {
+            var profileCards = profileItem
+                .Axes
+                .GetDescendants()
+                .Where(a => a.TemplateID.Guid.Equals(Constants.TemplateIds.ProfileCardTemplateId.Guid))
+                .ToList();
+
+            return profileCards;
+        }
+
+        public List<Item> GetPatternCards(Item profileItem)
+        {
+            var profiles = profileItem
+                .Axes
+                .GetDescendants()
+                .Where(a => a.TemplateID.Guid.Equals(Constants.TemplateIds.PatternCardTemplateId.Guid))
+                .ToList();
+
+            return profiles;
+        }
+
+        public List<Item> GetAllProfileCards(string db)
+        {
+            var profileItem = DataWrapper.GetItemByPath(Constants.Paths.ProfilePath, db);
+            if (profileItem == null)
+                return new List<Item>();
+
+            var profileCards = profileItem
+                .Axes
+                .GetDescendants()
+                .Where(a => a.TemplateID.Guid.Equals(Constants.TemplateIds.ProfileCardTemplateId.Guid))
+                .ToList();
+
+            return profileCards;
+        }
+
+        public List<Item> GetAllPatternCards(string db)
+        {
+            var profileItem = DataWrapper.GetItemByPath(Constants.Paths.ProfilePath, db);
+            if (profileItem == null)
+                return new List<Item>();
+
+            var patternCards = profileItem
+                .Axes
+                .GetDescendants()
+                .Where(a => a.TemplateID.Guid.Equals(Constants.TemplateIds.PatternCardTemplateId.Guid))
+                .ToList();
+
+            return patternCards;
         }
     }
 }

@@ -9,6 +9,7 @@ using SitecoreCognitiveServices.Feature.OleChat.Statics;
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Enums;
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Factories;
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Models;
+using SitecoreCognitiveServices.Feature.OleChat.Services;
 
 namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
 {
@@ -16,7 +17,8 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
     {
         protected readonly ISitecoreDataWrapper DataWrapper;
         protected readonly IPublishWrapper PublishWrapper;
-        
+        protected readonly IProfileService ProfileService;
+
         public override string KeyName => "personalization - setup";
 
         public override string DisplayName => Translator.Text("Chat.Intents.SetupPersonalization.Name");
@@ -28,21 +30,33 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             ISitecoreDataWrapper dataWrapper,
             IIntentInputFactory inputFactory,
             IConversationResponseFactory responseFactory,
-            IPublishWrapper publishWrapper) : base(inputFactory, responseFactory, settings)
+            IPublishWrapper publishWrapper,
+            IProfileService profileService) : base(inputFactory, responseFactory, settings)
         {
             DataWrapper = dataWrapper;
             PublishWrapper = publishWrapper;
+            ProfileService = profileService;
         }
         
         public override ConversationResponse Respond(LuisResult result, ItemContextParameters parameters, IConversation conversation)
         {
+            var profiles = ProfileService.GetProfiles(parameters.Database);
+            var patternCards = ProfileService.GetAllPatternCards(parameters.Database);
+            var profileCards = ProfileService.GetAllProfileCards(parameters.Database);
+
+            var patternParents = patternCards.Select(a => a.Paths.ParentPath).Distinct().Count();
+            var profileParents = profileCards.Select(a => a.Paths.ParentPath).Distinct().Count();
+
+            var profilesWithoutPatterns = profiles.Count - patternParents;
+            var profilesWithoutProfiles = profiles.Count - profileParents;
+
             var itemList = new List<ListItem>
             {
-                new ListItem(Translator.Text("Chat.Intents.SetupPersonalization.CreateProfile")), // profile
-                new ListItem(Translator.Text("Chat.Intents.SetupPersonalization.CreatePatternCard")), // pattern card
-                new ListItem(Translator.Text("Chat.Intents.SetupPersonalization.CreateProfileCard")), // profile card
+                new ListItem(string.Format(Translator.Text("Chat.Intents.SetupPersonalization.CreateProfile"), profiles.Count)), // profile
+                new ListItem(string.Format(Translator.Text("Chat.Intents.SetupPersonalization.CreatePatternCard"), profilesWithoutPatterns)), // pattern card
+                new ListItem(string.Format(Translator.Text("Chat.Intents.SetupPersonalization.CreateProfileCard"), profilesWithoutProfiles)), // profile card
                 new ListItem(Translator.Text("Chat.Intents.SetupPersonalization.AssignProfileCard")), // add profile card to page or search action
-                new ListItem(Translator.Text("Chat.Intents.SetupPersonalization.CreateGoal")),
+                new ListItem(string.Format(Translator.Text("Chat.Intents.SetupPersonalization.CreateGoal"), ProfileService.GetGoals(parameters.Database).Count)),
                 new ListItem(Translator.Text("Chat.Intents.SetupPersonalization.AssignGoal"))
             };
             var intentList = IntentInputFactory.Create(IntentInputType.LinkList, itemList);
