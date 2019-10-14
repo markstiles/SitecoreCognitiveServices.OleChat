@@ -54,7 +54,8 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             var parameters = new Dictionary<string, string>
             {
                 { Constants.SearchParameters.FilterPath, Constants.Paths.ProfilePath },
-                { Constants.SearchParameters.TemplateId, Constants.TemplateIds.ProfileTemplateId.ToString() }
+                { Constants.SearchParameters.TemplateId, Constants.TemplateIds.ProfileTemplateId.ToString() },
+                { Constants.SearchParameters.AutoStart, "true" }
             };
             ConversationParameters.Add(new ItemParameter(ProfileItemKey, "What profile do you want to create this profile card for", parameters, dataWrapper, inputFactory, resultFactory));
             ConversationParameters.Add(new StringParameter(NameKey, "What is the name of this profile card", inputFactory, resultFactory));

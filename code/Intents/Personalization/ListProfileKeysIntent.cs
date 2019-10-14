@@ -10,6 +10,7 @@ using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Factori
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Models;
 using SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters;
 using System.Text;
+using SitecoreCognitiveServices.Feature.OleChat.Services;
 
 namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
 {
@@ -17,7 +18,8 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
     {
         protected readonly ISitecoreDataWrapper DataWrapper;
         protected readonly IPublishWrapper PublishWrapper;
-        
+        protected readonly IProfileService ProfileService;
+
         public override string KeyName => "personalization - list profile keys";
 
         public override string DisplayName => Translator.Text("Chat.Intents.ListProfileKeys.Name");
@@ -36,15 +38,18 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             IIntentInputFactory inputFactory,
             IConversationResponseFactory responseFactory,
             IParameterResultFactory resultFactory,
-            IPublishWrapper publishWrapper) : base(inputFactory, responseFactory, settings)
+            IPublishWrapper publishWrapper,
+            IProfileService profileService) : base(inputFactory, responseFactory, settings)
         {
             DataWrapper = dataWrapper;
             PublishWrapper = publishWrapper;
+            ProfileService = profileService;
 
             var parameters = new Dictionary<string, string>
             {
                 { Constants.SearchParameters.FilterPath, Constants.Paths.ProfilePath },
-                { Constants.SearchParameters.TemplateId, Constants.TemplateIds.ProfileTemplateId.ToString() }
+                { Constants.SearchParameters.TemplateId, Constants.TemplateIds.ProfileTemplateId.ToString() },
+                { Constants.SearchParameters.AutoStart, "true" }
             };
             ConversationParameters.Add(new ItemParameter(ItemKey, Translator.Text("Chat.Intents.ListProfileKeys.WhichProfile"), parameters, dataWrapper, inputFactory, resultFactory));
         }
@@ -52,12 +57,12 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
         public override ConversationResponse Respond(LuisResult result, ItemContextParameters parameters, IConversation conversation)
         {
             var profileItem = (Item) conversation.Data[ItemKey].Value;
-            var profileKeys = profileItem.GetChildren().Where(a => a.TemplateID == Constants.TemplateIds.ProfileKeyTemplateId);
+            var profileKeys = ProfileService.GetProfileKeys(profileItem);
 
             var response = new StringBuilder();
-            var profileKeyList = string.Join(", ", profileKeys.Select(a => a.DisplayName));
-            response.AppendFormat(Translator.Text("Chat.Intents.ListProfileKeys.Response"), profileKeys.Count(), profileItem.DisplayName, profileKeyList);
-
+            var profileKeyList = string.Join("", profileKeys.Select(a => $"<li>{a.DisplayName}</li>"));
+            response.AppendFormat(Translator.Text("Chat.Intents.ListProfileKeys.Response"), profileKeys.Count(), profileItem.DisplayName, $"<ul>{profileKeyList}</ul>");
+            
             return ConversationResponseFactory.Create(KeyName, response.ToString());
         }
     }

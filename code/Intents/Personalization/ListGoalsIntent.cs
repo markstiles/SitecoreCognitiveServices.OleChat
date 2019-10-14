@@ -8,6 +8,7 @@ using SitecoreCognitiveServices.Feature.OleChat.Statics;
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Factories;
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Models;
 using System.Text;
+using SitecoreCognitiveServices.Feature.OleChat.Services;
 
 namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
 {
@@ -15,34 +16,34 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
     {
         protected readonly ISitecoreDataWrapper DataWrapper;
         protected readonly IPublishWrapper PublishWrapper;
+        protected readonly IProfileService ProfileService;
         
         public override string KeyName => "personalization - list goals";
 
         public override string DisplayName => Translator.Text("Chat.Intents.ListGoals.Name");
 
         public override bool RequiresConfirmation => false;
-       
+
         public ListGoalsIntent(
             IOleSettings settings,
             ISitecoreDataWrapper dataWrapper,
             IIntentInputFactory inputFactory,
             IConversationResponseFactory responseFactory,
             IParameterResultFactory resultFactory,
-            IPublishWrapper publishWrapper) : base(inputFactory, responseFactory, settings)
+            IPublishWrapper publishWrapper,
+            IProfileService profileService) : base(inputFactory, responseFactory, settings)
         {
             DataWrapper = dataWrapper;
             PublishWrapper = publishWrapper;
+            ProfileService = profileService;
         }
         
         public override ConversationResponse Respond(LuisResult result, ItemContextParameters parameters, IConversation conversation)
         {
-            var profiles = Sitecore.Context.Database.GetItem(Constants.ItemIds.GoalNodeId)
-                .Axes.GetDescendants()
-                .Where(a => a.TemplateID == Constants.TemplateIds.GoalTemplateId);
-
+            var goals = ProfileService.GetGoals();
             var response = new StringBuilder();
-            var profileList = string.Join(", ", profiles.Select(a => a.DisplayName));
-            response.AppendFormat(Translator.Text("Chat.Intents.ListGoals.Response"), profiles.Count(), profileList);
+            var goalList = string.Join("", goals.Select(a => $"<li>{a.DisplayName}</li>"));
+            response.AppendFormat(Translator.Text("Chat.Intents.ListGoals.Response"), goals.Count(), $"<ul>{goalList}</ul>");
 
             return ConversationResponseFactory.Create(KeyName, response.ToString());
         }

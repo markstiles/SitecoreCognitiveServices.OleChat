@@ -53,17 +53,13 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Services
                 {
                     var words = query.Split(new[] {" "}, StringSplitOptions.RemoveEmptyEntries);
                     words.ForEach(w => contentPredicate = contentPredicate
-                        .Or(item => item.Name.Like(w).Boost(10) 
-                            || item.Name.Contains(w).Boost(10)
-                            || item.Content.Like(w).Boost(5)
+                        .Or(item => item.Name.Contains(w).Boost(10)
                             || item.Content.Contains(w).Boost(5)));
                 }
                 else
                 {
                     contentPredicate = contentPredicate
-                        .Or(item => item.Name.Like(query).Boost(10)
-                            || item.Name.Contains(query).Boost(10)
-                            || item.Content.Like(query).Boost(5)
+                        .Or(item => item.Name.Contains(query).Boost(10)
                             || item.Content.Contains(query).Boost(5));
                 }
 

@@ -12,6 +12,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat
         {
             public static string FilterPath = "filterPath";
             public static string TemplateId = "templateId";
+            public static string AutoStart = "autostart";
         }
 
         public static class Paths

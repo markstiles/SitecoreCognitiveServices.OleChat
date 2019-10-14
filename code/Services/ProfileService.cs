@@ -90,33 +90,25 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Services
             return maxValue;
         }
 
-        public List<Item> GetGoals(string db)
+        public List<Item> GetGoals()
         {
-            var goalItem = DataWrapper.GetItemByPath(Constants.Paths.GoalPath, db);
-            if (goalItem == null)
-                return new List<Item>();
-
-            var goals = goalItem
+            var goals = Sitecore.Context.Database.GetItem(Constants.ItemIds.GoalNodeId)
                 .Axes
                 .GetDescendants()
-                .Where(a => a.TemplateID.Guid.Equals(Constants.TemplateIds.GoalTemplateId.Guid))
+                .Where(a => a.TemplateID.Guid == Constants.TemplateIds.GoalTemplateId.Guid)
                 .ToList();
-
+            
             return goals;
         }
 
-        public List<Item> GetProfiles(string db)
+        public List<Item> GetProfiles()
         {
-            var profileItem = DataWrapper.GetItemByPath(Constants.Paths.ProfilePath, db);
-            if (profileItem == null)
-                return new List<Item>();
-
-            var profiles = profileItem
+            var profiles = Sitecore.Context.Database.GetItem(Constants.ItemIds.ProfileNodeId)
                 .Axes
                 .GetDescendants()
-                .Where(a => a.TemplateID.Guid.Equals(Constants.TemplateIds.ProfileTemplateId.Guid))
+                .Where(a => a.TemplateID.Guid == Constants.TemplateIds.ProfileTemplateId.Guid)
                 .ToList();
-
+            
             return profiles;
         }
 
@@ -142,33 +134,25 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Services
             return profiles;
         }
 
-        public List<Item> GetAllProfileCards(string db)
+        public List<Item> GetAllProfileCards()
         {
-            var profileItem = DataWrapper.GetItemByPath(Constants.Paths.ProfilePath, db);
-            if (profileItem == null)
-                return new List<Item>();
-
-            var profileCards = profileItem
+            var profileCards = Sitecore.Context.Database.GetItem(Constants.ItemIds.ProfileNodeId)
                 .Axes
                 .GetDescendants()
-                .Where(a => a.TemplateID.Guid.Equals(Constants.TemplateIds.ProfileCardTemplateId.Guid))
+                .Where(a => a.TemplateID.Guid == Constants.TemplateIds.ProfileCardTemplateId.Guid)
                 .ToList();
-
+            
             return profileCards;
         }
 
-        public List<Item> GetAllPatternCards(string db)
+        public List<Item> GetAllPatternCards()
         {
-            var profileItem = DataWrapper.GetItemByPath(Constants.Paths.ProfilePath, db);
-            if (profileItem == null)
-                return new List<Item>();
-
-            var patternCards = profileItem
+            var patternCards = Sitecore.Context.Database.GetItem(Constants.ItemIds.ProfileNodeId)
                 .Axes
                 .GetDescendants()
-                .Where(a => a.TemplateID.Guid.Equals(Constants.TemplateIds.PatternCardTemplateId.Guid))
+                .Where(a => a.TemplateID.Guid == Constants.TemplateIds.PatternCardTemplateId.Guid)
                 .ToList();
-
+            
             return patternCards;
         }
     }

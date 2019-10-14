@@ -47,7 +47,8 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             var goalParameters = new Dictionary<string, string>
             {
                 { Constants.SearchParameters.FilterPath, Constants.Paths.GoalPath },
-                { Constants.SearchParameters.TemplateId, Constants.TemplateIds.GoalTemplateId.ToString() }
+                { Constants.SearchParameters.TemplateId, Constants.TemplateIds.GoalTemplateId.ToString() },
+                { Constants.SearchParameters.AutoStart, "true" }
             };
             ConversationParameters.Add(new ItemParameter(GoalItemKey, "Chat.Intents.AssignGoal.GoalParameterRequest", goalParameters, dataWrapper, inputFactory, resultFactory));
             var contentParameters = new Dictionary<string, string>

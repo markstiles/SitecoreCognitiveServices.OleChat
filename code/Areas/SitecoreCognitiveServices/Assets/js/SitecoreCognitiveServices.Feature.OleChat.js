@@ -218,9 +218,6 @@ jQuery(document).ready(function ()
     function SendItemSearchRequest(queryValue)
     {
         jQuery(itemSearchResults).html("");
-
-        if (queryValue === "")
-            return;
         
         var langValue = jQuery(".item-search-lang").val();
         var dbValue = jQuery(".item-search-db").val();
@@ -409,6 +406,9 @@ jQuery(document).ready(function ()
         jQuery(itemSearchTitle).text(inputLabel);
         jQuery(itemSearchForm).show();
         jQuery(itemSearchInput).focus();
+        
+        if (parameters.hasOwnProperty("autostart") && parameters.autostart === "true")
+            SendItemSearchRequest(jQuery(itemSearchInput).val());
     }
 
     function SetupRadioList(userType, options)

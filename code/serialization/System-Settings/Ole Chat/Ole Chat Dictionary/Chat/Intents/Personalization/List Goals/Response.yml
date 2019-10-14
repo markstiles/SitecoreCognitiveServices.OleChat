@@ -20,7 +20,7 @@ Languages:
   Fields:
   - ID: "2ba3454a-9a9c-4cdf-a9f8-107fd484eb6e"
     Hint: Phrase
-    Value: "There's {0} goals: {1}"
+    Value: "There's {0} goal(s): {1}"
   Versions:
   - Version: 1
     Fields:
