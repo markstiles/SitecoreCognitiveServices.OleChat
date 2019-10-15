@@ -16,7 +16,6 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 
         public string ParamName { get; set; }
         protected string ParamMessage { get; set; }
-        public string GetParamMessage(IConversation conversation) => ParamMessage;
         public string ItemParamName { get; set; }
 
         public IIntentInputFactory IntentInputFactory { get; set; }
@@ -40,6 +39,9 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 
         public IParameterResult GetParameter(string paramValue, IConversationContext context)
         {
+            if (string.IsNullOrWhiteSpace(paramValue))
+                return ResultFactory.GetFailure(ParamMessage);
+
             if (paramValue.ToLower() == Translator.Text("Chat.Parameters.All"))
                 return ResultFactory.GetSuccess(paramValue, "0");
 

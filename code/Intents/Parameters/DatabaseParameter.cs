@@ -17,8 +17,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 
         public string ParamName { get; set; }
         protected string ParamMessage { get; set; }
-        public string GetParamMessage(IConversation conversation) => ParamMessage;
-
+        
         public IOleSettings Settings { get; set; }
         public ISitecoreDataWrapper DataWrapper { get; set; }
         public IIntentInputFactory IntentInputFactory { get; set; }
@@ -47,9 +46,16 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 
         public IParameterResult GetParameter(string paramValue, IConversationContext context)
         {
+            if (string.IsNullOrWhiteSpace(ParamMessage))
+                return ResultFactory.GetFailure(ParamMessage);
+
             try
             {
-                return ResultFactory.GetSuccess(paramValue, DataWrapper.GetDatabase(paramValue.ToLower()));
+                var db = DataWrapper.GetDatabase(paramValue.ToLower());
+                if (db == null)
+                    ResultFactory.GetFailure(Translator.Text("Chat.Parameters.DBParameterValidationError"));
+
+                return ResultFactory.GetSuccess(paramValue, db);
             }
             catch { }
 

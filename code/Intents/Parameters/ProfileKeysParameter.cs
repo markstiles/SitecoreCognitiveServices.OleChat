@@ -18,23 +18,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 
         public string ParamName { get; set; }
         protected string ParamMessage { get; set; }
-        public string GetParamMessage(IConversation conversation)
-        {
-            var profileItem = (Item)conversation.Data[ProfileItemKey].Value;
-            var keys = ProfileService.GetProfileKeys(profileItem);
-            if (keys.Any()) {
-                var firstKey = keys.First();
-                var firstKeyName = ProfileService.GetProfileName(firstKey);
-                var minValue = ProfileService.GetMinValue(firstKey);
-                var maxValue = ProfileService.GetMaxValue(firstKey);
-
-                return string.Format(ParamMessage, firstKeyName, minValue, maxValue);
-            }
-
-            return "There are no keys on this profile";
-        }
-        public Dictionary<string, string> Parameters { get; set; }
-
+        
         public ISitecoreDataWrapper DataWrapper { get; set; }
         public IIntentInputFactory IntentInputFactory { get; set; }
         public IParameterResultFactory ResultFactory { get; set; }
@@ -64,18 +48,25 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
         public IParameterResult GetParameter(string paramValue, IConversationContext context)
         {
             var conversation = context.GetCurrentConversation();
-            var profileItem = (Item)conversation.Data[ProfileItemKey].Value;
+            var hasParamValue = string.IsNullOrWhiteSpace(paramValue);
+            var dataExists = conversation.Data.ContainsKey(DataKey);
 
             //find or setup temp storage
-            var dataExists = conversation.Data.ContainsKey(DataKey);
             var data = dataExists
                 ? (Dictionary<string, string>)conversation.Data[DataKey].Value
                 : new Dictionary<string, string>();
 
-            if(!dataExists)
+            if (!dataExists)
                 conversation.Data[DataKey] = new ParameterData { Value = data };
 
+            var profileItem = (Item)conversation.Data[ProfileItemKey].Value;
             var keys = ProfileService.GetProfileKeys(profileItem);
+            if (!keys.Any())
+            {
+                conversation.IsEnded = true;
+                return ResultFactory.GetFailure("There are no keys on this profile");
+            }
+            
             for (int i = 0; i < keys.Count; i++)
             {
                 var k = keys[i];
@@ -85,7 +76,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 
                 int outInt = 0;
                 if (!int.TryParse(paramValue, out outInt))
-                    return ResultFactory.GetFailure(Translator.Text("Chat.Parameters.ProfileKeysValidationError"));
+                    return ResultFactory.GetFailure("That's not a valid number.");
 
                 data[keyName] = paramValue;
                 
@@ -110,7 +101,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 
         public IntentInput GetInput(ItemContextParameters parameters, IConversation conversation)
         {
-            return IntentInputFactory.Create(IntentInputType.Text, GetParamMessage(conversation));
+            return IntentInputFactory.Create(IntentInputType.Text);
         }
     }
 }

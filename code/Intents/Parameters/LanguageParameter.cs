@@ -15,7 +15,6 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 
         public string ParamName { get; set; }
         protected string ParamMessage { get; set; }
-        public string GetParamMessage(IConversation conversation) => ParamMessage;
 
         public IOleSettings Settings { get; set; }
         public ISitecoreDataWrapper DataWrapper { get; set; }
@@ -42,6 +41,9 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 
         public IParameterResult GetParameter(string paramValue, IConversationContext context)
         {
+            if (string.IsNullOrWhiteSpace(paramValue))
+                return ResultFactory.GetFailure(ParamMessage);
+
             var dbName = (!string.IsNullOrEmpty(context.Parameters.Database)) ? context.Parameters.Database : Settings.MasterDatabase;
             var db = DataWrapper.GetDatabase(dbName);
             var lang = DataWrapper.GetLanguages(db)

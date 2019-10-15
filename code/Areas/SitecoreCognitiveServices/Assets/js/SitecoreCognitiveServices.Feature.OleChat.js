@@ -189,7 +189,7 @@ jQuery(document).ready(function ()
     jQuery(itemSearchInput).keyup(function (e) {
         clearTimeout(itemSearchTimer);
 
-        itemSearchTimer = setTimeout(function () { SendItemSearchRequest(jQuery(itemSearchInput).val()); }, 200);
+        itemSearchTimer = setTimeout(function () { SendItemSearchRequest(jQuery(itemSearchInput).val(), 0, 10); }, 200);
     });
 
     jQuery(itemSearchClose).click(function (e)
@@ -215,7 +215,7 @@ jQuery(document).ready(function ()
         jQuery(listSearchInput).val("");
     });
 
-    function SendItemSearchRequest(queryValue)
+    function SendItemSearchRequest(queryValue, skipValue, takeValue)
     {
         jQuery(itemSearchResults).html("");
         
@@ -229,7 +229,9 @@ jQuery(document).ready(function ()
                 db: dbValue,
                 language: langValue,
                 query: queryValue,
-                parameters: parametersValue
+                parameters: parametersValue,
+                skip: skipValue,
+                take: takeValue
             })
             .done(function (r) {
                 HandleItemSearchResults(r);
@@ -408,7 +410,7 @@ jQuery(document).ready(function ()
         jQuery(itemSearchInput).focus();
         
         if (parameters.hasOwnProperty("autostart") && parameters.autostart === "true")
-            SendItemSearchRequest(jQuery(itemSearchInput).val());
+            SendItemSearchRequest(jQuery(itemSearchInput).val(), 0, 10);
     }
 
     function SetupRadioList(userType, options)

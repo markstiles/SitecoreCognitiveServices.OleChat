@@ -10,7 +10,6 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
         #region Constructor
 
         protected string ParamMessage { get; set; }
-        public string GetParamMessage(IConversation conversation) => ParamMessage;
         public string ItemKey { get; set; }
         public string LangKey { get; set; }
 
@@ -25,6 +24,8 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
         }
 
         #endregion
+
+        public string GetErrorMessage() => ParamMessage;
 
         public bool IsValid(IConversationContext context)
         {

@@ -26,7 +26,13 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Services
 
         #endregion
 
-        public virtual List<SearchResultItem> GetResults(string db, string language, string query, Dictionary<string, string> parameters)
+        public virtual List<SearchResultItem> GetResults(
+            string db, 
+            string language, 
+            string query, 
+            Dictionary<string, string> parameters,
+            int skip, 
+            int take)
         {
             var indexName = ContentSearch.GetSitecoreIndexName(db);
             var index = ContentSearch.GetIndex(indexName);
@@ -48,6 +54,22 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Services
                     queryable = queryable.Where(c => c.TemplateId == idFilter);
                 }
 
+                if (parameters.ContainsKey(Constants.SearchParameters.TemplateName))
+                {
+                    queryable = queryable.Where(c => c.TemplateName == parameters[Constants.SearchParameters.TemplateName]);
+                }
+
+                if (parameters.ContainsKey(Constants.SearchParameters.FieldName) 
+                    && parameters.ContainsKey(Constants.SearchParameters.FieldValue))
+                {
+                    queryable = queryable.Where(c => c.Fields[parameters[Constants.SearchParameters.FieldName]] as string == parameters[Constants.SearchParameters.FieldValue]);
+                }
+
+                if (parameters.ContainsKey(Constants.SearchParameters.ItemName))
+                {
+                    queryable = queryable.Where(c => c.Name == parameters[Constants.SearchParameters.ItemName]);
+                }
+                
                 var contentPredicate = PredicateBuilder.False<SearchResultItem>();
                 if (query.Contains(" "))
                 {
@@ -63,10 +85,14 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Services
                             || item.Content.Contains(query).Boost(5));
                 }
 
-                return queryable
+                queryable = queryable
                     .Where(contentPredicate)
-                    .Take(10)
-                    .ToList();
+                    .Skip(skip);
+
+                if (take > 0)
+                    queryable = queryable.Take(take);
+                  
+                return queryable.ToList();
             }
         }
     }

@@ -166,6 +166,7 @@
     <Compile Include="Factories\SetupInformationFactory.cs" />
     <Compile Include="Intents\BaseOleIntent.cs" />
     <Compile Include="Intents\Parameters\IntegerParameter.cs" />
+    <Compile Include="Intents\Parameters\ItemListParameter.cs" />
     <Compile Include="Intents\Parameters\ProfileKeysParameter.cs" />
     <Compile Include="Intents\Parameters\WorkflowParameter.cs" />
     <Compile Include="Intents\Parameters\RoleParameter.cs" />
