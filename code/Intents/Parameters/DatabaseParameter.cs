@@ -11,13 +11,14 @@ using System.Web;
 
 namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 {
-    public class DatabaseParameter : IRequiredParameter
+    public class DatabaseParameter : IFieldParameter
     {
         #region Constructor
 
         public string ParamName { get; set; }
         protected string ParamMessage { get; set; }
-        
+        public bool IsOptional { get; set; }
+
         public IOleSettings Settings { get; set; }
         public ISitecoreDataWrapper DataWrapper { get; set; }
         public IIntentInputFactory IntentInputFactory { get; set; }
@@ -40,6 +41,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
             IntentInputFactory = inputFactory;
             PublishWrapper = publishWrapper;
             ResultFactory = resultFactory;
+            IsOptional = false;
         }
 
         #endregion

@@ -9,12 +9,13 @@ using System.Collections.Generic;
 
 namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 {
-    public class ItemParameter : IRequiredParameter
+    public class ItemParameter : IFieldParameter
     {
         #region Constructor
 
         public string ParamName { get; set; }
         protected string ParamMessage { get; set; }
+        public bool IsOptional { get; set; }
         public Dictionary<string, string> Parameters { get; set; }
 
         public ISitecoreDataWrapper DataWrapper { get; set; }
@@ -35,6 +36,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
             DataWrapper = dataWrapper;
             IntentInputFactory = inputFactory;
             ResultFactory = resultFactory;
+            IsOptional = false;
         }
 
         #endregion

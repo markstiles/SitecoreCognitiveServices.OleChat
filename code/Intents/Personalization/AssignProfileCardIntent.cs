@@ -36,7 +36,10 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
         #region Local Properties
 
         protected string ProfileCardItemKey = "Profile Card";
-        protected string PageItemsKey = "Page Items";
+        protected string ItemNameKey = "Item Name";
+        protected string TemplateItemKey = "Template Item";
+        protected string FolderItemKey = "Folder Item";
+        protected string FieldItemKey = "Field Item";
         
         #endregion
 
@@ -62,24 +65,82 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
                 { Constants.SearchParameters.AutoStart, "true" }
             };
             ConversationParameters.Add(new ItemParameter(ProfileCardItemKey, "What profile card do you want to assign?", profileParameters, dataWrapper, inputFactory, resultFactory));
-            var contentParameters = new Dictionary<string, string>
+
+            var nameParameter = new Dictionary<string, string>
             {
-                { Constants.SearchParameters.FilterPath, Constants.Paths.ContentPath }
+                { Constants.SearchParameters.FilterPath, Constants.Paths.ContentPath },
             };
-            ConversationParameters.Add(new ItemListParameter(PageItemsKey, contentParameters, dataWrapper, inputFactory, resultFactory, SearchService));
+            var nameParam = new ItemParameter(ItemNameKey, "What item do you want to filter by?", nameParameter, dataWrapper, inputFactory, resultFactory);
+            nameParam.IsOptional = true;
+            ConversationParameters.Add(nameParam);
+
+            var templateParameter = new Dictionary<string, string>
+            {
+                { Constants.SearchParameters.FilterPath, Constants.Paths.TemplatePath },
+            };
+            var templateParam = new ItemParameter(TemplateItemKey, "What template do you want to filter by?", templateParameter, dataWrapper, inputFactory, resultFactory);
+            templateParam.IsOptional = true;
+            ConversationParameters.Add(templateParam);
+
+            var folderParameter = new Dictionary<string, string>
+            {
+                { Constants.SearchParameters.FilterPath, Constants.Paths.ContentPath },
+            };
+            var folderParam = new ItemParameter(FolderItemKey, "What folder do you want to filter by?", folderParameter, dataWrapper, inputFactory, resultFactory);
+            folderParam.IsOptional = true;
+            ConversationParameters.Add(folderParam);
+
+            var fieldParam = new KeyValueParameter(FieldItemKey, "What field do you want to filter by?", "What Value in that field?", inputFactory, resultFactory);
+            fieldParam.IsOptional = true;
+            ConversationParameters.Add(fieldParam);
         }
 
         public override ConversationResponse Respond(LuisResult result, ItemContextParameters parameters, IConversation conversation)
         {
             var profileCardItem = (Item)conversation.Data[ProfileCardItemKey].Value;
-            var pageItems = (List<Item>)conversation.Data[PageItemsKey].Value;
             var profileItem = ProfileService.GetProfileItem(profileCardItem);
+            
+            //do search
+            var searchParameters = new Dictionary<string, string>();
+
+            var namedItem = conversation.Data[ItemNameKey].Value;
+            if (namedItem != null && namedItem is Item)
+                searchParameters.Add(Constants.SearchParameters.ItemName, ((Item)namedItem).DisplayName);
+
+            var templateItem = conversation.Data[TemplateItemKey].Value;
+            if (templateItem != null && templateItem is Item)
+                searchParameters.Add(Constants.SearchParameters.TemplateId, ((Item)templateItem).ID.ToString());
+
+            var folderItem = conversation.Data[FolderItemKey].Value;
+            var folderId = (folderItem != null && folderItem is Item)
+                ? ((Item)templateItem).ID.ToString()
+                : Constants.Paths.ContentPath;
+            searchParameters.Add(Constants.SearchParameters.TemplateId, folderId);
+
+            var fieldSet = conversation.Data[FieldItemKey].Value;
+            if (fieldSet != null && fieldSet is Item)
+            {
+                var kvp = (KeyValuePair<string, string>)fieldSet;
+                searchParameters.Add(Constants.SearchParameters.FieldName, kvp.Key);
+                searchParameters.Add(Constants.SearchParameters.FieldValue, kvp.Value);
+            }
+
+            var results = SearchService.GetResults(parameters.Database, parameters.Language, "", searchParameters, 0, -1);
+            if (results.Count < 1)
+            {
+                conversation.IsEnded = true;
+                ConversationResponseFactory.Create(KeyName, string.Format(
+                Translator.Text("Chat.Intents.AssignContentProfile.FailedResponse"),
+                profileCardItem.DisplayName, results.Count));
+            }
 
             //get the item's tracking field and append the new goal to it
-            foreach(var pageItem in pageItems)
+            foreach (var r in results)
             {
+                var pageItem = r.GetItem();
                 var trackingField = pageItem.Fields[Constants.FieldIds.StandardFields.TrackingFieldId];
-                XDocument xdoc = XDocument.Parse(trackingField.Value);
+                var parseValue = string.IsNullOrWhiteSpace(trackingField.Value) ? "<tracking></tracking>" : trackingField.Value;
+                XDocument xdoc = XDocument.Parse(parseValue);
                 if (!string.IsNullOrWhiteSpace(trackingField?.Value))
                 {
                     var profile = xdoc.Root.Descendants("profile");
@@ -169,7 +230,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             
             return ConversationResponseFactory.Create(KeyName, string.Format(
                 Translator.Text("Chat.Intents.AssignContentProfile.Response"),
-                profileCardItem.DisplayName, pageItems.Count));
+                profileCardItem.DisplayName, results.Count));
         }
     }
 }

@@ -25,6 +25,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat
             public static string SystemPath = "{13D6D6C6-C50B-4BBD-B331-2B04F1A58F21}";
             public static string GoalPath = "{0CB97A9F-CAFB-42A0-8BE1-89AB9AE32BD9}";
             public static string ProfilePath = "{12BD7E35-437B-449C-B931-23CFA12C03D8}";
+            public static string TemplatePath = "{3C1715FE-6A13-4FCF-845F-DE308BA9741D}";
         }
 
         public static class TemplateIds

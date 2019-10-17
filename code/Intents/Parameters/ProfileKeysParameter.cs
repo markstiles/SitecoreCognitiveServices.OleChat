@@ -12,13 +12,14 @@ using SitecoreCognitiveServices.Feature.OleChat.Services;
 
 namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 {
-    public class ProfileKeysParameter : IRequiredParameter
+    public class ProfileKeysParameter : IFieldParameter
     {
         #region Constructor
 
         public string ParamName { get; set; }
         protected string ParamMessage { get; set; }
-        
+        public bool IsOptional { get; set; }
+
         public ISitecoreDataWrapper DataWrapper { get; set; }
         public IIntentInputFactory IntentInputFactory { get; set; }
         public IParameterResultFactory ResultFactory { get; set; }
@@ -41,6 +42,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
             IntentInputFactory = inputFactory;
             ResultFactory = resultFactory;
             ProfileService = profileService;
+            IsOptional = false;
         }
 
         #endregion

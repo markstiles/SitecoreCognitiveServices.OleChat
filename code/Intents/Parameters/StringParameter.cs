@@ -9,12 +9,13 @@ using System.Web.UI.WebControls;
 
 namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 {
-    public class StringParameter : IRequiredParameter
+    public class StringParameter : IFieldParameter
     {
         #region Constructor
 
         public string ParamName { get; set; }
         protected string ParamMessage { get; set; }
+        public bool IsOptional { get; set; }
 
         public IIntentInputFactory IntentInputFactory { get; set; }
         public IParameterResultFactory ResultFactory { get; set; }
@@ -29,6 +30,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
             ParamMessage = paramMessage;
             IntentInputFactory = inputFactory;
             ResultFactory = resultFactory;
+            IsOptional = false;
         }
 
         #endregion

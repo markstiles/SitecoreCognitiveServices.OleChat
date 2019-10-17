@@ -200,7 +200,6 @@ jQuery(document).ready(function ()
         jQuery(itemSearchInput).val("");
     });
 
-    //sends text on 'enter-press' on the list search form
     jQuery(listSearchInput).keyup(function (e)
     {
         clearTimeout(listSearchTimer);
@@ -268,6 +267,7 @@ jQuery(document).ready(function ()
                 jQuery(listSearchForm).hide();
                 jQuery(listSearchResults).html("");
                 jQuery(listSearchInput).val("");
+                jQuery(chatInput).focus();
             });
     }
 
@@ -299,6 +299,7 @@ jQuery(document).ready(function ()
                 jQuery(itemSearchForm).hide();
                 jQuery(itemSearchResults).html("");
                 jQuery(itemSearchInput).val("");
+                jQuery(chatInput).focus();
             });
     }
 
@@ -372,6 +373,8 @@ jQuery(document).ready(function ()
                     HandleLogout();
                 else if (action === "confirm")
                     HandleConfirm(userType, selections);
+                else if (action === "yesorno")
+                    HandleYesOrNo(userType, channelData);
             }
 
             if (isAudioEnabled)
@@ -500,6 +503,24 @@ jQuery(document).ready(function ()
         }
         selectionList += "<div class='user-selection confirm-continue' data-selection='" + continueText + "'>" + continueText + "</div>";
         selectionList += "<div class='user-selection confirm-cancel' data-selection='" + cancelText + "'>" + cancelText + "</div>";
+        jQuery(chatConversation).append("<div class='" + userType + " option-list'><span class='message'><ul class='enabled'>" + selectionList + "</ul><span class='icon'></span></span></div>");
+
+        //click to clear a selection
+        jQuery(".enabled .user-selection")
+            .on('click', function () {
+                var selectionValue = jQuery(this).data("selection");
+                UpdateChatWindow(selectionValue, null, "user");
+                SendChatRequest(selectionValue);
+            });
+    }
+
+    function HandleYesOrNo(userType, channelData)
+    {
+        //channelData.Options
+
+        var selectionList = "";
+        selectionList += "<li class='user-selection' data-selection='yes'>Yes</li>";
+        selectionList += "<li class='user-selection' data-selection='no'>No</li>";
         jQuery(chatConversation).append("<div class='" + userType + " option-list'><span class='message'><ul class='enabled'>" + selectionList + "</ul><span class='icon'></span></span></div>");
 
         //click to clear a selection
