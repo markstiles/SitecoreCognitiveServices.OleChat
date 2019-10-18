@@ -186,8 +186,15 @@ jQuery(document).ready(function ()
         SendChatRequest(queryValue);
     });
     
-    jQuery(itemSearchInput).keyup(function (e) {
+    jQuery(itemSearchInput).keypress(function (e)
+    {
         clearTimeout(itemSearchTimer);
+        
+        if (e.which === 13) {
+            e.preventDefault();
+            SendItemSearchRequest(jQuery(itemSearchInput).val(), 0, 10);
+            return;
+        }
 
         itemSearchTimer = setTimeout(function () { SendItemSearchRequest(jQuery(itemSearchInput).val(), 0, 10); }, 200);
     });
@@ -267,7 +274,6 @@ jQuery(document).ready(function ()
                 jQuery(listSearchForm).hide();
                 jQuery(listSearchResults).html("");
                 jQuery(listSearchInput).val("");
-                jQuery(chatInput).focus();
             });
     }
 
@@ -299,7 +305,6 @@ jQuery(document).ready(function ()
                 jQuery(itemSearchForm).hide();
                 jQuery(itemSearchResults).html("");
                 jQuery(itemSearchInput).val("");
-                jQuery(chatInput).focus();
             });
     }
 
@@ -344,6 +349,8 @@ jQuery(document).ready(function ()
     {
         var convoBox = jQuery(chatConversation);
         convoBox.append("<div class='" + userType + "'><span class='message'>" + text + "<span class='icon'></span></span></div>");
+
+        jQuery(chatInput).focus();
 
         if (channelData !== null) {
             //options
@@ -412,8 +419,8 @@ jQuery(document).ready(function ()
         jQuery(itemSearchForm).show();
         jQuery(itemSearchInput).focus();
         
-        if (parameters.hasOwnProperty("autostart") && parameters.autostart === "true")
-            SendItemSearchRequest(jQuery(itemSearchInput).val(), 0, 10);
+        //if (parameters.hasOwnProperty("autostart") && parameters.autostart === "true")
+            //SendItemSearchRequest(jQuery(itemSearchInput).val(), 0, 10);
     }
 
     function SetupRadioList(userType, options)

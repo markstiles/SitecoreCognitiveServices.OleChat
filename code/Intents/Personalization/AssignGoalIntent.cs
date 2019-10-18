@@ -11,6 +11,7 @@ using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Factori
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Models;
 using SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters;
 using System.Xml.Linq;
+using SitecoreCognitiveServices.Feature.OleChat.Services;
 
 namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
 {
@@ -18,7 +19,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
     {
         protected readonly ISitecoreDataWrapper DataWrapper;
         protected readonly IPublishWrapper PublishWrapper;
-
+        protected readonly IProfileService ProfileService;
 
         public override string KeyName => "personalization - assign goal";
 
@@ -39,10 +40,12 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             IIntentInputFactory inputFactory,
             IConversationResponseFactory responseFactory,
             IPublishWrapper publishWrapper,
-            IParameterResultFactory resultFactory) : base(inputFactory, responseFactory, settings)
+            IParameterResultFactory resultFactory,
+            IProfileService profileService) : base(inputFactory, responseFactory, settings)
         {
             DataWrapper = dataWrapper;
             PublishWrapper = publishWrapper;
+            ProfileService = profileService;
 
             var goalParameters = new Dictionary<string, string>
             {
@@ -63,24 +66,11 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             var goalItem = (Item)conversation.Data[GoalItemKey].Value;
             var pageItem = (Item)conversation.Data[PageItemKey].Value;
 
-            //get the item's tracking field and append the new goal to it
-            var trackingField = pageItem.Fields[Constants.FieldIds.StandardFields.TrackingFieldId];
-            XDocument xdoc = XDocument.Parse(trackingField.Value);
-            if (!string.IsNullOrWhiteSpace(trackingField?.Value))
-            {
-                var events = xdoc.Root.Descendants("event");
-                XElement eventNode = events.FirstOrDefault(a => a.Attribute("id").Value == goalItem.ID.ToString());
-                if(eventNode == null) { 
-                    eventNode = new XElement("event", 
-                        new XAttribute("id", goalItem.ID.ToString()), 
-                        new XAttribute("name", goalItem.DisplayName));
-                    xdoc.Root.Add(eventNode);
-                }                
-            }
+            var newTrackingValue = ProfileService.UpdateTrackingGoal(pageItem, goalItem);
 
             var pageFields = new Dictionary<ID, string>
             {
-                { Constants.FieldIds.StandardFields.TrackingFieldId, xdoc.Root.ToString() }
+                { Constants.FieldIds.StandardFields.TrackingFieldId, newTrackingValue }
             };
             
             DataWrapper.UpdateFields(pageItem, pageFields);

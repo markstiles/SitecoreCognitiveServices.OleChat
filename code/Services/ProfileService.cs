@@ -1,10 +1,12 @@
-﻿using Sitecore.Data.Items;
+﻿using Sitecore.Data;
+using Sitecore.Data.Items;
 using SitecoreCognitiveServices.Foundation.SCSDK.Wrappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web;
+using System.Xml.Linq;
 
 namespace SitecoreCognitiveServices.Feature.OleChat.Services
 {
@@ -74,6 +76,79 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Services
             tracking.Append("</tracking>");
 
             return tracking.ToString();
+        }
+
+        public XElement GetProfileNode(string trackingFieldValue, ID profileId)
+        {
+            if (string.IsNullOrWhiteSpace(trackingFieldValue))
+                return null;
+
+            var profileCardDoc = XDocument.Parse(trackingFieldValue);
+            var profileNode = profileCardDoc
+                .Root
+                .Descendants("profile")
+                .FirstOrDefault(a => a.Attribute("id").Value == profileId.ToString());
+
+            return profileNode;
+        }
+
+        public string UpdateTrackingProfile(Item pageItem, Item profileCardItem)
+        {
+            var profileItem = GetProfileItem(profileCardItem);
+
+            var profileCardValueField = profileCardItem.Fields[Constants.FieldIds.ProfileCard.ProfileCardValueFieldId];
+            var cardProfile = GetProfileNode(profileCardValueField.Value, profileItem.ID);
+            var keys = cardProfile.Descendants("key")
+                .Select(a => new KeyValuePair<string, string>(a.Attribute("name").Value, a.Attribute("value").Value))
+                .ToDictionary(a => a.Key, b => b.Value);
+            
+            var trackingField = pageItem.Fields[Constants.FieldIds.StandardFields.TrackingFieldId];
+            var trackingValue = string.IsNullOrWhiteSpace(trackingField.Value) ? "<tracking></tracking>" : trackingField.Value;
+            var profileCardDoc = XDocument.Parse(trackingValue);
+            var profileNode = profileCardDoc
+                .Root
+                .Descendants("profile")
+                .FirstOrDefault(a => a.Attribute("id").Value == profileItem.ID.ToString());
+            if (profileNode == null)
+            {
+                profileNode = new XElement("profile",
+                    new XAttribute("id", profileItem.ID.ToString()),
+                    new XAttribute("name", profileItem.DisplayName),
+                    new XAttribute("presets", $"{profileCardItem.DisplayName}|100||"));
+                profileCardDoc.Root.Add(profileNode);
+            }
+
+            profileNode.RemoveNodes();
+            foreach (var k in keys)
+            {   
+                profileNode.Add(new XElement("key", 
+                    new XAttribute("name", k.Key), 
+                    new XAttribute("value", k.Value)));
+            }
+                 
+            return profileCardDoc.Root.ToString();
+        }
+
+        public string UpdateTrackingGoal(Item pageItem, Item goalItem)
+        {
+            //get the item's tracking field and append the new goal to it
+            var trackingField = pageItem.Fields[Constants.FieldIds.StandardFields.TrackingFieldId];
+
+            XDocument xdoc = XDocument.Parse(trackingField.Value);
+            if (!string.IsNullOrWhiteSpace(trackingField?.Value))
+            {
+                var events = xdoc.Root.Descendants("event");
+                XElement eventNode = events.FirstOrDefault(a => a.Attribute("id").Value == goalItem.ID.ToString());
+                if (eventNode == null)
+                {
+                    eventNode = new XElement("event",
+                        new XAttribute("id", goalItem.ID.ToString()),
+                        new XAttribute("name", goalItem.DisplayName));
+                    xdoc.Root.Add(eventNode);
+                }
+            }
+
+            return xdoc.Root.ToString();
         }
 
         public string GetMinValue(Item profileKeyItem)

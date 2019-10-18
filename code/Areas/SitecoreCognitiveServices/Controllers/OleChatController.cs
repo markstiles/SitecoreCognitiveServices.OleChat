@@ -144,7 +144,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Areas.SitecoreCognitiveServi
             return Json(reply);
         }
 
-        public ActionResult ItemSearch(string db, string language, string query, Dictionary<string, string> parameters, int skip, int take)
+        public ActionResult ItemSearch(string db, string language, string query, Dictionary<string, string> parameters, int skip = 0, int take = 10)
         {
             //query search
             var results = new List<SearchResultItem>();

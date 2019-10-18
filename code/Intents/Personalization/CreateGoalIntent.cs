@@ -76,7 +76,8 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
                 // { new ID("{71EBDEBD-9560-48C6-A66F-E17FC018232C}"), "" },                    // Rule
                 { new ID("{AC6BA888-4213-43BD-B787-D8DA2B6B881F}"), name },                     // Name
                 { new ID("{33AE0E84-74A0-437F-AB2B-859DFA96F6C9}"), points.ToString() },        // Points
-                { Sitecore.FieldIDs.WorkflowState, "{EDCBB550-BED3-490F-82B8-7B2F14CCD26E}" }   // workflow state
+                { Sitecore.FieldIDs.WorkflowState, "{EDCBB550-BED3-490F-82B8-7B2F14CCD26E}" },  // workflow state
+                { Sitecore.FieldIDs.Workflow, "{689E2994-4656-4C58-9112-7826CB46EE69}" }        // workflow
             };
 
             //create goal and folder if needed
