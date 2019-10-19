@@ -46,8 +46,8 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             DataWrapper = dataWrapper;
             PublishWrapper = publishWrapper;
 
-            ConversationParameters.Add(new StringParameter(NameKey, "Chat.Intents.CreateProfile.NameParameterRequest", inputFactory, resultFactory));
-            ConversationParameters.Add(new StringParameter(ProfileKeysKey, "Chat.Intents.CreateProfile.KeysParameterRequest", inputFactory, resultFactory));
+            ConversationParameters.Add(new StringParameter(NameKey, Translator.Text("Chat.Intents.CreateProfile.NameParameterRequest"), inputFactory, resultFactory));
+            ConversationParameters.Add(new StringParameter(ProfileKeysKey, Translator.Text("Chat.Intents.CreateProfile.KeysParameterRequest"), inputFactory, resultFactory));
         }
         
         public override ConversationResponse Respond(LuisResult result, ItemContextParameters parameters, IConversation conversation)

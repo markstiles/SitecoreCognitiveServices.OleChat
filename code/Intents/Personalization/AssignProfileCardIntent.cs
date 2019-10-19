@@ -29,7 +29,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
 
         public override string KeyName => "personalization - assign profile card";
 
-        public override string DisplayName => Translator.Text("Chat.Intents.CreateProfile.Name");
+        public override string DisplayName => Translator.Text("Chat.Intents.AssignProfileCard.Name");
 
         public override bool RequiresConfirmation => true;
 
@@ -64,13 +64,13 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
                 { Constants.SearchParameters.TemplateId, Constants.TemplateIds.ProfileCardTemplateId.ToString() },
                 { Constants.SearchParameters.AutoStart, "true" }
             };
-            ConversationParameters.Add(new ItemParameter(ProfileCardItemKey, "What profile card do you want to assign?", profileParameters, dataWrapper, inputFactory, resultFactory));
+            ConversationParameters.Add(new ItemParameter(ProfileCardItemKey, Translator.Text("Chat.Intents.AssignProfileCard.ProfileCardItemParameterRequest"), profileParameters, dataWrapper, inputFactory, resultFactory));
 
             var nameParameter = new Dictionary<string, string>
             {
                 { Constants.SearchParameters.FilterPath, Constants.Paths.ContentPath },
             };
-            var nameParam = new ItemParameter(ItemNameKey, "What item do you want to filter by?", nameParameter, dataWrapper, inputFactory, resultFactory);
+            var nameParam = new ItemParameter(ItemNameKey, Translator.Text("Chat.Intents.AssignProfileCard.ItemNameParameterRequest"), nameParameter, dataWrapper, inputFactory, resultFactory);
             nameParam.IsOptional = true;
             ConversationParameters.Add(nameParam);
 
@@ -78,7 +78,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             {
                 { Constants.SearchParameters.FilterPath, Constants.Paths.TemplatePath },
             };
-            var templateParam = new ItemParameter(TemplateItemKey, "What template do you want to filter by?", templateParameter, dataWrapper, inputFactory, resultFactory);
+            var templateParam = new ItemParameter(TemplateItemKey, Translator.Text("Chat.Intents.AssignProfileCard.TemplateItemParameterRequest"), templateParameter, dataWrapper, inputFactory, resultFactory);
             templateParam.IsOptional = true;
             ConversationParameters.Add(templateParam);
 
@@ -86,11 +86,11 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             {
                 { Constants.SearchParameters.FilterPath, Constants.Paths.ContentPath },
             };
-            var folderParam = new ItemParameter(FolderItemKey, "What folder do you want to filter by?", folderParameter, dataWrapper, inputFactory, resultFactory);
+            var folderParam = new ItemParameter(FolderItemKey, Translator.Text("Chat.Intents.AssignProfileCard.FolderItemParameterRequest"), folderParameter, dataWrapper, inputFactory, resultFactory);
             folderParam.IsOptional = true;
             ConversationParameters.Add(folderParam);
 
-            var fieldParam = new KeyValueParameter(FieldItemKey, "What field do you want to filter by?", "What Value in that field?", inputFactory, resultFactory);
+            var fieldParam = new KeyValueParameter(FieldItemKey, Translator.Text("Chat.Intents.AssignProfileCard.FieldNameParameterRequest"), Translator.Text("Chat.Intents.AssignProfileCard.FieldValueParameterRequest"), inputFactory, resultFactory);
             fieldParam.IsOptional = true;
             ConversationParameters.Add(fieldParam);
         }
@@ -129,7 +129,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             {
                 conversation.IsEnded = true;
                 ConversationResponseFactory.Create(KeyName, string.Format(
-                Translator.Text("Chat.Intents.AssignContentProfile.FailedResponse"),
+                Translator.Text("Chat.Intents.AssignProfileCard.FailedResponse"),
                 profileCardItem.DisplayName, results.Count));
             }
 
@@ -150,7 +150,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             }
             
             return ConversationResponseFactory.Create(KeyName, string.Format(
-                Translator.Text("Chat.Intents.AssignContentProfile.Response"),
+                Translator.Text("Chat.Intents.AssignProfileCard.Response"),
                 profileCardItem.DisplayName, results.Count));
         }
     }

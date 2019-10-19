@@ -1,8 +1,8 @@
 ﻿---
-ID: "0f6bb0db-0596-46fe-b142-d2be4950949d"
-Parent: "26f44186-9423-4ca0-9dde-cded7726c810"
+ID: "883fb295-06a0-49f0-b57e-88871d9ab674"
+Parent: "5e895dd1-7fd5-4388-bce2-65a1df5ff766"
 Template: "6d1cd897-1936-4a3a-a511-289a94c2a7b1"
-Path: /sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Personalization/Create Profile/Keys Parameter Request
+Path: /sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Personalization/Assign Profile Card/Folder Item Parameter Request
 DB: master
 BranchID: "25672703-93bd-4056-88a4-9c20ec501967"
 SharedFields:
@@ -11,7 +11,7 @@ SharedFields:
   Value: Office/32x32/document_text.png
 - ID: "580c75a8-c01a-4580-83cb-987776ceb3af"
   Hint: Key
-  Value: Chat.Intents.CreateProfile.KeysParameterRequest
+  Value: Chat.Intents.AssignProfileCard.FolderItemParameterRequest
 - ID: "f6d8a61c-2f84-4401-bd24-52d2068172bc"
   Hint: __Originator
   Value: "{A473F5DA-770D-4CE6-A868-450D6DFCAB24}"
@@ -20,10 +20,10 @@ Languages:
   Fields:
   - ID: "2ba3454a-9a9c-4cdf-a9f8-107fd484eb6e"
     Hint: Phrase
-    Value: "What are the keys for this profile ? (comma separated)"
+    Value: "What folder do you want to filter by?"
   Versions:
   - Version: 1
     Fields:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
-      Value: 20191019T030008Z
+      Value: 20191019T032056Z

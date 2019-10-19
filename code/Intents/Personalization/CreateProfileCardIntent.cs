@@ -57,9 +57,9 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
                 { Constants.SearchParameters.TemplateId, Constants.TemplateIds.ProfileTemplateId.ToString() },
                 { Constants.SearchParameters.AutoStart, "true" }
             };
-            ConversationParameters.Add(new ItemParameter(ProfileItemKey, "What profile do you want to create this profile card for", parameters, dataWrapper, inputFactory, resultFactory));
-            ConversationParameters.Add(new StringParameter(NameKey, "What is the name of this profile card", inputFactory, resultFactory));
-            ConversationParameters.Add(new ProfileKeysParameter(ProfileItemKey, ProfileKeyValuesKey, "What value do you want for {0} ({1} - {2})", inputFactory, resultFactory, profileService));
+            ConversationParameters.Add(new ItemParameter(ProfileItemKey, Translator.Text("Chat.Intents.CreateProfileCard.ProfileItemParameterRequest"), parameters, dataWrapper, inputFactory, resultFactory));
+            ConversationParameters.Add(new StringParameter(NameKey, Translator.Text("Chat.Intents.CreateProfileCard.ProfileCardNameParameterRequest"), inputFactory, resultFactory));
+            ConversationParameters.Add(new ProfileKeysParameter(ProfileItemKey, ProfileKeyValuesKey, Translator.Text("Chat.Intents.CreateProfileCard.ProfileKeysParameterRequest"), inputFactory, resultFactory, profileService));
         }
 
         public override ConversationResponse Respond(LuisResult result, ItemContextParameters parameters, IConversation conversation)
@@ -79,9 +79,8 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             };
             
             //create pattern card
-            var fromDb = "master";
             var profileCardFolder = profileItem.Axes.GetChild("Profile Cards");
-            var newProfileItem = DataWrapper.CreateItem(profileCardFolder.ID, Constants.TemplateIds.ProfileCardTemplateId, fromDb, name, fields);
+            var newProfileItem = DataWrapper.CreateItem(profileCardFolder.ID, Constants.TemplateIds.ProfileCardTemplateId, parameters.Database, name, fields);
 
             return ConversationResponseFactory.Create(KeyName, string.Format(
                 Translator.Text("Chat.Intents.CreateProfileCard.Response"),

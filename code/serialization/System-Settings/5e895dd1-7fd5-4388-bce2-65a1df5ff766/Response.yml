@@ -1,0 +1,17 @@
+﻿---
+ID: "56af7d50-3ff1-4cfa-addf-cc7646d73480"
+Parent: "5e895dd1-7fd5-4388-bce2-65a1df5ff766"
+Template: "6d1cd897-1936-4a3a-a511-289a94c2a7b1"
+Path: /sitecore/system/Modules/Sitecore Cognitive Services/Ole Chat/Ole Chat Dictionary/Chat/Intents/Personalization/Assign Profile Card/Response
+DB: master
+Languages:
+- Language: en
+  Fields:
+  - ID: "2ba3454a-9a9c-4cdf-a9f8-107fd484eb6e"
+    Hint: Phrase
+    Value: "You've attached the {0} profile card to {1} items."
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Value: "20191019T032508:637070523088182790Z"

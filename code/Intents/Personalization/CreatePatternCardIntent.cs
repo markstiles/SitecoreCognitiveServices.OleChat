@@ -24,7 +24,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
         
         public override string KeyName => "personalization - create pattern card";
 
-        public override string DisplayName => Translator.Text("Chat.Intents.CreateAudienceProfile.Name");
+        public override string DisplayName => Translator.Text("Chat.Intents.CreatePatternCard.Name");
 
         public override bool RequiresConfirmation => true;
 
@@ -55,9 +55,9 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
                 { Constants.SearchParameters.TemplateId, Constants.TemplateIds.ProfileTemplateId.ToString() },
                 { Constants.SearchParameters.AutoStart, "true" }
             };
-            ConversationParameters.Add(new ItemParameter(ProfileItemKey, "What profile do you want to create this pattern card for?", contentParameters, dataWrapper, inputFactory, resultFactory));
-            ConversationParameters.Add(new StringParameter(NameKey, "What is the name of the target audience?", inputFactory, resultFactory));
-            ConversationParameters.Add(new ProfileKeysParameter(ProfileItemKey, ProfileKeyValuesKey, "What value do you want for {0} ({1} - {2})", inputFactory, resultFactory, profileService));
+            ConversationParameters.Add(new ItemParameter(ProfileItemKey, Translator.Text("Chat.Intents.CreatePatternCard.ProfileItemParameterRequest"), contentParameters, dataWrapper, inputFactory, resultFactory));
+            ConversationParameters.Add(new StringParameter(NameKey, Translator.Text("Chat.Intents.CreatePatternCard.ProfileNameParameterRequest"), inputFactory, resultFactory));
+            ConversationParameters.Add(new ProfileKeysParameter(ProfileItemKey, ProfileKeyValuesKey, Translator.Text("Chat.Intents.CreatePatternCard.ProfileKeyParameterRequest"), inputFactory, resultFactory, profileService));
         }
 
         public override ConversationResponse Respond(LuisResult result, ItemContextParameters parameters, IConversation conversation)
