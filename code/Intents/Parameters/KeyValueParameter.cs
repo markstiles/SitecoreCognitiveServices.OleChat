@@ -9,6 +9,7 @@ using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Models;
 using SitecoreCognitiveServices.Foundation.SCSDK.Wrappers;
 using System.Collections.Generic;
 using SitecoreCognitiveServices.Feature.OleChat.Services;
+using System.Web.UI.WebControls;
 
 namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 {
@@ -25,11 +26,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
         public IIntentInputFactory IntentInputFactory { get; set; }
         public IParameterResultFactory ResultFactory { get; set; }
         public IProfileService ProfileService { get; set; }
-
-        public static string DataKey = "KeyValueDataKey";
-        public static string FirstParamKey = "FirstParamKey";
-        public static string SecondParamKey = "SecondParamKey";
-
+        
         public KeyValueParameter(
             string paramName,
             string firstParamMessage,
@@ -50,28 +47,41 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
         public IParameterResult GetParameter(string paramValue, IConversationContext context)
         {
             var conversation = context.GetCurrentConversation();
-            var hasParamValue = string.IsNullOrWhiteSpace(paramValue);
-            var dataExists = conversation.Data.ContainsKey(DataKey);
+            var hasParamValue = !string.IsNullOrWhiteSpace(paramValue);
+            var dataExists = conversation.Data.ContainsKey(ParamName);
+            if (!dataExists)
+                conversation.Data[ParamName] = new ParameterData { Value = new ListItem("", ""), IsIncomplete = true };
 
-            if (!conversation.Data.ContainsKey(FirstParamKey))
+            var data = (ListItem)conversation.Data[ParamName].Value;
+            
+            if (string.IsNullOrWhiteSpace(data.Text))
             {
-                if (string.IsNullOrWhiteSpace(paramValue))
+                if (hasParamValue)
+                {
+                    hasParamValue = false;
+                    data.Text = paramValue;
+                }   
+                else
+                {
                     return ResultFactory.GetFailure(FirstParamMessage);
-                
-                conversation.Data[FirstParamKey] = new ParameterData { Value = paramValue };
-                return ResultFactory.GetFailure(SecondParamMessage);
+                }
             }
             
             //if has first response then ask for second request 
-            if (!conversation.Data.ContainsKey(SecondParamKey)
-                && string.IsNullOrWhiteSpace(paramValue))
-                return ResultFactory.GetFailure(SecondParamMessage);
-
-            //remove temp storage
-            var key = (string)conversation.Data[FirstParamKey].Value;
-            conversation.Data.Remove(FirstParamKey);
+            if (string.IsNullOrWhiteSpace(data.Value))
+            {
+                if (hasParamValue)
+                {
+                    data.Value = paramValue;
+                    conversation.Data[ParamName].IsIncomplete = false;
+                }   
+                else
+                {
+                    return ResultFactory.GetFailure(SecondParamMessage);
+                }
+            }
             
-            return ResultFactory.GetSuccess($"{key} : {paramValue}", new KeyValuePair<string, string>(key, paramValue));
+            return ResultFactory.GetSuccess($"{data.Text} : {data.Value}", data);
         }
 
         public IntentInput GetInput(ItemContextParameters parameters, IConversation conversation)

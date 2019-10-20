@@ -117,10 +117,10 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             searchParameters.Add(Constants.SearchParameters.FilterPath, folderId);
 
             var fieldSet = conversation.Data[FieldItemKey].Value;
-            if (fieldSet != null && fieldSet is Item)
+            if (fieldSet != null && fieldSet is ListItem)
             {
-                var kvp = (KeyValuePair<string, string>)fieldSet;
-                searchParameters.Add(Constants.SearchParameters.FieldName, kvp.Key);
+                var kvp = (ListItem)fieldSet;
+                searchParameters.Add(Constants.SearchParameters.FieldName, kvp.Text);
                 searchParameters.Add(Constants.SearchParameters.FieldValue, kvp.Value);
             }
 
