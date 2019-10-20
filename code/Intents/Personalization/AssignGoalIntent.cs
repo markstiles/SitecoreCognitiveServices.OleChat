@@ -53,12 +53,12 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
                 { Constants.SearchParameters.TemplateId, Constants.TemplateIds.GoalTemplateId.ToString() },
                 { Constants.SearchParameters.AutoStart, "true" }
             };
-            ConversationParameters.Add(new ItemParameter(GoalItemKey, "Chat.Intents.AssignGoal.GoalParameterRequest", goalParameters, dataWrapper, inputFactory, resultFactory));
+            ConversationParameters.Add(new ItemParameter(GoalItemKey, Translator.Text("Chat.Intents.AssignGoal.GoalParameterRequest"), goalParameters, dataWrapper, inputFactory, resultFactory));
             var contentParameters = new Dictionary<string, string>
             {
                 { Constants.SearchParameters.FilterPath, Constants.Paths.ContentPath }
             };
-            ConversationParameters.Add(new ItemParameter(PageItemKey, "Chat.Intents.AssignGoal.PageParameterRequest", contentParameters, dataWrapper, inputFactory, resultFactory));
+            ConversationParameters.Add(new ItemParameter(PageItemKey, Translator.Text("Chat.Intents.AssignGoal.PageParameterRequest"), contentParameters, dataWrapper, inputFactory, resultFactory));
         }
 
         public override ConversationResponse Respond(LuisResult result, ItemContextParameters parameters, IConversation conversation)

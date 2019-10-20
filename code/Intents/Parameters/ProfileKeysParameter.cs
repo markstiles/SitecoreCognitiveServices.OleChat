@@ -76,6 +76,11 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
                 if (data.ContainsKey(keyName))
                     continue;
 
+                var minValue = ProfileService.GetMinValue(k);
+                var maxValue = ProfileService.GetMaxValue(k);
+                if (string.IsNullOrWhiteSpace(paramValue))
+                    return ResultFactory.GetFailure(string.Format(ParamMessage, keyName, minValue, maxValue));
+
                 int outInt = 0;
                 if (!int.TryParse(paramValue, out outInt))
                     return ResultFactory.GetFailure("That's not a valid number.");
@@ -89,10 +94,10 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Parameters
 
                 var nextKey = keys[j];
                 var nextKeyName = ProfileService.GetProfileName(nextKey);
-                var minValue = ProfileService.GetMinValue(nextKey);
-                var maxValue = ProfileService.GetMaxValue(nextKey);
+                var nextMinValue = ProfileService.GetMinValue(nextKey);
+                var nextMaxValue = ProfileService.GetMaxValue(nextKey);
 
-                return ResultFactory.GetFailure(string.Format(ParamMessage, nextKeyName, minValue, maxValue));
+                return ResultFactory.GetFailure(string.Format(ParamMessage, nextKeyName, nextMinValue, nextMaxValue));
             }
 
             //remove temp storage
