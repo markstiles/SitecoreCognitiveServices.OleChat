@@ -40,7 +40,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Services
             {
 
                 var queryable = context.GetQueryable<SearchResultItem>()
-                    .Where(a => a.Language == language);
+                    .Where(a => a.Language == language && a["_latestversion"] == "1");
 
                 if (parameters.ContainsKey(Constants.SearchParameters.FilterPath))
                 {
@@ -62,7 +62,9 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Services
                 if (parameters.ContainsKey(Constants.SearchParameters.FieldName) 
                     && parameters.ContainsKey(Constants.SearchParameters.FieldValue))
                 {
-                    queryable = queryable.Where(c => c.Fields[parameters[Constants.SearchParameters.FieldName]] as string == parameters[Constants.SearchParameters.FieldValue]);
+                    var fieldName = parameters[Constants.SearchParameters.FieldName];
+                    var fieldValue = parameters[Constants.SearchParameters.FieldValue];
+                    queryable = queryable.Where(c => c[fieldName] == fieldValue);
                 }
 
                 if (parameters.ContainsKey(Constants.SearchParameters.ItemName))
@@ -71,14 +73,15 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Services
                 }
                 
                 var contentPredicate = PredicateBuilder.False<SearchResultItem>();
-                if (query.Contains(" "))
+                var notEmptyQuery = !string.IsNullOrWhiteSpace(query);
+                if (notEmptyQuery && query.Contains(" "))
                 {
                     var words = query.Split(new[] {" "}, StringSplitOptions.RemoveEmptyEntries);
                     words.ForEach(w => contentPredicate = contentPredicate
                         .Or(item => item.Name.Contains(w).Boost(10)
                             || item.Content.Contains(w).Boost(5)));
                 }
-                else
+                else if (notEmptyQuery)
                 {
                     contentPredicate = contentPredicate
                         .Or(item => item.Name.Contains(query).Boost(10)

@@ -196,7 +196,7 @@ jQuery(document).ready(function ()
             return;
         }
 
-        itemSearchTimer = setTimeout(function () { SendItemSearchRequest(jQuery(itemSearchInput).val(), 0, 10); }, 200);
+        itemSearchTimer = setTimeout(function () { SendItemSearchRequest(jQuery(itemSearchInput).val(), 0, 10); }, 1000);
     });
 
     jQuery(itemSearchClose).click(function (e)
@@ -207,11 +207,17 @@ jQuery(document).ready(function ()
         jQuery(itemSearchInput).val("");
     });
 
-    jQuery(listSearchInput).keyup(function (e)
+    jQuery(listSearchInput).keypress(function (e)
     {
         clearTimeout(listSearchTimer);
 
-        listSearchTimer = setTimeout(function () { SearchList(jQuery(listSearchInput).val()); }, 100);
+        if (e.which === 13) {
+            e.preventDefault();
+            SendItemSearchRequest(jQuery(listSearchInput).val(), 0, 10);
+            return;
+        }
+
+        listSearchTimer = setTimeout(function () { SearchList(jQuery(listSearchInput).val()); }, 150);
     });
 
     jQuery(listSearchClose).click(function (e) {
@@ -416,11 +422,12 @@ jQuery(document).ready(function ()
     {
         jQuery(itemSearchForm).data("parameters", parameters);
         jQuery(itemSearchTitle).text(inputLabel);
+        var isOpening = jQuery(itemSearchForm).is(':hidden');
         jQuery(itemSearchForm).show();
         jQuery(itemSearchInput).focus();
-        
-        //if (parameters.hasOwnProperty("autostart") && parameters.autostart === "true")
-            //SendItemSearchRequest(jQuery(itemSearchInput).val(), 0, 10);
+
+        if (isOpening && parameters.hasOwnProperty("autostart") && parameters.autostart === "true")
+            SendItemSearchRequest(jQuery(itemSearchInput).val(), 0, 10);
     }
 
     function SetupRadioList(userType, options)

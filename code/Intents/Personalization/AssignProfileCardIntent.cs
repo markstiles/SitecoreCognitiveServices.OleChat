@@ -39,7 +39,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
         protected string ItemNameKey = "Item Name";
         protected string TemplateItemKey = "Template Item";
         protected string FolderItemKey = "Folder Item";
-        protected string FieldItemKey = "Field Item";
+        protected string FieldItemKey = "Field Filter";
         
         #endregion
 
