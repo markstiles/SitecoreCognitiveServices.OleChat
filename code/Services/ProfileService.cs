@@ -114,7 +114,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Services
                 profileNode = new XElement("profile",
                     new XAttribute("id", profileItem.ID.ToString()),
                     new XAttribute("name", profileItem.DisplayName),
-                    new XAttribute("presets", $"{profileCardItem.DisplayName}|100||"));
+                    new XAttribute("presets", $"{profileCardItem.DisplayName.ToLower()}|100||"));
                 profileCardDoc.Root.Add(profileNode);
             }
 
