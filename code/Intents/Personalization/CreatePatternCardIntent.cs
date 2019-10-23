@@ -81,6 +81,9 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             var patternCardFolder = profileItem.Axes.GetChild("Pattern Cards");
             var newPatternCardItem = DataWrapper.CreateItem(patternCardFolder.ID, Constants.TemplateIds.PatternCardTemplateId, fromDb, name, fields);
 
+            var toDb = DataWrapper.GetDatabase("web");
+            PublishWrapper.PublishItem(newPatternCardItem, new[] { toDb }, new[] { DataWrapper.ContentLanguage }, true, false, false);
+
             return ConversationResponseFactory.Create(KeyName, string.Format(
                 Translator.Text("Chat.Intents.CreatePatternCard.Response"),
                 profileItem.DisplayName));

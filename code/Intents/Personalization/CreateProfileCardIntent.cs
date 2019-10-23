@@ -82,6 +82,9 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             var profileCardFolder = profileItem.Axes.GetChild("Profile Cards");
             var newProfileItem = DataWrapper.CreateItem(profileCardFolder.ID, Constants.TemplateIds.ProfileCardTemplateId, parameters.Database, name, fields);
 
+            var toDb = DataWrapper.GetDatabase("web");
+            PublishWrapper.PublishItem(newProfileItem, new[] { toDb }, new[] { DataWrapper.ContentLanguage }, true, false, false);
+
             return ConversationResponseFactory.Create(KeyName, string.Format(
                 Translator.Text("Chat.Intents.CreateProfileCard.Response"),
                 profileItem.DisplayName));
