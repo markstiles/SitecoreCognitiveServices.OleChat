@@ -40,7 +40,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
         protected string TemplateItemKey = "Template Item";
         protected string FolderItemKey = "Folder Item";
         protected string FieldItemKey = "Field Filter";
-        
+
         #endregion
 
         public AssignProfileCardIntent(
@@ -98,7 +98,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
         public override ConversationResponse Respond(LuisResult result, ItemContextParameters parameters, IConversation conversation)
         {
             var profileCardItem = (Item)conversation.Data[ProfileCardItemKey].Value;
-            
+
             //do search
             var searchParameters = new Dictionary<string, string>();
 
@@ -134,9 +134,13 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
             }
 
             //get the item's tracking field and append the new goal to it
+            int alteredPages = 0;
             foreach (var r in results)
             {
                 var pageItem = r.GetItem();
+                if (pageItem.Visualization.Layout == null)
+                    continue;
+
                 var newTrackingValue = ProfileService.UpdateTrackingProfile(pageItem, profileCardItem);
 
                 var pageFields = new Dictionary<ID, string>
@@ -147,11 +151,13 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Intents.Personalization
                 DataWrapper.UpdateFields(pageItem, pageFields);
                 var toDb = DataWrapper.GetDatabase("web");
                 PublishWrapper.PublishItem(pageItem, new[] { toDb }, new[] { DataWrapper.ContentLanguage }, true, false, false);
+
+                alteredPages++;
             }
-            
+
             return ConversationResponseFactory.Create(KeyName, string.Format(
                 Translator.Text("Chat.Intents.AssignProfileCard.Response"),
-                profileCardItem.DisplayName, results.Count));
+                profileCardItem.DisplayName, alteredPages));
         }
     }
 }

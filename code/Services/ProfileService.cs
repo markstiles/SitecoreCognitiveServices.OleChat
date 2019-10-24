@@ -117,6 +117,14 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Services
                     new XAttribute("presets", $"{profileCardItem.DisplayName.ToLower()}|100||"));
                 profileCardDoc.Root.Add(profileNode);
             }
+            else if (profileNode.Attribute("presets") == null)
+            {
+                profileNode.Add(new XAttribute("presets", $"{profileCardItem.DisplayName.ToLower()}|100||"));
+            }
+            else 
+            {
+                profileNode.Attribute("presets").Value = $"{profileCardItem.DisplayName.ToLower()}|100||";
+            }
 
             profileNode.RemoveNodes();
             foreach (var k in keys)
