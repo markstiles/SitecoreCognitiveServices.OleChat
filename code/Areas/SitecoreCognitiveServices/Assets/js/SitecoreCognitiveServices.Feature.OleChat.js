@@ -235,6 +235,8 @@ jQuery(document).ready(function ()
         var dbValue = jQuery(".item-search-db").val();
         var parametersValue = jQuery(itemSearchForm).data("parameters");
 
+        jQuery(".progress-indicator").show();
+
         jQuery
             .post(jQuery(itemSearchForm).attr("action"),
             {
@@ -247,6 +249,8 @@ jQuery(document).ready(function ()
             })
             .done(function (r) {
                 HandleItemSearchResults(r);
+            }).always(function () {
+                jQuery(".progress-indicator").hide();
             });
     }
     
@@ -335,7 +339,9 @@ jQuery(document).ready(function ()
         jQuery(".message ul").removeClass("enabled").addClass("disabled");
         jQuery(".message .user-option, .message .user-selection, .message .option-submit").off("click");
         jQuery(".message .confirm-continue, .message .confirm-cancel, .message input, .message .option-submit").remove();
-        
+
+        jQuery(".progress-indicator").show();
+
         jQuery
             .post(jQuery(chatForm).attr("action"), GenerateActivity(queryValue, langValue, dbValue, idValue))
             .done(function (r) {
@@ -348,6 +354,8 @@ jQuery(document).ready(function ()
 
                 var troubleText = jQuery(".trouble-message").text();
                 UpdateChatWindow(troubleText + "...<br/><br/>" + statusMsg, null, "bot");
+            }).always(function () {
+                jQuery(".progress-indicator").hide();
             });
     }
 
