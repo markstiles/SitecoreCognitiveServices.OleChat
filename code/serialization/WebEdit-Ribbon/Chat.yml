@@ -1,8 +1,8 @@
 ﻿---
 ID: "e8139402-24e1-403e-b437-d828e43de14b"
-Parent: "d966825f-c2f8-4439-8ef9-2a85f5ea20bb"
+Parent: "0642041b-6e6c-4b82-9648-bb6603e8dce5"
 Template: "8f3d8f9b-2d76-4ace-803f-35415d2b230a"
-Path: /sitecore/content/Applications/WebEdit/Ribbons/WebEdit/Cognitive/Chat
+Path: /sitecore/content/Applications/WebEdit/Ribbons/WebEdit/Page Editor/Chat
 DB: core
 SharedFields:
 - ID: "8bb9a5e3-cae8-49c6-b830-258a51d970c9"

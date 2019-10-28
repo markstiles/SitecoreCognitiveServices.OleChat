@@ -2,7 +2,7 @@
 ID: "9196c300-4b44-4bed-b530-7cc732429be7"
 Parent: "e8139402-24e1-403e-b437-d828e43de14b"
 Template: "1db34c92-03b0-4475-9a39-da14e4d9d8fc"
-Path: /sitecore/content/Applications/WebEdit/Ribbons/WebEdit/Cognitive/Chat/Ole
+Path: /sitecore/content/Applications/WebEdit/Ribbons/WebEdit/Page Editor/Chat/Ole
 DB: core
 SharedFields:
 - ID: "a4f985d9-98b3-4b52-aaaf-4344f6e747c6"
