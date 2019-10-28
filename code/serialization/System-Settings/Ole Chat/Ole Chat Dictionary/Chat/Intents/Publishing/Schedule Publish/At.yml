@@ -11,7 +11,7 @@ SharedFields:
   Value: Office/32x32/document_text.png
 - ID: "580c75a8-c01a-4580-83cb-987776ceb3af"
   Hint: Key
-  Value: 
+  Value: Chat.Intents.SchedulePublish.At
 - ID: "f6d8a61c-2f84-4401-bd24-52d2068172bc"
   Hint: __Originator
   Value: "{A473F5DA-770D-4CE6-A868-450D6DFCAB24}"

@@ -142,18 +142,17 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Services
             //get the item's tracking field and append the new goal to it
             var trackingField = pageItem.Fields[Constants.FieldIds.StandardFields.TrackingFieldId];
 
-            XDocument xdoc = XDocument.Parse(trackingField.Value);
-            if (!string.IsNullOrWhiteSpace(trackingField?.Value))
+            var trackingValue = string.IsNullOrWhiteSpace(trackingField.Value) ? "<tracking></tracking>" : trackingField.Value;
+            XDocument xdoc = XDocument.Parse(trackingValue);
+            var eventNode = xdoc.Root
+                .Descendants("event")
+                .FirstOrDefault(a => a.Attribute("id").Value == goalItem.ID.ToString());
+            if (eventNode == null)
             {
-                var events = xdoc.Root.Descendants("event");
-                XElement eventNode = events.FirstOrDefault(a => a.Attribute("id").Value == goalItem.ID.ToString());
-                if (eventNode == null)
-                {
-                    eventNode = new XElement("event",
-                        new XAttribute("id", goalItem.ID.ToString()),
-                        new XAttribute("name", goalItem.DisplayName));
-                    xdoc.Root.Add(eventNode);
-                }
+                eventNode = new XElement("event",
+                    new XAttribute("id", goalItem.ID.ToString()),
+                    new XAttribute("name", goalItem.DisplayName));
+                xdoc.Root.Add(eventNode);
             }
 
             return xdoc.Root.ToString();
