@@ -105,7 +105,7 @@ input[type="text"].item-search-input { font-size: 13px; width: calc(90% - 15px);
 .item-search-results .title img { height: 20px; vertical-align: middle; width: 20px; display: inline-block; margin-right: 10px; }
 .item-search-results .path { font-size:14px; margin-left:30px; }
 .item-search-results .no-results { margin: 20px auto; width: 100px; font-size: 15px; font-weight: bold; text-align:center; }
-.item-search-wrap .chat-audio { display:none; overflow: hidden; cursor: pointer; margin-left: 10px; background: #dc291e; color: #fff; border-radius: 3px; vertical-align: top; width: 38px; text-align: center; height: 35px; display:inline-block; }
+.item-search-wrap .chat-audio { display:none; overflow: hidden; cursor: pointer; margin-left: 10px; background: #dc291e; color: #fff; border-radius: 3px; vertical-align: top; width: 38px; text-align: center; height: 35px; }
 .item-search-wrap .chat-audio img { height: 25px; width: 25px; position: relative; top: 5px; }
 .item-search-wrap .chat-audio .mic {  }
 .item-search-wrap .chat-audio.disabled .mic { display: none; }
@@ -125,7 +125,7 @@ input[type="text"].list-search-input { font-size: 13px; width: calc(90% - 15px);
 .list-search-results .result-item:hover { background:#ccc; }
 .list-search-results .title { font-weight:bold; margin-bottom:3px; vertical-align:middle; font-size:15px; }
 .list-search-results .no-results { margin: 20px auto; width: 100px; font-size: 15px; font-weight: bold; text-align:center; }
-.list-search-wrap .chat-audio { display:none; overflow: hidden; cursor: pointer; margin-left: 10px; background: #dc291e; color: #fff; border-radius: 3px; vertical-align: top; width: 38px; text-align: center; height: 35px; display:inline-block; }
+.list-search-wrap .chat-audio { display:none; overflow: hidden; cursor: pointer; margin-left: 10px; background: #dc291e; color: #fff; border-radius: 3px; vertical-align: top; width: 38px; text-align: center; height: 35px; }
 .list-search-wrap .chat-audio img { height: 25px; width: 25px; position: relative; top: 5px; }
 .list-search-wrap .chat-audio .mic {  }
 .list-search-wrap .chat-audio.disabled .mic { display: none; }
