@@ -28,6 +28,7 @@
                 <img src="/Areas/SitecoreCognitiveServices/Assets/img/audio.jpg" />
             </div>
             <input class="chat-input" id="chat-input" type="text" />
+            <button class="chat-submit scButton">@Translator.Text("Chat.Send")</button>
             <div class="chat-audio microphone-button" title="Start Microphone">
                 <img class="mic" src="/Areas/SitecoreCognitiveServices/Assets/img/mic.png" title="microphone button" />
                 <img class="speech-animated" src="/Areas/SitecoreCognitiveServices/Assets/img/speech-animated.gif" title="capturing speech" />
@@ -40,7 +41,6 @@
         <input type="hidden" name="chat-db" class="chat-db" value="@Model.Database" />
         <input type="hidden" name="chat-lang" class="chat-lang" value="@Model.Language" />
         <input type="hidden" name="chat-id" class="chat-id" value="@Model.Id" />
-        <button class="chat-submit scButton">@Translator.Text("Chat.Send")</button>
     </form>
     <form class="form item-search-form" method="post" action="/SitecoreCognitiveServices/OleChat/ItemSearch" data-parameters="">
         @Html.AntiForgeryToken()

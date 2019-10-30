@@ -20,7 +20,7 @@ Languages:
   Fields:
   - ID: "2ba3454a-9a9c-4cdf-a9f8-107fd484eb6e"
     Hint: Phrase
-    Value: "What are the keys for this profile ? (comma separated)"
+    Value: "What are the keys (categories) for this profile ? (comma separated)"
   Versions:
   - Version: 1
     Fields:

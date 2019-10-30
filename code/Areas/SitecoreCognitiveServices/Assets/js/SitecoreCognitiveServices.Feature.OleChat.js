@@ -185,6 +185,20 @@ jQuery(document).ready(function ()
 
         SendChatRequest(queryValue);
     });
+
+    jQuery(chatSubmit).focusout(function (event)
+    {
+        event.preventDefault();
+        var queryValue = jQuery(chatInput).val();
+        if (queryValue === "")
+            return;
+
+        jQuery(chatInput).val("");
+        jQuery(chatInput).attr("type", "text");
+        UpdateChatWindow(queryValue, null, "user");
+
+        SendChatRequest(queryValue);
+    });
     
     jQuery(itemSearchInput).keypress(function (e)
     {
