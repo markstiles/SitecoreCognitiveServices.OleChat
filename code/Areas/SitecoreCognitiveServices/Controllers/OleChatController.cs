@@ -21,6 +21,7 @@ using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Bing;
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language;
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Factories;
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Models;
+using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Language.Providers;
 using SitecoreCognitiveServices.Foundation.SCSDK.Services.MSSDK.Speech;
 using SitecoreCognitiveServices.Foundation.SCSDK.Wrappers;
 
@@ -41,8 +42,11 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Areas.SitecoreCognitiveServi
         protected readonly ISearchService Searcher;
         protected readonly IConversationContextFactory ConversationContextFactory;
         protected readonly ISpellCheckService SpellCheckService;
+        protected readonly IIntentProvider IntentProvider;
 
         protected ItemContextParameters Parameters;
+
+        protected List<string> QuestionWords = new List<string> { "who", "who's", "whos", "what", "what's", "whats", "when", "when's", "whens", "where", "where's", "wheres", "why", "how", "how's", "hows" };
 
         public OleChatController(
             ILuisService luisService,
@@ -55,7 +59,8 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Areas.SitecoreCognitiveServi
             ISpeechService speechService,
             ISearchService searcher,
             IConversationContextFactory conversationContextFactory,
-            ISpellCheckService spellCheckService)
+            ISpellCheckService spellCheckService,
+            IIntentProvider intentProvider)
         {
             LuisService = luisService;
             LuisConversationService = luisConversationService;
@@ -68,7 +73,7 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Areas.SitecoreCognitiveServi
             Searcher = searcher;
             ConversationContextFactory = conversationContextFactory;
             SpellCheckService = spellCheckService;
-            
+            IntentProvider = intentProvider;
             ThemeManager.GetImage("Office/32x32/man_8.png", 32, 32);
             
             var lang = WebUtil.GetQueryString("language");
@@ -119,7 +124,13 @@ namespace SitecoreCognitiveServices.Feature.OleChat.Areas.SitecoreCognitiveServi
                 "profile user - quit",
                 parameters,
                 result);
-            var response = LuisConversationService.ProcessUserInput(conversationContext);
+
+            var conversation = conversationContext.GetCurrentConversation();
+            var inConversation = conversation?.IsEnded ?? false;
+            var isQuestion = result.Query.Split(new char[] { ' ' }).Take(2).Any(a => QuestionWords.Contains(a));
+            var response = (!inConversation && isQuestion)
+                ? IntentProvider.GetIntent(ChatSettings.OleApplicationId, "self - websearch").Respond(result, parameters, conversation);
+                : LuisConversationService.ProcessUserInput(conversationContext);
             var newMessage = Regex.Replace(response.Message, "<.*?>", " ");
 
             var relativePath = $"temp\\ole-{CreateMD5Hash(newMessage)}.mp3";

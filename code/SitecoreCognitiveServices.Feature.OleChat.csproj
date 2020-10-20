@@ -191,6 +191,7 @@
     <Compile Include="Intents\Parameters\LanguageParameter.cs" />
     <Compile Include="Intents\Parameters\UserParameter.cs" />
     <Compile Include="Intents\Parameters\YesOrNoParameter.cs" />
+    <Compile Include="Intents\Self\WebSearchIntent.cs" />
     <Compile Include="Intents\System\RebuildIndexIntent.cs" />
     <Compile Include="Intents\ProfileUser\QuitIntent.cs" />
     <Compile Include="Intents\Publishing\SchedulePublishIntent.cs" />

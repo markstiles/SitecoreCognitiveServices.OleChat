@@ -50,6 +50,8 @@ fieldset a { text-decoration: underline; font-weight: bold; }
 .chat-form .message ul .user-selection{ color:#474747; font-weight:bold; cursor: pointer; padding: 7px 15px; border-bottom: 1px solid #dc291e; display: block; margin: 0px; text-align: center; }
 .chat-form .message ul .user-option:last-child,
 .chat-form .message ul .user-selection:last-child { border:none; }
+.chat-form .message ul.user-links { padding:10px 0; }
+.chat-form .message ul.user-links li { text-decoration: underline; cursor: pointer; font-size: 19px; margin-left: 30px; color: #000; padding: 5px 0; }
 .chat-form .message ul .field-name { color: #474747; font-size: 19px; font-weight:normal; }
 .chat-form .message ul .field-value { color: #474747; font-size: 19px; font-weight: bold; text-transform:capitalize; }
 .chat-form .message ul.disabled .user-selection { cursor: default; }

@@ -394,6 +394,8 @@ jQuery(document).ready(function ()
                     SetupCheckboxList();
                 else if (formInput.InputType === "ListSearch" && hasOptions)
                     SetupListSearch(formInput.Options);
+                else if (formInput.InputType === "ExternalLinks" && hasOptions)
+                    SetupExternalLinks(userType, formInput.Options);
             }
             
             //actions
@@ -413,6 +415,17 @@ jQuery(document).ready(function ()
         }
         
         convoBox.scrollTop(convoBox[0].scrollHeight - convoBox.height());
+    }
+
+    function SetupExternalLinks(userType, options)
+    {
+        var optionList = "";
+        for (i = 0; i < options.length; i++)
+        {
+            optionList += "<li><a href='" + options[i].Value + "' target='_blank'>" + options[i].Text + "</a></li>";
+        }
+        jQuery(chatConversation).append("<div class='" + userType + " option-list'><span class='message'><ul class='user-links'>" + optionList + "</ul><span class='icon'></span></span></div>");
+        
     }
 
     function SetupLinkList(userType, options)
